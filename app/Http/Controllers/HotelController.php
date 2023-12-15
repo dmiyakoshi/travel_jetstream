@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
-use Illuminate\Http\Request;
+use App\http\Requests\HotelRequest;
+use Illuminate\Support\DB;
 
 class HotelController extends Controller
 {
@@ -20,15 +21,27 @@ class HotelController extends Controller
      */
     public function create()
     {
-        //
+        return view('hotels.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(HotelRequest $request)
     {
-        //
+        $hotel = new Hotel($request->all());
+        $hotel->company_id = $request->user()->id;
+
+
+        try {
+            $hotel->save();
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors('登録処理でエラーが発生しました');
+        }
+
+        return redirect()
+        ->route('hotels.show', $hotel)
+        ->with('notice', '情報登録に成功しました');
     }
 
     /**
@@ -50,7 +63,7 @@ class HotelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Hotel $hotel)
+    public function update(HotelRequest $request, Hotel $hotel)
     {
         //
     }

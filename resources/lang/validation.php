@@ -127,5 +127,16 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    'attributes'           => [],
+    'attributes'           => [
+        'name' => '名前',
+        'adress' => '住所',
+        'description' => '詳細',
+        'phonenumber' => '電話番号',
+        'status' => 'ステータス',
+    ],
+    'values' => [
+        'due_date' => [
+            'yesterday' => '昨日',
+        ]
+    ]
 ];
