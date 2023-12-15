@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\http\Requests\HotelRequest;
 use Illuminate\Support\DB;
+use App\Models\Prefectures;
 
 class HotelController extends Controller
 {
@@ -21,7 +22,9 @@ class HotelController extends Controller
      */
     public function create()
     {
-        return view('hotels.create');
+        $prefectures = Prefectures::all();
+
+        return view('hotels.create', compact('prefectures'));
     }
 
     /**

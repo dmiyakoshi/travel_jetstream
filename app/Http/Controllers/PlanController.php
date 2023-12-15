@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Consts\CompanyConst;
+use App\Models\Hotel;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
@@ -20,7 +23,9 @@ class PlanController extends Controller
      */
     public function create()
     {
-        //
+        $hotels = Hotel::where('company_id', Auth::guard(CompanyConst::class)->user()->id);
+
+        return view('plans.create', compact('hotels'));
     }
 
     /**

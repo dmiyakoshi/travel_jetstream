@@ -9,6 +9,14 @@ class Plan extends Model
 {
     use HasFactory;
 
+    protected $fillable =[
+        'title',
+        'price',
+        'description',
+        'due_date',
+        'hotel_id'
+    ];
+
     public function hotels() {
         return $this->belongsTo(Hotel::class);
     }

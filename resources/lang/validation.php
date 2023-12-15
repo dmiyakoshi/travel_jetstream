@@ -133,6 +133,8 @@ return [
         'description' => '詳細',
         'phonenumber' => '電話番号',
         'status' => 'ステータス',
+        'prefecture_id' => '都道府県',
+        'hotel_id' => 'ホテル',
     ],
     'values' => [
         'due_date' => [

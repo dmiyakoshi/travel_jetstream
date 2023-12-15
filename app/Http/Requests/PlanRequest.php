@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HotelRequest extends FormRequest
+class PlanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,7 @@ class HotelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:50',
-            'adress' => 'required|string|max:50',
-            'phonenumber' => 'required|string|max:13',
-            'description' => 'nullable|string|max:200',
+            //
         ];
     }
 }

@@ -18,9 +18,6 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->foreignId('prefecture')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
             $table->string('title');
             $table->integer('price');
             $table->text('description');
