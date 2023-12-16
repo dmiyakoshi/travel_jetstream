@@ -21,10 +21,6 @@ class Plan extends Model
         return $this->belongsTo(Hotel::class);
     }
 
-    public function prefecture() {
-        return $this->hasOne(Prefectures::class);
-    }
-
     public function reservations() {
         return $this->hasMany(Reservation::class);
     }

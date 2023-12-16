@@ -11,7 +11,7 @@ class PlanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class PlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:50',
+            'hotel_id' => 'required|exists:hotels,id',
+            'due_date' => 'required|after:yesterday',
+            'description' => 'required|string|max:2000',
+            'status' => 'nullable|boolean',
         ];
     }
 }

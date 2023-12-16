@@ -24,4 +24,9 @@ class Hotel extends Model
     public function plans() {
         return $this->hasMany(Plan::class);
     }
+
+    public function prefecture() {
+        return $this->hasOne(Prefectures::class);
+    }
+
 }
