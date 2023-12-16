@@ -30,14 +30,17 @@ class PlanController extends Controller
         if (empty($user)) {
             return view('welcome');
         } else {
-                        $params = $request->query();
-                        $jobOffers = Plan::search($params)->openData()
-                            ->with(['hotel', 'prefecture'])->latest()->paginate(5);
-                        $occupation = $request->occupation;
-                        $jobOffers->appends(compact('occupation'));
+            $params = $request->query();
+            $plans = Plan::search($params)->openData()
+                ->order($params)->with(['hotel', 'prefecture'])->latest()->paginate(5);
+            $prefecture = $request->prefecture;
+            $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
+            $sort = empty($request->sort) ? [] : ['sort' => $request->sort];
+
+            $plans->appends(compact('prefecture'));
             $prefectures = Prefectures::all();
 
-            return view('job_offers.index', compact(['plans', 'prefectures']));
+            return view('plans.index', compact(['plans', 'prefectures', 'sort', 'search']));
         }
     }
 
