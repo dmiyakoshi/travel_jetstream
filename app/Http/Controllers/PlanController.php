@@ -8,16 +8,37 @@ use App\Http\Requests\PlanRequest;
 use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\PlanView;
+use App\Models\Prefectures;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PlanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = '';
+        foreach (config('fortify.users') as $guard) {
+            if (Auth::guard(Str::plural($guard))->check()) {
+                $user = Auth::guard(Str::plural($guard))->user();
+            }
+        }
+
+        if (empty($user)) {
+            return view('welcome');
+        } else {
+                        $params = $request->query();
+                        $jobOffers = Plan::search($params)->openData()
+                            ->with(['hotel', 'prefecture'])->latest()->paginate(5);
+                        $occupation = $request->occupation;
+                        $jobOffers->appends(compact('occupation'));
+            $prefectures = Prefectures::all();
+
+            return view('job_offers.index', compact(['plans', 'prefectures']));
+        }
     }
 
     /**

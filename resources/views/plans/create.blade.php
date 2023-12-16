@@ -36,11 +36,11 @@
             </div>
             <div class="mb-4">
                 <label class="block text-white mb-2" for="due_date">
-                    募集期限
+                    掲載期限
                 </label>
                 <input type="date" name="due_date"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
-                    required placeholder="募集期限" value="{{ old('due_date') }}">
+                    required placeholder="掲載期限" value="{{ old('due_date') }}">
             </div>
             <div class="mb-4">
                 <label class="block text-white mb-2" for="description">

@@ -19,7 +19,8 @@ class Authenticate extends Middleware
             if (in_array($user, config('fortify.users'))) {
                 return route($user . '.login');
             }
-            return route('welcome');
+
+            return route('root');
         }
         return $request->expectsJson() ? null : redirectToAuth($request);
     }
