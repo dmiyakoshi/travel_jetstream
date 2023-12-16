@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Consts\CompanyConst;
+use App\Consts\UserConst;
 use App\Http\Requests\PlanRequest;
 use App\Models\Hotel;
 use App\Models\Plan;
+use App\Models\PlanView;
 use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
@@ -49,7 +51,14 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        //
+        if (Auth::guard(UserConst::class)->check()) {
+            PlanView::updateOrCreate([
+                'plan_id' => $plan->id,
+                'user_id' => Auth::guard(UserConst::class)->user()->id,
+            ]);
+        }
+
+        return view('plan.show', compact('plan'));
     }
 
     /**

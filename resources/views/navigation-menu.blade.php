@@ -51,6 +51,12 @@
                                 {{ __('Manage Account') }}
                             </div>
 
+                            @if (Auth::guard(CompanyConst::GUARD)->check())
+                                <x-jet-dropdown-link href="{{ route('job_offers.create') }}">
+                                    {{ '求人情報登録' }}
+                                </x-jet-dropdown-link>
+                            @endif
+
                             <x-dropdown-link href="{{ route($prefix . 'profile.show') }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -114,15 +120,21 @@
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route($prefix . 'profile.show') }}" :active="request()->routeIs($prefix . 'profile.show')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-                    <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                        {{ __('Log Out') }}
                     </x-responsive-nav-link>
-                </form>
+
+                    @if (Auth::guard(CompanyConst::GUARD)->check())
+                        <x-jet-dropdown-link href="{{ route('job_offers.create') }}">
+                            {{ '求人情報登録' }}
+                        </x-jet-dropdown-link>
+                    @endif
+
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+                        <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
             </div>
         </div>
     </div>
