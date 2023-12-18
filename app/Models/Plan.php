@@ -36,6 +36,11 @@ class Plan extends Model
         return $query;
     }
 
+    public function scopePrice(Builder $query) {
+
+        return $query;
+    }
+
     public function scopeOrder(Builder $query, $params)
     {
         if ((empty($params['sort'])) ||
