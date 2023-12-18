@@ -21,12 +21,20 @@ class PlanRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $route = $this->route()->getName();
+
+        $rule = [
             'title' => 'required|string|max:50',
             'hotel_id' => 'required|exists:hotels,id',
             'due_date' => 'required|after:yesterday',
             'description' => 'required|string|max:2000',
             'status' => 'nullable|boolean',
         ];
+
+        if($route === 'plan.update') {
+            $rule['due_date'] = 'required|date';
+        }
+
+        return $rule;
     }
 }

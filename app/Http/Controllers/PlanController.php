@@ -40,7 +40,7 @@ class PlanController extends Controller
             $plans->appends(compact('prefecture'));
             $prefectures = Prefectures::all();
 
-            return view('plans.index', compact(['plans', 'prefectures', 'sort', 'search']));
+            return view('plans.index', compact('plans', 'prefectures', 'sort', 'search'));
         }
     }
 
@@ -90,7 +90,9 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        //
+        $hotel = Hotel::where('hotel_id', $plan->hotel_id);
+
+        return view('plans.edit', compact('plan', 'hotel'));
     }
 
     /**
@@ -98,7 +100,22 @@ class PlanController extends Controller
      */
     public function update(PlanRequest $request, Plan $plan)
     {
-        //
+        if (Auth::guard(CompanyConst::GUARD)->user()->cannot('update', $plan)) {
+            return redirect()->route('plans.show', $plan)
+                ->withErrors('自分の求人情報以外は更新できません');
+        }
+
+        $plan->fill($request->all());
+
+        try {
+            $plan->save();
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->withErrors('求人情報更新処理でエラーが発生しました');
+        }
+
+        return redirect()->route('plans.show', $plan)
+            ->with('notice', '求人情報を更新しました');
     }
 
     /**
@@ -106,6 +123,18 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan)
     {
-        //
+        if (Auth::guard(CompanyConst::GUARD)->user()->cannot('delete', $plan)) {
+            return redirect()->route('job_offers.show', $plan)
+                ->withErrors('自分の求人情報以外は削除できません');
+        }
+
+        try {
+            $plan->delete();
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->withErrors('求人情報削除処理でエラーが発生しました');
+        }
+        return redirect()->route('job_offers.index')
+            ->with('notice', '求人情報を削除しました');
     }
 }

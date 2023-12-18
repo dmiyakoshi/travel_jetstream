@@ -16,7 +16,8 @@ class Plan extends Model
         'price',
         'description',
         'due_date',
-        'hotel_id'
+        'hotel_id',
+        'status',
     ];
 
     public function scopeOpenData(Builder $query)
