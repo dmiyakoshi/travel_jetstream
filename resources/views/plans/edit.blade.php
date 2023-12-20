@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-indigo-900 shadow-md rounded-md">
-        <h2 class="text-center text-lg text-white font-bold pt-6 tracking-widest">求人情報更新</h2>
+        <h2 class="text-center text-lg text-white font-bold pt-6 tracking-widest">プラン情報変更</h2>
 
         <x-validation-errors :errors="$errors" />
 
-        <form action="{{ route('job_offers.update', $jobOffer) }}" method="POST"
+        <form action="{{ route('plans.update') }}" method="POST"
             class="rounded pt-3 pb-8 mb-4">
             @csrf
             @method('PUT')
@@ -14,26 +14,34 @@
                 </label>
                 <input type="text" name="title"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
-                    required placeholder="タイトル" value="{{ old('title', $jobOffer->title) }}">
+                    required placeholder="タイトル" value="{{ old('title', $plan->title) }}">
             </div>
             <div class="mb-4">
-                <label class="block text-white mb-2" for="occupation_id">
-                    職種
+                <label class="block text-white mb-2" for="price">
+                    価格
                 </label>
-                <select name="occupation_id" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3">
+                <input type="text" name="price"
+                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
+                required placeholder="価格" value="{{ old('price', $plan->price) }}">
+            </div>
+            <div class="mb-4">
+                <label class="block text-white mb-2" for="hotel_id">
+                    ホテル
+                </label>
+                <select name="hotel_id" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3">
                     <option disabled selected value="">選択してください</option>
-                    @foreach($occupations as $occupation)
-                        <option value="{{ $occupation->id }}" @if($occupation->id == old('occupation_id', $jobOffer->occupation_id)) selected @endif>{{ $occupation->name }}</option>
+                    @foreach($hotels as $hotel)
+                        <option value="{{ $hotel->id }}" @if($hotel->id == old('hotel_id', $plan->hotel_id)) selected @endif>{{ $hotel->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-4">
                 <label class="block text-white mb-2" for="due_date">
-                    募集期限
+                    掲載期限
                 </label>
                 <input type="date" name="due_date"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
-                    required placeholder="募集期限" value="{{ old('due_date', $jobOffer->due_date) }}">
+                    required placeholder="掲載期限" value="{{ old('due_date', $plan->due_date) }}">
             </div>
             <div class="mb-4">
                 <label class="block text-white mb-2" for="description">
@@ -41,20 +49,22 @@
                 </label>
                 <textarea name="description" rows="10"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
-                    required placeholder="詳細">{{ old('description', $jobOffer->description) }}</textarea>
+                    placeholder="詳細">{{ old('description', $plan->description) }}</textarea>
             </div>
+
             <div class="mb-4">
-                <label class="block text-white mb-2" for="description">
+                <label class="block text-white mb-2" for="status">
                     公開状況
                 </label>
                 <select name="status"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3">
-                    @foreach (JobOfferConst::STATUS_LIST as $name => $value)
-                        <option value="{{ $value }}" @if ($value == old('status', $jobOffer->status)) selected @endif>{{ $name }}</option>
+                    @foreach (PlanConst::STATUS_LIST as $name => $value)
+                        <option value="{{ $value }}" @if ($value == old('status', $plan->status)) selected @endif>{{ $name }}</option>
                     @endforeach
                 </select>
             </div>
-            <input type="submit" value="更新"
+
+            <input type="submit" value="登録"
                 class="w-full flex justify-center bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">
         </form>
     </div>

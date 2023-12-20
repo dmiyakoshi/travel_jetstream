@@ -54,7 +54,8 @@ class HotelController extends Controller
     {
         $prefecture = Prefectures::where('prefecture_id', $hotel->prefecture_id);
 
-        return view('hotels.show', compact('hotel', 'prefecture'));
+        $plan = $hotel->plans()->latest();
+        return view('hotels.show', compact('hotel', 'plans', 'prefecture'));
     }
 
     /**

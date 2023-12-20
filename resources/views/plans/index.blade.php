@@ -22,23 +22,17 @@
                 <h3 class="mb-3 text-gray-400 text-sm">検索条件</h3>
                 <ul>
                     <li class="mb-2"><a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
-                            class="hover:text-blue-500 {{ strpos(url()->full(), 'occupation') ?: 'text-green-500 font-bold' }}">全て</a>
+                            class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
                     </li>
 
                     @foreach ($prefectures as $prefecture)
                         <li class="mb-2"><a
-                                href="/?{{ http_build_query(array_merge($sort, ['occupation' => $prefecture->id])) }}"
-                                class="hover:text-blue-500 {{ strpos(url()->full(), 'occupation=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">{{ $prefecture->name }}</a>
+                                href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
+                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">{{ $prefecture->name }}</a>
                         </li>
                     @endforeach
                 </ul>
             </div>
-
-            <!-- 省略 -->
-
-            </li>
-            @endforeach
-            </ul>
         </div>
         <div class="w-full">
             @foreach ($plans as $plan)
@@ -78,9 +72,9 @@
                 </div>
                 <hr>
             @endforeach
-            <dif class="block mt-3">
+            <div class="block mt-3">
                 {{ $plans->links() }}
-            </dif>
+            </div>
         </div>
     </div>
     </div>

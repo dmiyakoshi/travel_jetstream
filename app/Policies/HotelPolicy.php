@@ -3,12 +3,12 @@
 namespace App\Policies;
 
 use App\Consts\CompanyConst;
-use App\Models\Plan;
+use App\Models\Hotel;
 use App\Models\Company;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Auth;
 
-class PlanPolicy
+class HotelPolicy
 {
     /**
      * Determine whether the Company can view any models.
@@ -21,7 +21,7 @@ class PlanPolicy
     /**
      * Determine whether the Company can view the model.
      */
-    public function view(Company $company, Plan $plan): bool
+    public function view(Company $company, Hotel $hotel): bool
     {
         //
     }
@@ -31,29 +31,30 @@ class PlanPolicy
      */
     public function create(Company $company): bool
     {
-        
+        //
     }
 
     /**
      * Determine whether the Company can update the model.
      */
-    public function update(Company $company, Plan $plan): bool
+    public function update(Company $company, Hotel $hotel): bool
     {
-        return Auth::guard(CompanyConst::class)->user()->id == $plan->hotel()->company_id; 
+        return Auth::guard(CompanyConst::class)->user()->id == $hotel->company_id; 
+
     }
 
     /**
      * Determine whether the Company can delete the model.
      */
-    public function delete(Company $company, Plan $plan): bool
+    public function delete(Company $company, Hotel $hotel): bool
     {
-        return Auth::guard(CompanyConst::class)->user()->id === $plan->hotel()->company_id; 
+        return Auth::guard(CompanyConst::class)->user()->id == $hotel->company_id; 
     }
 
     /**
      * Determine whether the Company can restore the model.
      */
-    public function restore(Company $company, Plan $plan): bool
+    public function restore(Company $company, Hotel $hotel): bool
     {
         //
     }
@@ -61,7 +62,7 @@ class PlanPolicy
     /**
      * Determine whether the Company can permanently delete the model.
      */
-    public function forceDelete(Company $company, Plan $plan): bool
+    public function forceDelete(Company $company, Hotel $hotel): bool
     {
         //
     }

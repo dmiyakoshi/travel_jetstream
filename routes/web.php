@@ -45,11 +45,11 @@ Route::resource('reservations', ReservationController::class)
     ->middleware('users');
 
 Route::resource('reservations', ReservationController::class)
-    ->only(['show', 'destory'])
+    ->only(['show', 'index', 'destory'])
     ->middleware('auth.comoanies, users');
 
 Route::resource('reservations', ReservationController::class)
-    ->except(['index', 'edit']);
+    ->except(['update', 'edit']);
 
 
 // 今回は使わない
