@@ -17,7 +17,7 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
-            $table->foreignId('hotel_id')
+            $table->foreignId('plan_id')
             ->constrained()
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
