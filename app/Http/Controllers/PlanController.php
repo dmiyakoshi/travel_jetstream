@@ -9,7 +9,6 @@ use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\PlanView;
 use App\Models\Prefectures;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -127,7 +126,7 @@ class PlanController extends Controller
     public function destroy(Plan $plan)
     {
         if (Auth::guard(CompanyConst::GUARD)->user()->cannot('delete', $plan)) {
-            return redirect()->route('job_offers.show', $plan)
+            return redirect()->route('plans.show', $plan)
                 ->withErrors('自分の求人情報以外は削除できません');
         }
 
@@ -137,7 +136,7 @@ class PlanController extends Controller
             return back()->withInput()
                 ->withErrors('求人情報削除処理でエラーが発生しました');
         }
-        return redirect()->route('job_offers.index')
+        return redirect()->route('plans.index')
             ->with('notice', '求人情報を削除しました');
     }
 }

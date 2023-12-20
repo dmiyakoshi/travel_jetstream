@@ -52,7 +52,9 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        //
+        $prefecture = Prefectures::where('prefecture_id', $hotel->prefecture_id);
+
+        return view('hotels.show', compact('hotel', 'prefecture'));
     }
 
     /**

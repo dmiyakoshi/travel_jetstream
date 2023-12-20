@@ -14,7 +14,7 @@ class Hotel extends Model
         'adress',
         'phonenumber',
         'description',
-        'prefectures_id',
+        'prefecture_id',
     ];
 
     public function company() {
