@@ -37,19 +37,22 @@ class Plan extends Model
         return $query;
     }
 
-    public function scopePrice(Builder $query) {
-
-        return $query;
-    }
-
     public function scopeOrder(Builder $query, $params)
     {
         if ((empty($params['sort'])) ||
-                    (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)) {
+            (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)
+        ) {
             $query->latest();
         } elseif (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_VIEW_RANK) {
-            $query->withCount('jobOfferViews')
-                ->orderBy('job_offer_views_count', 'desc');
+            $query->withCount('planViews')
+                ->orderBy('plan_views_count', 'desc');
+        } else if ((!empty($params['sort'])) ||
+            (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)
+        ) {
+            $query->latest();
+        } elseif (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_VIEW_RANK) {
+            $query->withCount('planViews')
+                ->orderBy('plan_views_count', 'desc');
         }
 
         return $query;

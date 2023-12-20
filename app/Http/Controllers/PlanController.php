@@ -9,6 +9,7 @@ use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\PlanView;
 use App\Models\Prefectures;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -27,21 +28,23 @@ class PlanController extends Controller
             }
         }
 
-        if (empty($user)) {
-            return view('welcome');
-        } else {
-            $params = $request->query();
-            $plans = Plan::search($params)->openData()
-                ->order($params)->with(['hotel', 'prefecture'])->latest()->paginate(5);
-            $prefecture = $request->prefecture;
-            $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
-            $sort = empty($request->sort) ? [] : ['sort' => $request->sort];
+        // if (empty($user)) {
+        //     return view('welcome');
+        // } else {
+        $params = $request->query();
+        $plans = Plan::search($params)->openData()
+            ->order($params)->with(['hotel', 'prefecture'])->latest()->paginate(5);
+        $prefecture = $request->prefecture;
+        $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
+        $sort = empty($request->sort) ? [] : ['sort' => $request->sort];
 
-            $plans->appends(compact('prefecture'));
-            $prefectures = Prefectures::all();
+        $plans->appends(compact('prefecture'));
 
-            return view('plans.index', compact('plans', 'prefectures', 'sort', 'search'));
-        }
+
+        $prefectures = Prefectures::all();
+
+        return view('plans.index', compact('plans', 'prefectures', 'sort', 'search'));
+        // }
     }
 
     /**
