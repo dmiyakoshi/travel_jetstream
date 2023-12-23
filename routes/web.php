@@ -55,6 +55,15 @@ Route::resource('plans.reservations', ReservationController::class)
     ->only(['create', 'destory'])
     ->middleware(['auth:users']);
 
+Route::get('/payment/create', 'StripePaymentsController@create')
+    ->name('payment.create');
+
+Route::post('payment/charge', 'StripePaymentsController@charge')
+    ->name('payment.charge');
+
+Route::get('/payment/complete', 'StripePaymentsController@complete')
+    ->name('payment.complete');
+
 // 今回は使わない
 // Route::middleware([
 //     'auth:sanctum',
