@@ -51,6 +51,9 @@ Route::resource('reservations', ReservationController::class)
 Route::resource('reservations', ReservationController::class)
     ->except(['update', 'edit']);
 
+Route::resource('plans.reservations', ReservationController::class)
+    ->only(['create', 'destory'])
+    ->middleware(['auth:users']);
 
 // 今回は使わない
 // Route::middleware([

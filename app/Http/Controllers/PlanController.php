@@ -85,7 +85,7 @@ class PlanController extends Controller
             ]);
         }
 
-        $reservation = Reservation::where('user_id', Auth::guard(UserConst::class)->user()->id);
+        $reservation = $plan->reservation()->where('user_id', Auth::guard(UserConst::class)->user()->id)->first();
 
         return view('plan.show', compact('plan', 'reservation'));
     }
