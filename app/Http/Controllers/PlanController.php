@@ -9,6 +9,7 @@ use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\PlanView;
 use App\Models\Prefectures;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -84,7 +85,9 @@ class PlanController extends Controller
             ]);
         }
 
-        return view('plan.show', compact('plan'));
+        $reservation = Reservation::where('user_id', Auth::guard(UserConst::class)->user()->id);
+
+        return view('plan.show', compact('plan', 'reservation'));
     }
 
     /**

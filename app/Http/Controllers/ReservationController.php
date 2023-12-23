@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,9 @@ class ReservationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Plan $plan)
     {
-        //
+        return view('reservations.create', compact('plan')); 
     }
 
     /**
@@ -60,6 +61,8 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        //
+        // id がuser_id でユーザー側からの削除
+
+        // id が hotel_id でホテル側からの削除
     }
 }

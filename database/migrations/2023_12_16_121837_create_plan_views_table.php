@@ -21,7 +21,11 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
-            $table->unique(['plan_id', 'user_id']);
+            $table->foreignId('hotel_id')
+            ->constrained()
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
+            $table->unique(['plan_id', 'user_id', 'hotel_id']);
             $table->timestamps();
         });
     }
