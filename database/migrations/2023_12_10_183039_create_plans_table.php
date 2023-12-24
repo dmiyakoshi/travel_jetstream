@@ -24,7 +24,7 @@ return new class extends Migration
             //     ->cascadeOnDelete();
             $table->string('title');
             $table->integer('price');
-            $table->tinyInteger('meal');
+            $table->tinyInteger('meal')->default(0);
             $table->text('description');
             $table->date('due_date');
             $table->boolean('status')->default(1);

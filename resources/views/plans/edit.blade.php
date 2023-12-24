@@ -44,6 +44,20 @@
                     required placeholder="掲載期限" value="{{ old('due_date', $plan->due_date) }}">
             </div>
             <div class="mb-4">
+                <label class="block text-white mb-2" for="meal">
+                    食事
+                </label>
+                <select name="meal"
+                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3">
+                    <option disabled selected value="">選択してください</option>
+                    @foreach (PlanConst::MEAL_LIST as $name => $value)
+                        <option value="{{ $value }}" @if ($value == old('meal', $plan->meal)) selected @endif>
+                            {{ $name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-4">
                 <label class="block text-white mb-2" for="description">
                     詳細
                 </label>

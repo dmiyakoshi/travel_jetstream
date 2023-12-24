@@ -19,6 +19,7 @@ class Plan extends Model
         'description',
         'due_date',
         'hotel_id',
+        'meal',
         'status',
     ];
 

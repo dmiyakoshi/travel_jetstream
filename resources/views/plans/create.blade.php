@@ -4,8 +4,7 @@
 
         <x-validation-errors :errors="$errors" />
 
-        <form action="{{ route('plans.store') }}" method="POST"
-            class="rounded pt-3 pb-8 mb-4">
+        <form action="{{ route('plans.store') }}" method="POST" class="rounded pt-3 pb-8 mb-4">
             @csrf
             <div class="mb-4">
                 <label class="block text-white mb-2" for="title">
@@ -20,17 +19,19 @@
                     価格
                 </label>
                 <input type="text" name="price"
-                class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
-                required placeholder="価格" value="{{ old('price') }}">
+                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
+                    required placeholder="価格" value="{{ old('price') }}">
             </div>
             <div class="mb-4">
                 <label class="block text-white mb-2" for="hotel_id">
                     ホテル
                 </label>
-                <select name="hotel_id" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3">
+                <select name="hotel_id"
+                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3">
                     <option disabled selected value="">選択してください</option>
-                    @foreach($hotels as $hotel)
-                        <option value="{{ $hotel->id }}" @if($hotel->id == old('hotel_id')) selected @endif>{{ $hotel->name }}</option>
+                    @foreach ($hotels as $hotel)
+                        <option value="{{ $hotel->id }}" @if ($hotel->id == old('hotel_id')) selected @endif>
+                            {{ $hotel->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -41,6 +42,19 @@
                 <input type="date" name="due_date"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
                     required placeholder="掲載期限" value="{{ old('due_date') }}">
+            </div>
+            <div class="mb-4">
+                <label class="block text-white mb-2" for="meal">
+                    食事
+                </label>
+                <select name="meal"
+                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3">
+                    <option disabled selected value="">選択してください</option>
+                    @foreach (PlanConst::MEAL_LIST as $name => $value)
+                        <option value="{{ $value }}" @if ($value == old('meal')) selected @endif>
+                            {{ $name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-4">
                 <label class="block text-white mb-2" for="description">
