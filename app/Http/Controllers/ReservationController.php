@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Consts\CompanyConst;
+use App\Consts\UserConst;
 use App\Models\Plan;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -21,7 +24,7 @@ class ReservationController extends Controller
      */
     public function create(Plan $plan)
     {
-        return view('reservations.create', compact('plan')); 
+        return view('reservations.create', compact('plan'));
     }
 
     /**
@@ -59,10 +62,21 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservation $reservation)
+    public function destroy(Reservation $reservation, Plan $plan)
     {
         // id がuser_id でユーザー側からの削除
-
+        if (Auth::guard(UserConst::GUARD)->check() && Auth::guard(UserConst::GUARD)->user()->id == $plan->user_id) 
+        {
+            // 
+        }
         // id が hotel_id でホテル側からの削除
+        else if (Auth::guard(CompanyConst::GUARD)->check() && Auth::guard(CompanyConst::GUARD)->user()->id == $plan->hotel()->company_id) 
+        {
+            // 
+        } 
+        else 
+        {
+            return back()->with('notice', '削除できません');
+        }
     }
 }

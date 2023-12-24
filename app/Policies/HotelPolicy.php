@@ -31,7 +31,7 @@ class HotelPolicy
      */
     public function create(Company $company): bool
     {
-        //
+        return Auth::guard(CompanyConst::GUARD)->check();
     }
 
     /**
@@ -39,7 +39,7 @@ class HotelPolicy
      */
     public function update(Company $company, Hotel $hotel): bool
     {
-        return Auth::guard(CompanyConst::class)->user()->id == $hotel->company_id; 
+        return Auth::guard(CompanyConst::GUARD)->user()->id == $hotel->company_id; 
 
     }
 
@@ -48,7 +48,7 @@ class HotelPolicy
      */
     public function delete(Company $company, Hotel $hotel): bool
     {
-        return Auth::guard(CompanyConst::class)->user()->id == $hotel->company_id; 
+        return Auth::guard(CompanyConst::GUARD)->user()->id == $hotel->company_id; 
     }
 
     /**

@@ -52,7 +52,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $hotels = Hotel::where('company_id', Auth::guard(CompanyConst::class)->user()->id);
+        $hotels = Hotel::where('company_id', Auth::guard(CompanyConst::GUARD)->user()->id);
 
         return view('plans.create', compact('hotels'));
     }
@@ -78,14 +78,14 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        if (Auth::guard(UserConst::class)->check()) {
+        if (Auth::guard(UserConst::GUARD)->check()) {
             PlanView::updateOrCreate([
                 'plan_id' => $plan->id,
-                'user_id' => Auth::guard(UserConst::class)->user()->id,
+                'user_id' => Auth::guard(UserConst::GUARD)->user()->id,
             ]);
         }
 
-        $reservation = $plan->reservation()->where('user_id', Auth::guard(UserConst::class)->user()->id)->first();
+        $reservation = $plan->reservation()->where('user_id', Auth::guard(UserConst::GUARD)->user()->id)->first();
 
         return view('plan.show', compact('plan', 'reservation'));
     }

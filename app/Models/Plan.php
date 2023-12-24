@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Consts\CompanyConst;
 use App\Consts\PlanConst;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Plan extends Model
 {
@@ -58,9 +60,36 @@ class Plan extends Model
         return $query;
     }
 
-    public function hotels()
+    public function scopeMyplan(Builder $query) {
+        $company = Auth::guard(CompanyConst::GUARD)->user()->id;
+
+        $query->where('company_id', $company);
+
+        $myplan = [];
+        foreach($query as $q) {
+            if($q->hotel()->company_id == $company) {
+                $myplan[] = $q;
+            }
+        }
+        return $myplan;
+    }
+
+    public function scopeSearchStatus(Builder $query, $params)
+    {
+        if (isset($params['status'])) {
+            $query->where('status', $params['status']);
+        }
+
+        return $query;
+    }
+
+    public function hotel()
     {
         return $this->belongsTo(Hotel::class);
+    }
+
+    public function company() {
+        return $this->belongsTo(Company::class);
     }
 
     public function reservations()

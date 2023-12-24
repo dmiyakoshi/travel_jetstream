@@ -39,7 +39,7 @@ class PlanPolicy
      */
     public function update(Company $company, Plan $plan): bool
     {
-        return Auth::guard(CompanyConst::class)->user()->id == $plan->hotel()->company_id; 
+        return Auth::guard(CompanyConst::GUARD)->user()->id == $plan->hotel()->company_id; 
     }
 
     /**
@@ -47,7 +47,7 @@ class PlanPolicy
      */
     public function delete(Company $company, Plan $plan): bool
     {
-        return Auth::guard(CompanyConst::class)->user()->id === $plan->hotel()->company_id; 
+        return Auth::guard(CompanyConst::GUARD)->user()->id === $plan->hotel()->company_id; 
     }
 
     /**

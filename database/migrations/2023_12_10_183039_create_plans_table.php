@@ -18,8 +18,13 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            // $table->foreignId('company_id')
+            //     ->constrained()
+            //     ->cascadeOnUpdate()
+            //     ->cascadeOnDelete();
             $table->string('title');
             $table->integer('price');
+            $table->tinyInteger('meal');
             $table->text('description');
             $table->date('due_date');
             $table->boolean('status')->default(1);
