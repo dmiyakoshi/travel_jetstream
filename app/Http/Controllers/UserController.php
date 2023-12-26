@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Consts\UserConst;
+use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,6 +16,10 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        return view('auth.user.dashboard');
+        $plans = Plan::whereHas('reservations', function($query) {
+            $query->where('user_id', Auth::guard(UserConst::GUARD)->user()->id);
+        })->get();
+
+        return view('auth.user.dashboard', compact('plans'));
     }
 }

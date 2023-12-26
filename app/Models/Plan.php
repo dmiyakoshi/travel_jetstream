@@ -86,11 +86,11 @@ class Plan extends Model
 
     public function hotel()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->belongTo(Hotel::class);
     }
 
     public function company() {
-        return $this->belongsTo(Company::class);
+        return $this->belongTo(Company::class);
     }
 
     public function reservations()

@@ -3,6 +3,7 @@
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\StripePaymentsController;
 use App\Models\Hotel;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
@@ -55,14 +56,17 @@ Route::resource('plans.reservations', ReservationController::class)
     ->only(['create', 'destory'])
     ->middleware(['auth:users']);
 
-Route::get('/payment/create', 'StripePaymentsController@create')
-    ->name('payment.create');
+Route::get('/payment/create', [StripePaymentsController::class, 'create'])
+    ->name('payment.create')
+    ->middleware('users');
 
-Route::post('payment/charge', 'StripePaymentsController@charge')
-    ->name('payment.charge');
+Route::post('/payment/charge', [StripePaymentsController::class, 'charge'])
+    ->name('payment.charge')
+    ->middleware('users');
 
-Route::get('/payment/complete', 'StripePaymentsController@complete')
-    ->name('payment.complete');
+Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
+    ->name('payment.complete')
+    ->middleware('users');
 
 // 今回は使わない
 // Route::middleware([

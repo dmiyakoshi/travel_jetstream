@@ -24,6 +24,14 @@ class ReservationController extends Controller
      */
     public function create(Plan $plan)
     {
+        if (Auth::guard(UserConst::GUARD)->check()) {
+            // none
+        } else if (Auth::guard(CompanyConst::GUARD)->check()) {
+            return back()->withErrors('予約できません');
+        } else {
+            return redirect()->route('user.login');
+        }
+
         return view('reservations.create', compact('plan'));
     }
 
@@ -65,17 +73,13 @@ class ReservationController extends Controller
     public function destroy(Reservation $reservation, Plan $plan)
     {
         // id がuser_id でユーザー側からの削除
-        if (Auth::guard(UserConst::GUARD)->check() && Auth::guard(UserConst::GUARD)->user()->id == $plan->user_id) 
-        {
+        if (Auth::guard(UserConst::GUARD)->check() && Auth::guard(UserConst::GUARD)->user()->id == $plan->user_id) {
             // 
         }
         // id が hotel_id でホテル側からの削除
-        else if (Auth::guard(CompanyConst::GUARD)->check() && Auth::guard(CompanyConst::GUARD)->user()->id == $plan->hotel()->company_id) 
-        {
+        else if (Auth::guard(CompanyConst::GUARD)->check() && Auth::guard(CompanyConst::GUARD)->user()->id == $plan->hotel()->company_id) {
             // 
-        } 
-        else 
-        {
+        } else {
             return back()->with('notice', '削除できません');
         }
     }

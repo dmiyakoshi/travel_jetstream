@@ -1,5 +1,5 @@
 <div class="content">
-    <form action="{{ asset('payment.charge', ) }}" method="POST">
+    <form action="{{ route('payment.charge', $plan) }}" method="POST">
         {{ csrf_field() }}
                 <script
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
