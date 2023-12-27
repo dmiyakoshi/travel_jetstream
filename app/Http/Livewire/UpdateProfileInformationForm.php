@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace Laravel\Jetstream\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
 
 class UpdateProfileInformationForm extends Component
 {
@@ -65,13 +64,7 @@ class UpdateProfileInformationForm extends Component
         );
 
         if (isset($this->photo)) {
-            $user = '';
-            foreach (config('fortify.users') as $guard) {
-                if (Auth::guard(Str::plural($guard))->check()) {
-                    $user = $guard;
-                }
-            }
-            return redirect()->route($user . '.profile.show');
+            return redirect()->route('profile.show');
         }
 
         $this->dispatch('saved');

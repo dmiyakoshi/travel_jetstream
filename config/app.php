@@ -186,9 +186,10 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'CompanyConst' => App\Consts\CompanyConst::GUARD,
-        'UserConst' => App\Consts\UserConst::GUARD,
-        'PlanConst' => App\Consts\PlanConst::class,
+        'CompanyConst' => \App\Consts\CompanyConst::GUARD,
+        'UserConst' => \App\Consts\UserConst::GUARD,
+        'PlanConst' => \App\Consts\PlanConst::class,
+        
     ])->toArray(),
 
 ];

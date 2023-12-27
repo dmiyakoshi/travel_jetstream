@@ -49,7 +49,7 @@ return [
         'companies' => [
             'driver' => 'session',
             'provider' => 'companies',
-        ]
+        ],
     ],
 
     /*

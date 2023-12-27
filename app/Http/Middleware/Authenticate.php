@@ -20,7 +20,7 @@ class Authenticate extends Middleware
                 return route($user . '.login');
             }
 
-            return route('root');
+            return route('welcome');
         }
         return $request->expectsJson() ? null : redirectToAuth($request);
     }

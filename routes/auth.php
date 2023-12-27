@@ -128,6 +128,7 @@ foreach (config('fortify.users') as $user) {
                 ->name('profile.show');
         });
 }
+
 Route::get('company/dashboard', [CompanyController::class, 'dashboard'])
     ->middleware(['auth:companies'])
     ->name('company.dashboard');

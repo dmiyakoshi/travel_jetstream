@@ -4,8 +4,6 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StripePaymentsController;
-use App\Models\Hotel;
-use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +16,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('welcome');
 
 Route::get('/', [PlanController::class, 'index'])
     ->name('root');
@@ -39,7 +33,6 @@ Route::resource('hotels', HotelController::class)
 
 Route::resource('hotels', HotelController::class)
     ->only(['index', 'show']);
-
 
 Route::resource('reservations', ReservationController::class)
     ->only(['create', 'store'])
@@ -67,6 +60,10 @@ Route::post('/payment/charge', [StripePaymentsController::class, 'charge'])
 Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
     ->name('payment.complete')
     ->middleware('users');
+
+Route::get('/welcome', function () {
+    return view('welcome');
+})->name('welcome');
 
 // 今回は使わない
 // Route::middleware([
