@@ -52,7 +52,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $hotels = Hotel::where('company_id', Auth::guard(CompanyConst::GUARD)->user()->id);
+        $hotels = Hotel::where('company_id', Auth::guard('campaines')->user()->id);
 
         return view('plans.create', compact('hotels'));
     }
@@ -78,14 +78,14 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        if (Auth::guard(UserConst::GUARD)->check()) {
+        if (Auth::guard('users')->check()) {
             PlanView::updateOrCreate([
                 'plan_id' => $plan->id,
-                'user_id' => Auth::guard(UserConst::GUARD)->user()->id,
+                'user_id' => Auth::guard('users')->user()->id,
             ]);
         }
 
-        $reservation = $plan->reservation()->where('user_id', Auth::guard(UserConst::GUARD)->user()->id)->first();
+        $reservation = $plan->reservation()->where('user_id', Auth::guard('users')->user()->id)->first();
 
         return view('plan.show', compact('plan', 'reservation'));
     }
@@ -105,7 +105,7 @@ class PlanController extends Controller
      */
     public function update(PlanRequest $request, Plan $plan)
     {
-        if (Auth::guard(CompanyConst::GUARD)->user()->cannot('update', $plan)) {
+        if (Auth::guard('campaines')->user()->cannot('update', $plan)) {
             return redirect()->route('plans.show', $plan)
                 ->withErrors('自分の求人情報以外は更新できません');
         }
@@ -128,7 +128,7 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan)
     {
-        if (Auth::guard(CompanyConst::GUARD)->user()->cannot('delete', $plan)) {
+        if (Auth::guard('campaines')->user()->cannot('delete', $plan)) {
             return redirect()->route('plans.show', $plan)
                 ->withErrors('自分の求人情報以外は削除できません');
         }

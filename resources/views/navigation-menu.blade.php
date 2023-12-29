@@ -50,7 +50,7 @@
                                 <span class="inline-flex rounded-md">
                                     <button type="button" onclick="location.href='{{ route('welcome') }}'"
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        登録する
+                                        アカウント登録
                                         <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                             fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -69,7 +69,7 @@
 
                             @if (Auth::guard(\App\Consts\CompanyConst::GUARD)->check())
                                 <x-dropdown-link href="{{ route('plans.create') }}">
-                                    {{ '求人情報登録' }}
+                                    {{ 'プラン情報登録' }}
                                 </x-dropdown-link>
                             @endif
 
@@ -118,6 +118,12 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             </div>
+    @else
+    <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link href="{{ route('welcome') }}">
+            アカウント登録
+        </x-responsive-nav-link>
+    </div>
     @endif
 
     <!-- Responsive Settings Options -->
@@ -145,7 +151,7 @@
         @endif
 
 
-        @if (Auth::guard(CompanyConst::GUARD)->check())
+        @if (Auth::guard('companies')->check())
             <x-dropdown-link href="{{ route('hotels.create') }}">
                 {{ 'ホテル登録' }}
             </x-dropdown-link>

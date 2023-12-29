@@ -21,7 +21,7 @@ class CompanyController extends Controller
 
         $plans = Plan::latest()
             ->with('reservations')
-            ->MyJobOffer()
+            ->MyPlan()
             ->searchStatus($params)
             ->paginate(5);
 
