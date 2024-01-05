@@ -35,31 +35,31 @@ Route::resource('hotels', HotelController::class)
     ->only(['index', 'show']);
 
 Route::resource('reservations', ReservationController::class)
-    ->only(['create', 'store'])
-    ->middleware('users');
-
-Route::resource('reservations', ReservationController::class)
-    ->only(['show', 'index', 'destory'])
-    ->middleware('auth.comoanies, users');
+    ->only(['show', 'index'])
+    ->middleware('auth.companies, auth.users');
 
 Route::resource('reservations', ReservationController::class)
     ->except(['update', 'edit']);
 
 Route::resource('plans.reservations', ReservationController::class)
-    ->only(['create', 'destory'])
-    ->middleware(['auth:users']);
+    ->only(['create'])
+    ->middleware(['auth.users']);
+
+Route::resource('plans.reservations', ReservationController::class)
+    ->only(['destory'])
+    ->middleware(['auth.users', 'auth.companies']);
 
 Route::get('/payment/create', [StripePaymentsController::class, 'create'])
     ->name('payment.create')
-    ->middleware('users');
+    ->middleware('auth.users');
 
 Route::post('/payment/charge', [StripePaymentsController::class, 'charge'])
     ->name('payment.charge')
-    ->middleware('users');
+    ->middleware('auth.users');
 
 Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
     ->name('payment.complete')
-    ->middleware('users');
+    ->middleware('auth.users');
 
 Route::get('/welcome', function () {
     return view('welcome');

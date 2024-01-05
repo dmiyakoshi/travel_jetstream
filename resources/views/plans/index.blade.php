@@ -25,15 +25,18 @@
                             class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
                     </li>
 
-                    @foreach ($prefectures as $prefecture)
-                        <li class="mb-2"><a
-                                href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
-                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">{{ $prefecture->name }}</a>
-                        </li>
-                    @endforeach
+                    @if (!empty($prefectures))
+                        @foreach ($prefectures as $prefecture)
+                            <li class="mb-2"><a
+                                    href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
+                                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">{{ $prefecture->name }}</a>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
         </div>
+
         <div class="w-full">
             @foreach ($plans as $plan)
                 <div class="bg-white w-full px-10 py-8 hover:shadow-2xl transition duration-500">
@@ -76,6 +79,5 @@
                 {{ $plans->links() }}
             </div>
         </div>
-    </div>
     </div>
 </x-app-layout>

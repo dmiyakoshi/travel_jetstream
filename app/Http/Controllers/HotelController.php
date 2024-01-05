@@ -6,6 +6,7 @@ use App\Models\Hotel;
 use App\http\Requests\HotelRequest;
 use Illuminate\Support\DB;
 use App\Models\Prefectures;
+use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {
@@ -14,7 +15,11 @@ class HotelController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::guard('companies')->check()) {
+            $hotel = Hotel::where('companies');
+        }
+
+        // どうするか未定
     }
 
     /**
@@ -63,7 +68,7 @@ class HotelController extends Controller
      */
     public function edit(Hotel $hotel)
     {
-        //
+        return view('hotels.edit', compact('hotel'));
     }
 
     /**
@@ -71,7 +76,17 @@ class HotelController extends Controller
      */
     public function update(HotelRequest $request, Hotel $hotel)
     {
-        //
+        if (Auth::guard('companies')->user()->id == $hotel->company_id) {
+            return redirect()->route('hotels.show', $hotel)->withErrors('errors', '編集権限がありません');
+        }
+
+        $hotel->fill($request->all());
+
+        try {
+            $hotel->save();
+        } catch (\Throwable $th) {
+            redirect()->route('hotels.show', $hotel)->withErrors('errors', '編集保存時にエラーが発生しました。');
+        }
     }
 
     /**
@@ -79,6 +94,14 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        //
+        if (Auth::guard('companies')->user()->id == $hotel->company_id) {
+            return redirect()->route('hotels.show', $hotel)->withErrors('errors', '削除権限がありません');
+        }
+
+        try {
+            $hotel->delete();
+        } catch (\Throwable $th) {
+            redirect()->route('hotels.show', $hotel)->withErrors('errors', '削除の際にエラーが発生しました。');
+        }
     }
 }

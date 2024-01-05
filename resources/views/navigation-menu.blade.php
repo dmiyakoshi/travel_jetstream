@@ -67,7 +67,7 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            @if (Auth::guard(\App\Consts\'companies')->check())
+                            @if (Auth::guard('companies')->check())
                                 <x-dropdown-link href="{{ route('plans.create') }}">
                                     {{ 'プラン情報登録' }}
                                 </x-dropdown-link>
@@ -118,12 +118,12 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             </div>
-    @else
-    <div class="pt-2 pb-3 space-y-1">
+        @else
+            {{-- <div class="pt-2 pb-3 space-y-1">
         <x-responsive-nav-link href="{{ route('welcome') }}">
             アカウント登録
         </x-responsive-nav-link>
-    </div>
+    </div> --}}
     @endif
 
     <!-- Responsive Settings Options -->
@@ -169,7 +169,5 @@
                 </x-responsive-nav-link>
             </form>
         @endif
-    </div>
-    </div>
     </div>
 </nav>

@@ -38,9 +38,19 @@ class ReservationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Plan $plan)
     {
-        //
+        $reservation = new Reservation($request->all());
+
+        $reservation->company_id = $plan->hotel()->company_id;
+
+        try {
+            $reservation->save();
+        } catch (\Throwable $th) {
+            return redirect()->route('reservation.create', compact('plan'))->withErrors('errors', '予約処理でエラーが発生しました');
+        }
+
+        return redirect()->route('plan.show', compact('plan'))->with('notice', '予約が完了しました');
     }
 
     /**
@@ -70,17 +80,24 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservation $reservation, Plan $plan)
+    public function destroy(Reservation $reservation)
     {
-        // id がuser_id でユーザー側からの削除
+        $plan = $reservation->plan();
+
         if (Auth::guard('users')->check() && Auth::guard('users')->user()->id == $plan->user_id) {
-            // 
-        }
-        // id が hotel_id でホテル側からの削除
-        else if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->company_id) {
-            // 
+            // ユーザー側からの削除
+        } else if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->company_id) {
+            // id が hotel_id でホテル側からの削除 
         } else {
-            return back()->with('notice', '削除できません');
+            return back()->withE('notice', 'キャンセル権限がありません');
         }
+
+        try {
+            $reservation->delete();
+        } catch (\Throwable $th) {
+            return back()->with('notice', '予約キャンセルに失敗しました');
+        }
+
+        return view('plan.show', compact('plan'))->with('notice', '予約をキャンセルしました');
     }
 }
