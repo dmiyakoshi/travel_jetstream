@@ -14,7 +14,7 @@ class StripePaymentsController extends Controller
 {
     public function create(Plan $plan)
     {
-        if (Auth::guard(UserConst::GUARD)->check()) {
+        if (Auth::guard('users')->check()) {
             return back();
         }
 

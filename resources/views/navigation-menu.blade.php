@@ -67,7 +67,7 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            @if (Auth::guard(\App\Consts\CompanyConst::GUARD)->check())
+                            @if (Auth::guard(\App\Consts\'companies')->check())
                                 <x-dropdown-link href="{{ route('plans.create') }}">
                                     {{ 'プラン情報登録' }}
                                 </x-dropdown-link>

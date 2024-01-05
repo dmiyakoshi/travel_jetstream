@@ -62,7 +62,7 @@ class Plan extends Model
     }
 
     public function scopeMyplan(Builder $query) {
-        $company = Auth::guard(CompanyConst::GUARD)->user()->id;
+        $company = Auth::guard('companies')->user()->id;
 
         $query->where('company_id', $company);
 

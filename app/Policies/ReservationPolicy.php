@@ -35,7 +35,7 @@ class ReservationPolicy
      */
     public function create(User $user, Plan $plan): bool
     {
-        return Auth::guard(UserConst::GUARD)->check();
+        return Auth::guard('users')->check();
     }
 
     /**

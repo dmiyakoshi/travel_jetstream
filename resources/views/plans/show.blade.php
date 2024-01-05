@@ -13,8 +13,8 @@
                 <div>
                     <span>on {{ $plan->created_at->format('Y-m-d') }}</span>
                     <span class="inline-block mx-1">|</span>
-                    @if (Auth::guard(CompanyConst::Guard)->check() &&
-                            Auth::guard(CompanyConst::Guard)->user()->id == $plan->hotel()->company_id)
+                    @if (Auth::guard('companies')->check() &&
+                            Auth::guard('companies')->user()->id == $plan->hotel()->company_id)
                         <span>{{ $plan->planviews->count() }}回閲覧されています</span>
                     @endif
                 </div>
@@ -33,13 +33,13 @@
         </article>
         <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center my-4">
 
-            @if (Auth::guard(CompanyConst::Guard)->check() &&
-                    Auth::guard(CompanyConst::Guard)->user()->can('update', $plan))
+            @if (Auth::guard('companies')->check() &&
+                    Auth::guard('companies')->user()->can('update', $plan))
                 <a href="{{ route('plans.edit', $plan) }}"
                     class="bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 sm:mr-2 mb-2 sm:mb-0">変更</a>
             @endif
-            @if (Auth::guard(CompanyConst::Guard)->check() &&
-                    Auth::guard(CompanyConst::Guard)->user()->can('delete', $plan))
+            @if (Auth::guard('companies')->check() &&
+                    Auth::guard('companies')->user()->can('delete', $plan))
                 <form action="{{ route('plans.destroy', $plan) }}" method="post" class="w-full sm:w-32">
                     @csrf
                     @method('DELETE')
@@ -47,7 +47,7 @@
                         class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                 </form>
             @endif
-            @if (Auth::guard(UserConst::Guard)->check())
+            @if (Auth::guard('users')->check())
                 @if (empty($reservation))
                     <a href="{{ route('reservations.create', $plan) }}">予約する</a>
                     <form action="{{ route('reservations.create', $plan) }}" method="POST">

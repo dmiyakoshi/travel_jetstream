@@ -17,7 +17,7 @@ class UserController extends Controller
     public function dashboard()
     {
         $plans = Plan::whereHas('reservations', function($query) {
-            $query->where('user_id', Auth::guard(UserConst::GUARD)->user()->id);
+            $query->where('user_id', Auth::guard('users')->user()->id);
         })->get();
 
         return view('auth.user.dashboard', compact('plans'));
