@@ -48,9 +48,9 @@
                                 @endif
                             @else
                                 <span class="inline-flex rounded-md">
-                                    <button type="button" onclick="location.href='{{ route('welcome') }}'"
+                                    <button type="button"
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        アカウント登録
+                                        メニュー
                                         <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                             fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -67,11 +67,35 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            @if (Auth::guard('companies')->check())
-                                <x-dropdown-link href="{{ route('plans.create') }}">
-                                    {{ 'プラン情報登録' }}
-                                </x-dropdown-link>
+                            @if ($prefix == null)
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    <x-dropdown-link href="{{ route('welcome') }}">
+                                        {{ 'アカウント登録はこちら' }}
+                                    </x-dropdown-link>
+                                </div>
+
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    <x-dropdown-link href="{{ route('user.login') }}">
+                                        {{ 'ユーザーアカウントログイン' }}
+                                    </x-dropdown-link>
+                                </div>
+
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    <x-dropdown-link href="{{ route('company.login') }}">
+                                        {{ '企業アカウントログイン' }}
+                                    </x-dropdown-link>
+                                </div>
                             @endif
+
+                            @if (Auth::guard('companies')->check())
+                            <x-dropdown-link href="{{ route('hotels.create') }}">
+                                {{ 'ホテル登録' }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('plans.create') }}">
+                                {{ '掲載プラン登録' }}
+                            </x-dropdown-link>
+                        @endif
+                
 
                             @if (!empty($prefix))
                                 <x-dropdown-link href="{{ route($prefix . 'profile.show') }}">
@@ -84,7 +108,7 @@
                                 <form method="POST" action="{{ route($prefix . 'logout') }}" x-data>
                                     @csrf
 
-                                    <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                                    <x-dropdown-link href="{{ route($prefix . 'logout') }}" @click.prevent="$root.submit();">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
@@ -99,6 +123,7 @@
                 <button @click="open = ! open"
                     class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        メニュー
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
@@ -156,15 +181,15 @@
                 {{ 'ホテル登録' }}
             </x-dropdown-link>
             <x-dropdown-link href="{{ route('plans.create') }}">
-                {{ 'プラン登録' }}
+                {{ '掲載プラン登録' }}
             </x-dropdown-link>
         @endif
 
         <!-- Authentication -->
         @if (!empty($prefix))
-            <form method="POST" action="{{ route('logout') }}" x-data>
+            <form method="POST" action="{{ route($prefix .'logout') }}" x-data>
                 @csrf
-                <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                <x-responsive-nav-link href="{{ route($prefix .'logout') }}" @click.prevent="$root.submit();">
                     {{ __('Log Out') }}
                 </x-responsive-nav-link>
             </form>

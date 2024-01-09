@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-indigo-900 shadow-md rounded-md">
+    <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-indigo-600 shadow-md rounded-md">
         <h2 class="text-center text-lg text-white font-bold pt-6 tracking-widest">ホテル情報登録</h2>
 
         <x-validation-errors :errors="$errors" />

@@ -9,6 +9,7 @@ use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\PlanView;
 use App\Models\Prefectures;
+use App\Models\Region;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,23 +29,19 @@ class PlanController extends Controller
             }
         }
 
-        // if (empty($user)) {
-        //     return view('welcome');
-        // } else {
+        $regions = Region::all();
+
         $params = $request->query();
         $plans = Plan::search($params)->openData()
-            ->order($params)->with(['hotel', 'prefecture'])->latest()->paginate(5);
+            ->order($params)->with(['hotel'])->latest()->paginate(5);
         $prefecture = $request->prefecture;
         $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
         $sort = empty($request->sort) ? [] : ['sort' => $request->sort];
 
         $plans->appends(compact('prefecture'));
 
+        return view('plans.index', compact('plans', 'regions', 'sort', 'search'));
 
-        $prefectures = Prefectures::all();
-
-        return view('plans.index', compact('plans', 'prefectures', 'sort', 'search'));
-        // }
     }
 
     /**

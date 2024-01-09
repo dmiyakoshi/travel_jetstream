@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\Hotel;
 use App\Models\Plan;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,14 +22,15 @@ class CompanyController extends Controller
     {
         $params = $request->query();
 
-        $plans = Plan::latest()
-            ->with('reservations')
-            ->MyPlan()
-            ->searchStatus($params)
-            ->paginate(5);
+        // $plans = Plan::latest()
+        //     ->with('reservations')
+        //     ->MyPlan()
+        // ->searchStatus($params)
+        // ->paginate(5);
 
-        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id);
+        // 本当は 予約日が今の日付よりあとのreservations
+        $reservations = Reservation::where('company_id', Auth::guard('companies')->user()->id)->with('plan');
 
-        return view('auth.company.dashboard', compact('plans', 'hotels'));
+        return view('auth.company.dashboard', compact('reservations'));
     }
 }

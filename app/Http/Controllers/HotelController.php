@@ -16,7 +16,9 @@ class HotelController extends Controller
     public function index()
     {
         if (Auth::guard('companies')->check()) {
-            $hotel = Hotel::where('companies');
+            $hotel = Hotel::where('company_id', Auth::guard('companies')->user()->id);
+        } else if (Auth::guard('users')->check()) {
+            // どうするか未定　お気に入りホテルを作りそれを表示する？
         }
 
         // どうするか未定

@@ -8,4 +8,4 @@ INSERT INTO regions (name) VALUES
 ('中国'),
 ('四国'),
 ('九州'),
-('沖縄')
+('沖縄');

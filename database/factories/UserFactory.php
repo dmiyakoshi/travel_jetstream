@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'telephone' => fake()->phoneNumber(),
             'profile_photo_path' => null,
             'current_team_id' => null,
-            'profile' => $this->faker->text,
+            'profile' => null,
         ];
     }
 
