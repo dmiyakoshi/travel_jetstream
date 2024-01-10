@@ -25,7 +25,8 @@
                         <div class="flex justify-between text-sm items-center mb-4">
                             <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">
                                 {{ $reservation->user()->name }}</div>
-                            {{-- <div class="text-gray-700 text-sm text-right">
+                            {{-- ここに予約した日が分かるように表示する 
+                                <div class="text-gray-700 text-sm text-right">
                                 <span>掲載期限 :{{ $reservation->due_date }}</span>
                                 <span class="inline-block mx-1">|</span>
                                 <span>エントリー :{{ $reservation->reservations->count() }}</span>

@@ -30,6 +30,7 @@ class PlanController extends Controller
         }
 
         $regions = Region::all();
+        $prefectures = Prefectures::all();
 
         $params = $request->query();
         $plans = Plan::search($params)->openData()
@@ -40,7 +41,7 @@ class PlanController extends Controller
 
         $plans->appends(compact('prefecture'));
 
-        return view('plans.index', compact('plans', 'regions', 'sort', 'search'));
+        return view('plans.index', compact('plans', 'regions', 'prefectures', 'sort', 'search'));
 
     }
 
@@ -49,7 +50,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $hotels = Hotel::where('company_id', Auth::guard('campaines')->user()->id);
+        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id);
 
         return view('plans.create', compact('hotels'));
     }

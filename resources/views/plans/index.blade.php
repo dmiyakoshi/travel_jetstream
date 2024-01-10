@@ -26,6 +26,9 @@
                     </li>
 
                     @if (!empty($regions))
+
+                        {{ dd($regions[5]->Prefectures()->region_id) }}
+
                         @foreach ($regions as $region)
                             <div>
                                 {{-- 後でアコーディオンメニュー変更する　デザイン変更　左にまとめて並び変えと区別する --}}
@@ -37,9 +40,9 @@
                                     </li>
                                 @endforeach
                         @endforeach
+                    @endif
+                </ul>
             </div>
-            @endif
-            </ul>
         </div>
     </div>
 
