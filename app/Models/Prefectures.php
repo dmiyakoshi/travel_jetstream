@@ -1,15 +1,20 @@
 <?php
 
-namespace App\Models;
+// namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Model;
 
-class Prefectures extends Model
-{
-    use HasFactory;
+// class Prefectures extends Model
+// {
+//     use HasFactory;
 
-    public function region() {
-        return $this->belongTo(Region::class);
-    }
-}
+//     protected $fillable = [
+//         'name',
+//         'region_id',
+//     ];
+
+//     public function region() {
+//         return $this->belongTo(Region::class);
+//     }
+// }

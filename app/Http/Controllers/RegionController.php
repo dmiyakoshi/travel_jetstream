@@ -20,7 +20,7 @@ class RegionController extends Controller
      */
     public function create()
     {
-        //
+        return view('region.create');
     }
 
     /**
@@ -28,7 +28,7 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return ;
     }
 
     /**

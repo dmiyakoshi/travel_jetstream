@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Consts\CompanyConst;
-use App\Consts\UserConst;
 use App\Http\Requests\PlanRequest;
 use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\PlanView;
-use App\Models\Prefectures;
+use App\Models\Prefecture;
 use App\Models\Region;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -30,7 +28,6 @@ class PlanController extends Controller
         }
 
         $regions = Region::all();
-        $prefectures = Prefectures::all();
 
         $params = $request->query();
         $plans = Plan::search($params)->openData()
@@ -39,10 +36,14 @@ class PlanController extends Controller
         $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
         $sort = empty($request->sort) ? [] : ['sort' => $request->sort];
 
+
+        // $prefectures = Prefecture::all();
+        $prefectures = Prefecture::where('region_id', 2);
+
+        dd($prefectures);
         $plans->appends(compact('prefecture'));
 
-        return view('plans.index', compact('plans', 'regions', 'prefectures', 'sort', 'search'));
-
+        return view('plans.index', compact('plans', 'regions', 'prefecture', 'sort', 'search'));
     }
 
     /**
