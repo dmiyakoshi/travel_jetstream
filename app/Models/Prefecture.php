@@ -9,6 +9,10 @@ class Prefecture extends Model
 {
     use HasFactory;
 
+    protected $table = 'prefectures';
+
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'name',
         'region_id',
@@ -16,6 +20,6 @@ class Prefecture extends Model
 
     public function region()
     {
-        return $this->belongTo(Region::class);
+        return $this->belongTo(Region::class, 'region_id');
     }
 }

@@ -38,9 +38,11 @@ class PlanController extends Controller
 
 
         // $prefectures = Prefecture::all();
-        $prefectures = Prefecture::where('region_id', 2);
+        $prefectures = Prefecture::where('region_id', '=', '2')->get();
 
-        dd($prefectures);
+        // dd($prefectures);
+        dd($regions[5]->prefectures()->get());
+
         $plans->appends(compact('prefecture'));
 
         return view('plans.index', compact('plans', 'regions', 'prefecture', 'sort', 'search'));

@@ -15,6 +15,6 @@ class Region extends Model
 
 
     public function prefectures() {
-        return $this->hasMany(Prefecture::class);
+        return $this->hasMany(Prefecture::class, 'region_id');
     }
 }
