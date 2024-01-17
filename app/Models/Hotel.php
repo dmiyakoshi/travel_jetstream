@@ -26,7 +26,7 @@ class Hotel extends Model
     }
 
     public function prefecture() {
-        return $this->hasOne(Prefectures::class);
+        return $this->belongsTo(Prefecture::class);
     }
 
 }

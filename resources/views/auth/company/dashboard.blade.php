@@ -17,6 +17,12 @@
                 @endforeach
             </ul>
         </div> --}}
+        {{-- 会社が登録したホテル一覧へのリンク --}}
+        <div>
+            <a href="{{ route('hotels.index') }}">
+                登録ホテル一覧へ
+            </a>
+        </div>
         <div>
             <h4 class="text-gray-400 text-sm">予約状況</h4>
             @foreach ($reservations as $reservation)

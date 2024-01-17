@@ -23,7 +23,8 @@
             <div class="w-2/5">
                 <h3 class="mb-3 text-gray-400 text-sm">検索条件</h3>
                 <ul>
-                    <li class="mb-2"><a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
+                    <li class="mb-2">
+                        <a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
                             class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
                     </li>
 
@@ -31,13 +32,17 @@
                         @foreach ($regions as $region)
                             <div>
                                 {{-- 後でアコーディオンメニュー変更する　デザイン変更　左にまとめて並び変えと区別する --}}
-                                <p>{{ $region->name }}</p>
-                                @foreach ($region->prefectures() as $prefcture)
-                                    <li class="mb-2"><a
-                                            href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
-                                            class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">{{ $prefecture->name }}</a>
-                                    </li>
-                                @endforeach
+                                <div class="">
+                                    <p>{{ $region->name }}</p>
+                                </div>
+                                <div class="">
+                                    @foreach ($region->prefectures()->get() as $prefecture)
+                                        <li class="mb-2">
+                                            <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
+                                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">{{ $prefecture->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </div>
                         @endforeach
                     @endif
                 </ul>
@@ -65,8 +70,8 @@
                             <div class="mt-4 flex items-center space-x-4 py-6">
                                 <div>
                                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                        <img class="h-8 w-8 rounded-full object-cover" {{-- src="{{ $plan->hotel->profile_photo_url }}" --}}
-                                            alt="{{ $plan->hotel->name }}" />
+                                        {{-- <img class="h-8 w-8 rounded-full object-cover"  src="{{ $plan->hotel->profile_photo_url }}" 
+                                            alt="{{ $plan->hotel->name }}" /> --}}
                                     @endif
                                 </div>
                                 <div class="text-sm font-semibold">{{ $plan->hotel->name }}<span

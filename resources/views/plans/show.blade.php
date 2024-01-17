@@ -7,14 +7,13 @@
         <article class="mb-2">
             <div class="flex justify-between text-sm">
                 <div class="flex item-center">
-                    <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">{{ $plan->occupation->name }}
+                    <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">{{ $plan->hotel()->first()->prefecture()->first()->name }}
                     </div>
                 </div>
                 <div>
                     <span>on {{ $plan->created_at->format('Y-m-d') }}</span>
                     <span class="inline-block mx-1">|</span>
-                    @if (Auth::guard('companies')->check() &&
-                            Auth::guard('companies')->user()->id == $plan->hotel()->company_id)
+                    @if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->first()->company_id)
                         <span>{{ $plan->planviews->count() }}回閲覧されています</span>
                     @endif
                 </div>
@@ -32,7 +31,6 @@
             <p class="text-gray-700 text-base">{!! nl2br(e($plan->description)) !!}</p>
         </article>
         <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center my-4">
-
             @if (Auth::guard('companies')->check() &&
                     Auth::guard('companies')->user()->can('update', $plan))
                 <a href="{{ route('plans.edit', $plan) }}"
@@ -62,6 +60,18 @@
                         <input type="submit" value="予約キャンセル" onclick="if(!confirm('予約を取り消しますか？')){return false};"
                             class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                     </form>
+                @endif
+            @else
+                @if (Auth::guard('companies')->check())
+                    @foreach ($reservation as $re)
+                        <form action="{{ route('reservations.destroy', [$re, $plan]) }}" method="post"
+                            class="w-full sm:w-32">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="予約キャンセル" onclick="if(!confirm('予約を取り消しますか？')){return false};"
+                                class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                        </form>
+                    @endforeach
                 @endif
             @endif
         </div>

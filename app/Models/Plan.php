@@ -61,14 +61,15 @@ class Plan extends Model
         return $query;
     }
 
-    public function scopeMyplan(Builder $query) {
+    public function scopeMyplan(Builder $query)
+    {
         $company = Auth::guard('companies')->user()->id;
 
         $query->where('company_id', $company);
 
         $myplan = [];
-        foreach($query as $q) {
-            if($q->hotel()->company_id == $company) {
+        foreach ($query as $q) {
+            if ($q->hotel()->company_id == $company) {
                 $myplan[] = $q;
             }
         }
@@ -84,22 +85,19 @@ class Plan extends Model
         return $query;
     }
 
-    public function hotel()
-    {
-        return $this->belongTo(Hotel::class);
+    public function hotel() {
+        return $this->belongsTo(Hotel::class);
     }
 
     public function company() {
-        return $this->belongTo(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
-    public function reservations()
-    {
+    public function reservations() {
         return $this->hasMany(Reservation::class);
     }
 
-    public function planviews()
-    {
+    public function planviews() {
         return $this->hasMany(PlanView::class);
     }
 }

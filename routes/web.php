@@ -28,7 +28,7 @@ Route::resource('plans', PlanController::class)
     ->only(['show']);
 
 Route::resource('hotels', HotelController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destory'])
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth:companies');
 
 Route::resource('hotels', HotelController::class)

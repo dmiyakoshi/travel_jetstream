@@ -36,13 +36,6 @@ class PlanController extends Controller
         $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
         $sort = empty($request->sort) ? [] : ['sort' => $request->sort];
 
-
-        // $prefectures = Prefecture::all();
-        $prefectures = Prefecture::where('region_id', '=', '2')->get();
-
-        // dd($prefectures);
-        dd($regions[5]->prefectures()->get());
-
         $plans->appends(compact('prefecture'));
 
         return view('plans.index', compact('plans', 'regions', 'prefecture', 'sort', 'search'));
@@ -53,7 +46,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id);
+        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->get();
 
         return view('plans.create', compact('hotels'));
     }
@@ -71,7 +64,7 @@ class PlanController extends Controller
             return back()->withInput()->withErrors('登録処理でエラーが発生しました');
         }
 
-        return redirect()->route('plan.show', $plan)->with('notice', '登録処理が成功しました');
+        return redirect()->route('plans.show', $plan)->with('notice', '登録処理が成功しました');
     }
 
     /**
@@ -86,9 +79,15 @@ class PlanController extends Controller
             ]);
         }
 
-        $reservation = $plan->reservation()->where('user_id', Auth::guard('users')->user()->id)->first();
+        if (Auth::guard('users')->check()) {
+            $reservation = $plan->reservations()->where('user_id', Auth::guard('users')->user()->id)->first();
+        } else if (Auth::guard('companies')->check()) {
+            $reservation = $plan->reservations()->get();
+        } else {
+            $reservation = "";
+        }
 
-        return view('plan.show', compact('plan', 'reservation'));
+        return view('plans.show', compact('plan', 'reservation'));
     }
 
     /**

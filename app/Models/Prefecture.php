@@ -20,6 +20,6 @@ class Prefecture extends Model
 
     public function region()
     {
-        return $this->belongTo(Region::class, 'region_id');
+        return $this->belongaTo(Region::class, 'region_id');
     }
 }
