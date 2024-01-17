@@ -42,7 +42,7 @@ class ReservationController extends Controller
     {
         $reservation = new Reservation($request->all());
 
-        $reservation->company_id = $plan->hotel()->company_id;
+        $reservation->company_id = $plan->hotel()->get()->company_id;
 
         try {
             $reservation->save();
@@ -58,7 +58,8 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        //
+        // exceptが効かず、なぜか route に存在
+        return back();
     }
 
     /**

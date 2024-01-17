@@ -46,8 +46,12 @@ Route::resource('plans.reservations', ReservationController::class)
     ->middleware(['auth:users']);
 
 Route::resource('plans.reservations', ReservationController::class)
-    ->only(['destory'])
+    ->except(['show', 'edit', 'update', 'index']);
+
+Route::resource('plans.reservations', ReservationController::class)
+    ->except(['edit', 'update'])
     ->middleware(['auth:users', 'auth:companies']);
+
 
 Route::get('/payment/create', [StripePaymentsController::class, 'create'])
     ->name('payment.create')
