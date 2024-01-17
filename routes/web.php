@@ -21,7 +21,7 @@ Route::get('/', [PlanController::class, 'index'])
     ->name('root');
 
 Route::resource('plans', PlanController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destory'])
+    ->only(['destroy','create', 'store', 'edit', 'update'])
     ->middleware('auth:companies');
 
 Route::resource('plans', PlanController::class)
