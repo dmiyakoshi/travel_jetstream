@@ -5,3 +5,35 @@
 [x-cloak] {
     display: none;
 }
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.col-span-1  {
+    grid-column: span 1 / span 1;
+}
+
+.col-span-2 {
+    grid-column: span 2 / span 2;
+}
+
+.col-span-3 {
+    grid-column: span 3 / span 3;
+}
+
+.col-start-1 {
+    grid-column-start: 1;
+}
+
+.col-start-2 {
+    grid-column-start: 2;
+}
+
+.col-end-3 {
+    grid-column-end: 3;
+}
+
+.col-end-2 {
+    grid-column-end: 2;
+}

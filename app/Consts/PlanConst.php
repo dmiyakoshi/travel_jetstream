@@ -10,6 +10,14 @@ class PlanConst
     const SORT_PRICE_ASC = 3;
     const SORT_PRICE_DEC = 4;
 
+    // 地域
+    const REGION_HOKKAIDOU = 1;
+    const REGION_OKINAWA = 10;
+    const REGION_LIST = [
+        '北海道' => self::REGION_HOKKAIDOU,
+        '沖縄県' => self::REGION_OKINAWA,
+    ];
+
     const SORT_LIST = [
         '新着' => self::SORT_NEW_ARRIVALS,
         '人気' => self::SORT_VIEW_RANK,
