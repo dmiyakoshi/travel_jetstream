@@ -47,12 +47,12 @@
             @endif
             @if (Auth::guard('users')->check())
                 @if (empty($reservation))
-                    <form action="{{ route('reservations.create', $plan) }}" method="GET">
+                    <form action="{{ route('plans.reservations.crete', $plan) }}" method="GET">
                         <input type="submit" value="予約する" onclick="if(!confirm('予約しますか？')){return false};"
                             class="w-full sm:w-40 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                     </form>
                 @else
-                    <form action="{{ route('reservations.destroy', [$reservation, $plan]) }}" method="post"
+                    <form action="{{ route('plans.reservations.destroy', [$reservation, $plan]) }}" method="post"
                         class="w-full sm:w-32">
                         @csrf
                         @method('DELETE')
@@ -63,13 +63,16 @@
             @else
                 @if (Auth::guard('companies')->check())
                     @foreach ($reservation as $re)
-                        <form action="{{ route('reservations.destroy', [$re, $plan]) }}" method="post"
+                        <div class="flex">
+                            <p class="mb-4">{{ $re->user()->first()->name }}</p>
+                            <form action="{{ route('plans.reservations.destroy', [$re, $plan]) }}" method="post"
                             class="w-full sm:w-32">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="予約キャンセル" onclick="if(!confirm('予約を取り消しますか？')){return false};"
-                                class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                            class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                         </form>
+                    </div>
                     @endforeach
                 @endif
             @endif

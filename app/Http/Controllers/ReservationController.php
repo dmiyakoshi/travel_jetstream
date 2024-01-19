@@ -8,6 +8,7 @@ use App\Models\Plan;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Echo_;
 
 class ReservationController extends Controller
 {
@@ -45,6 +46,7 @@ class ReservationController extends Controller
         $reservation->company_id = $plan->hotel()->get()->company_id;
 
         try {
+            $reservation->user_id = Auth::guard('users')->user()->id;
             $reservation->save();
         } catch (\Throwable $th) {
             return redirect()->route('reservation.create', compact('plan'))->withErrors('errors', '予約処理でエラーが発生しました');

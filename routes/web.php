@@ -21,7 +21,7 @@ Route::get('/', [PlanController::class, 'index'])
     ->name('root');
 
 Route::resource('plans', PlanController::class)
-    ->only(['destroy','create', 'store', 'edit', 'update'])
+    ->only(['destroy', 'create', 'store', 'edit', 'update'])
     ->middleware('auth:companies');
 
 Route::resource('plans', PlanController::class)
@@ -34,23 +34,16 @@ Route::resource('hotels', HotelController::class)
 Route::resource('hotels', HotelController::class)
     ->only(['index', 'show']);
 
-Route::resource('reservations', ReservationController::class)
-    ->only(['show', 'index'])
-    ->middleware('auth:companies, auth:users');
-
-Route::resource('reservations', ReservationController::class)
-    ->except(['update', 'edit']);
-
 Route::resource('plans.reservations', ReservationController::class)
-    ->only(['create'])
+    ->only(['create', 'store'])
     ->middleware(['auth:users']);
 
 Route::resource('plans.reservations', ReservationController::class)
-    ->except(['show', 'edit', 'update', 'index']);
+    ->only(['destory', 'index'])
+    ->middleware(['auth:users', 'auth:companies']);
 
 Route::resource('plans.reservations', ReservationController::class)
-    ->except(['edit', 'update'])
-    ->middleware(['auth:users', 'auth:companies']);
+    ->except(['show', 'edit', 'update']);
 
 
 Route::get('/payment/create', [StripePaymentsController::class, 'create'])

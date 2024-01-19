@@ -33,7 +33,7 @@
                     @foreach ($regions as $region)
                         @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
                             {{-- 北海道と沖縄の時は別処理　IDで区別するので定数で登録したほうがいい --}}
-                            <li class="mb-2">
+                            <li class="mb-2 text-left">
                                 <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
                                     class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
                                     {{ $region->name }}
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="">
                                     @foreach ($region->prefectures()->get() as $prefecture)
-                                        <li class="mb-2">
+                                        <li class="mb-2 text-center">
                                             <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
                                                 class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">
                                                 {{ $prefecture->name }}
