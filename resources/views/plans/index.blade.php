@@ -30,9 +30,9 @@
                 </li>
 
                 @if (!empty($regions))
-                    {{-- 北海道と沖縄の時は別処理　IDで区別するので定数で登録したほうがいい --}}
                     @foreach ($regions as $region)
-                        @if ($region->id == PlanConst::REGION__HOKKAIDOU || $region->id == PlanConst::REGION__OKINAWA)
+                        @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
+                            {{-- 北海道と沖縄の時は別処理　IDで区別するので定数で登録したほうがいい --}}
                             <li class="mb-2">
                                 <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
                                     class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
@@ -173,9 +173,30 @@
 
     <style>
         .accordionButton {
-            width: 150px;
-            background-color: brown;
+            text-align: left
         }
+
+        .accordionButton::before,
+        .accordionButton::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            width: 1.5px;
+            height: 8px;
+            background-color: #fff;
+            transition: .5s;
+        }
+
+        .accordionButton::before {
+            transform: rotate(-45deg);
+            right: 35px;
+        }
+
+        .accordionButton::after {
+            transform: rotate(45deg);
+            right: 30px;
+        }
+
 
         .menu {
             height: 0;
@@ -222,31 +243,6 @@
             font-size: 1em;
         }
 
-        button:hover {
-            border: solid 1px #1A5B27;
-        }
-
-        button::before,
-        button::after {
-            content: "";
-            position: absolute;
-            top: 20px;
-            width: 1.5px;
-            height: 8px;
-            background-color: #fff;
-            transition: .5s;
-        }
-
-        button::before {
-            transform: rotate(-45deg);
-            right: 35px;
-        }
-
-        button::after {
-            transform: rotate(45deg);
-            right: 30px;
-        }
-
         li.active button::before {
             transform: rotate(-135deg);
             transition: .5s;
@@ -255,6 +251,10 @@
         li.active button::after {
             transform: rotate(135deg);
             transition: .5s;
+        }
+
+        li.active button {
+            border: #2563eb solid 1px;
         }
 
         ul:nth-of-type(2) {
