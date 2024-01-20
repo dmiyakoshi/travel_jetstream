@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Consts\CompanyConst;
+// use App\Consts\CompanyConst;
 use App\Consts\PlanConst;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Plan extends Model
 {
@@ -34,7 +35,9 @@ class Plan extends Model
     public function scopeSearch(Builder $query, $params)
     {
         if (!empty($params['prefecture'])) {
-            $query->where('prefecture_id', $params['prefecture']);
+            // $query->where('prefecture_id', $params['prefecture']);
+            $query->leftjoin('hotels', 'plans.hotel_id', '=', 'hotels.id')->where('prefecture_id', $params['prefecture'])->latest('plans.created_at');
+            // table('plans')->join('hotels', 'plans.hotel_id', '=', 'hotels.id')->where('prefecture_id', $params['prefecture']);
         }
 
         return $query;
@@ -42,10 +45,11 @@ class Plan extends Model
 
     public function scopeOrder(Builder $query, $params)
     {
+
         if ((empty($params['sort'])) ||
             (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)
         ) {
-            $query->latest();
+            $query->latest('plans.created_at');
         } elseif (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_VIEW_RANK) {
             $query->withCount('planViews')
                 ->orderBy('plan_views_count', 'desc');

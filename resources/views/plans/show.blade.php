@@ -11,14 +11,14 @@
                     </div>
                 </div>
                 <div>
-                    <span>on {{ $plan->created_at->format('Y-m-d') }}</span>
+                    <span>作成日 :{{ $plan->created_at->format('Y-m-d') }}</span>
                     <span class="inline-block mx-1">|</span>
                     @if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->first()->company_id)
                         <span>{{ $plan->planviews->count() }}回閲覧されています</span>
                     @endif
                 </div>
             </div>
-            <p class="text-gray-700 text-base text-right">応募期限 :{{ $plan->due_date }}</p>
+            <p class="text-gray-700 text-base text-right">掲載期限 :{{ $plan->due_date }}</p>
             <h2 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-1 text-3xl md:text-4xl">
                 {{ $plan->title }}</h2>
             <div class="flex mt-1 mb-3">

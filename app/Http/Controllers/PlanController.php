@@ -30,8 +30,14 @@ class PlanController extends Controller
         $regions = Region::all();
 
         $params = $request->query();
-        $plans = Plan::search($params)->openData()
-            ->order($params)->with(['hotel'])->latest()->paginate(5);
+
+        $plans = Plan::openData()->order($params)
+        ->search($params)
+        // ->latest('plans.created_at')
+        ->paginate(5);
+
+        // dd($plans);
+
         $prefecture = $request->prefecture;
         $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
         $sort = empty($request->sort) ? [] : ['sort' => $request->sort];

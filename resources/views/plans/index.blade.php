@@ -1,3 +1,5 @@
+{{-- {{ dd($plans) }} --}}
+
 <x-app-layout>
     <div class="container mx-auto w-full my-8 px-4 py-4">
         <div class="flex justify-end items-center mb-3">
@@ -20,29 +22,45 @@
         </div>
     </div>
     <div class="container mx-auto w-full my-8 px-4 py-4 bg-white grid grid-cols-6">
-        <div class="cols-span-2">
-            <ul class="">
-                <h3 class="mb-3 text-gray-400 text-sm">検索条件</h3>
-                {{-- スマホの場合はここが丸ごとアコーディオンメニューになる --}}
-                <li class="mb-2">
-                    <a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
-                        class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
-                </li>
+        <div class="cols-span-2 md:cols-span-2">
+            <h3 class="mb-3 text-gray-400 text-sm">検索条件</h3>
+            {{-- スマホの場合はここが丸ごとアコーディオンメニューになる --}}
+            <li class="mb-2">
+                <a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
+                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
+            </li>
 
-                @if (!empty($regions))
-                    @foreach ($regions as $region)
-                        @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
-                            {{-- 北海道と沖縄の時は別処理　IDで区別するので定数で登録したほうがいい --}}
-                            <li class="mb-2 text-left">
-                                <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
-                                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
+            @if (!empty($regions))
+                @foreach ($regions as $region)
+                    @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
+                        {{-- 北海道と沖縄の時は別処理　IDで区別するので定数で登録したほうがいい --}}
+                        <li class="mb-2 text-center py-2">
+                            <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
+                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
+                                {{ $region->name }}
+                            </a>
+                        </li>
+                    @else
+                        <ul class="include-accordion scroll-control">
+                            <li>
+                                <button class="accordionBtn text-center" type="button">
                                     {{ $region->name }}
-                                </a>
+                                </button>
+                                <ul class="ml-2 bg-gray-500 text-white">
+                                    @foreach ($region->prefectures()->get() as $prefecture)
+                                        <li class="mb-2 text-center">
+                                            <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
+                                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">
+                                                {{ $prefecture->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </li>
-                        @else
-                            <div>
-                                {{-- 後でアコーディオンメニュー変更する　デザイン変更　左にまとめて並び変えと区別する --}}
-                                <div class="">
+                        </ul>
+
+                            {{-- 後でアコーディオンメニュー変更する　デザイン変更　左にまとめて並び変えと区別する --}}
+                            {{-- <div class="">
                                     <p>{{ $region->name }}</p>
                                 </div>
                                 <div class="">
@@ -54,11 +72,10 @@
                                             </a>
                                         </li>
                                     @endforeach
-                                </div>
-                        @endif
-                    @endforeach
-                @endif
-            </ul>
+                                </div> --}}
+                    @endif
+                @endforeach
+            @endif
         </div>
         <div class="col-span-3">
             @foreach ($plans as $plan)
@@ -203,10 +220,6 @@
             display: none;
         }
 
-        ul {
-            margin-left: 30px;
-        }
-
         li {
             list-style: none;
         }
@@ -216,30 +229,22 @@
             padding: 0;
             overflow: hidden;
             transition: .5s;
-            border-top: 1px solid #67a863;
-            background-color: #5EAA6C;
             margin: 0;
         }
 
         ul li li {
-            border-bottom: 1px dotted #7FBF8B;
             padding: 10px 0 10px 10px;
-            margin-left: 15px;
         }
 
-        ul:nth-of-type(1) li.active li:last-child {
-            border-bottom: 1px solid #67a863;
-        }
 
         button {
             position: relative;
             border: none;
             width: 100%;
             background-color: inherit;
-            color: #fff;
             cursor: pointer;
             text-align: left;
-            padding: 15px 0 15px 20px;
+            padding: 15px 0;
             font-size: 1em;
         }
 
@@ -255,27 +260,6 @@
 
         li.active button {
             border: #2563eb solid 1px;
-        }
-
-        ul:nth-of-type(2) {
-            background-color: #357D87;
-        }
-
-        ul:nth-of-type(2) ul {
-            background-color: #519FA5;
-            border-top: 1px solid #5D9FA8;
-        }
-
-        ul:nth-of-type(2) button:hover {
-            background-color: #1C4B56;
-        }
-
-        ul:nth-of-type(2) li li {
-            border-bottom: 1px dotted #73BEBF;
-        }
-
-        ul:nth-of-type(2) li.active li:last-child {
-            border-bottom: 1px solid #5D9FA8;
         }
 
         ul.active {
