@@ -33,10 +33,8 @@ class PlanController extends Controller
 
         $plans = Plan::openData()->order($params)
         ->search($params)
-        // ->latest('plans.created_at')
+        ->latest('plans.created_at')
         ->paginate(5);
-
-        // dd($plans);
 
         $prefecture = $request->prefecture;
         $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];

@@ -56,7 +56,7 @@ class Plan extends Model
         } else if ((!empty($params['sort'])) ||
             (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)
         ) {
-            $query->latest();
+            $query->latest('plans.created_at');
         } elseif (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_VIEW_RANK) {
             $query->withCount('planViews')
                 ->orderBy('plan_views_count', 'desc');
