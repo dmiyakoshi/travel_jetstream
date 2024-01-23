@@ -10,7 +10,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.col-span-1  {
+.col-span-1 {
     grid-column: span 1 / span 1;
 }
 
@@ -21,6 +21,11 @@
 .col-span-3 {
     grid-column: span 3 / span 3;
 }
+
+.col-span-6 {
+    grid-column: span 6 / span 6;
+}
+
 
 .col-start-1 {
     grid-column-start: 1;
@@ -36,4 +41,15 @@
 
 .col-end-2 {
     grid-column-end: 2;
+}
+
+
+@media (min-width: 768px) {
+    .md:col-span-3 {
+        grid-column: span 3 / span 3;
+    }
+
+    .md:col-span-2 {
+        grid-column: span 2 / span 2;
+    }
 }

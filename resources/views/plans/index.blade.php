@@ -22,10 +22,10 @@
         </div>
     </div>
     <div class="container mx-auto w-full my-8 px-4 py-4 bg-white grid grid-cols-6">
-        <div class="cols-span-2 md:cols-span-2">
+        <div class="cols-span-2">
             <h3 class="mb-3 text-gray-400 text-sm">検索条件</h3>
             {{-- スマホの場合はここが丸ごとアコーディオンメニューになる --}}
-            <li class="mb-2">
+            <li class="mb-2 text-center">
                 <a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
                     class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
             </li>
@@ -33,7 +33,6 @@
             @if (!empty($regions))
                 @foreach ($regions as $region)
                     @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
-                        {{-- 北海道と沖縄の時は別処理　IDで区別するので定数で登録したほうがいい --}}
                         <li class="mb-2 text-center py-2">
                             <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
                                 class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
@@ -58,26 +57,12 @@
                                 </ul>
                             </li>
                         </ul>
-
-                            {{-- 後でアコーディオンメニュー変更する　デザイン変更　左にまとめて並び変えと区別する --}}
-                            {{-- <div class="">
-                                    <p>{{ $region->name }}</p>
-                                </div>
-                                <div class="">
-                                    @foreach ($region->prefectures()->get() as $prefecture)
-                                        <li class="mb-2 text-center">
-                                            <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
-                                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">
-                                                {{ $prefecture->name }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </div> --}}
                     @endif
                 @endforeach
             @endif
         </div>
-        <div class="col-span-3">
+
+        <div class="col-span-6 md:col-span-3">
             @foreach ($plans as $plan)
                 <div class="bg-white w-full px-10 py-8 hover:shadow-2xl transition duration-500 col-span-6">
                     <div class="mt-4">
