@@ -88,14 +88,14 @@
                             @endif
 
                             @if (Auth::guard('companies')->check())
-                            <x-dropdown-link href="{{ route('hotels.create') }}">
-                                {{ 'ホテル登録' }}
-                            </x-dropdown-link>
-                            <x-dropdown-link href="{{ route('plans.create') }}">
-                                {{ '掲載プラン登録' }}
-                            </x-dropdown-link>
-                        @endif
-                
+                                <x-dropdown-link href="{{ route('hotels.create') }}">
+                                    {{ 'ホテル登録' }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('plans.create') }}">
+                                    {{ '掲載プラン登録' }}
+                                </x-dropdown-link>
+                            @endif
+
 
                             @if (!empty($prefix))
                                 <x-dropdown-link href="{{ route($prefix . 'profile.show') }}">
@@ -108,7 +108,8 @@
                                 <form method="POST" action="{{ route($prefix . 'logout') }}" x-data>
                                     @csrf
 
-                                    <x-dropdown-link href="{{ route($prefix . 'logout') }}" @click.prevent="$root.submit();">
+                                    <x-dropdown-link href="{{ route($prefix . 'logout') }}"
+                                        @click.prevent="$root.submit();">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
@@ -131,68 +132,70 @@
                             stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+
             </div>
         </div>
     </div>
 
-    @if (!empty($prefix))
-        <!-- Responsive Navigation Menu -->
-        <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+    <!-- Responsive Navigation Menu -->
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+        @if (!empty($prefix))
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route($prefix . 'dashboard') }}" :active="request()->routeIs($prefix . 'dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             </div>
         @else
-            {{-- <div class="pt-2 pb-3 space-y-1">
-        <x-responsive-nav-link href="{{ route('welcome') }}">
-            アカウント登録
-        </x-responsive-nav-link>
-    </div> --}}
-    @endif
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('welcome') }}">
+                    アカウント登録
+                </x-responsive-nav-link>
+            </div>
+        @endif
 
-    <!-- Responsive Settings Options -->
-    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos() && $prefix == 'user')
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="flex items-center px-4">
-                {{-- <div class="shrink-0 me-3">
+        <!-- Responsive Settings Options -->
+        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos() && $prefix == 'user')
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                <div class="flex items-center px-4">
+                    {{-- <div class="shrink-0 me-3">
                     <img class="h-10 w-10 rounded-full object-cover" src="{{ $user->profile_photo_url }}"
                         alt="{{ $user->name }}" />
                 </div> --}}
 
-                <div>
-                    <div class="font-medium text-base text-gray-800">{{ $user->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ $user->email }}</div>
+                    <div>
+                        <div class="font-medium text-base text-gray-800">{{ $user->name }}</div>
+                        <div class="font-medium text-sm text-gray-500">{{ $user->email }}</div>
+                    </div>
                 </div>
-            </div>
-    @endif
-
-    <div class="mt-3 space-y-1">
-        <!-- Account Management -->
-        @if (!empty($prefix))
-            <x-responsive-nav-link href="{{ route($prefix . 'profile.show') }}" :active="request()->routeIs($prefix . 'profile.show')">
-                {{ __('Profile') }}
-            </x-responsive-nav-link>
         @endif
 
-
-        @if (Auth::guard('companies')->check())
-            <x-dropdown-link href="{{ route('hotels.create') }}">
-                {{ 'ホテル登録' }}
-            </x-dropdown-link>
-            <x-dropdown-link href="{{ route('plans.create') }}">
-                {{ '掲載プラン登録' }}
-            </x-dropdown-link>
-        @endif
-
-        <!-- Authentication -->
-        @if (!empty($prefix))
-            <form method="POST" action="{{ route($prefix .'logout') }}" x-data>
-                @csrf
-                <x-responsive-nav-link href="{{ route($prefix .'logout') }}" @click.prevent="$root.submit();">
-                    {{ __('Log Out') }}
+        <div class="mt-3 space-y-1">
+            <!-- Account Management -->
+            @if (!empty($prefix))
+                <x-responsive-nav-link href="{{ route($prefix . 'profile.show') }}" :active="request()->routeIs($prefix . 'profile.show')">
+                    {{ __('Profile') }}
                 </x-responsive-nav-link>
-            </form>
-        @endif
+            @endif
+
+
+            @if (Auth::guard('companies')->check())
+                <x-dropdown-link href="{{ route('hotels.create') }}">
+                    {{ 'ホテル登録' }}
+                </x-dropdown-link>
+                <x-dropdown-link href="{{ route('plans.create') }}">
+                    {{ '掲載プラン登録' }}
+                </x-dropdown-link>
+            @endif
+
+            <!-- Authentication -->
+            @if (!empty($prefix))
+                <form method="POST" action="{{ route($prefix . 'logout') }}" x-data>
+                    @csrf
+                    <x-responsive-nav-link href="{{ route($prefix . 'logout') }}" @click.prevent="$root.submit();">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link>
+                </form>
+            @endif
+        </div>
     </div>
 </nav>
