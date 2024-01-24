@@ -1,8 +1,6 @@
-{{-- {{ dd($plans) }} --}}
-
 <x-app-layout>
     <div class="container mx-auto w-full my-8 px-4 py-4">
-        <div class="flex justify-end items-center mb-3">
+        <div class="flex justify-end items-center mb-3 gap-1 md:flex-row">
             <h4 class="text-gray-400 text-sm">並び替え</h4>
             <ul class="flex gap-4">
                 @foreach (PlanConst::SORT_LIST as $name => $value)
@@ -22,7 +20,7 @@
         </div>
     </div>
     <div class="container mx-auto w-full my-8 px-4 py-4 bg-white grid grid-cols-6">
-        <div class="cols-span-2">
+        <div class="col-span-2">
             <h3 class="mb-3 text-gray-400 text-sm">検索条件</h3>
             {{-- スマホの場合はここが丸ごとアコーディオンメニューになる --}}
             <li class="mb-2 text-center">
