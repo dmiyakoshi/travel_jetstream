@@ -20,44 +20,46 @@
         </div>
     </div>
     <div class="container mx-auto w-full my-8 px-4 py-4 bg-white grid grid-cols-6">
-        <div class="col-span-2">
-            <h3 class="mb-3 text-gray-400 text-sm">検索条件</h3>
+        <div class="col-span-3  md:col-span-2">
+            <h3 class="mb-3 text-gray-400 text-xl text-center md:text-base accordionH3">検索条件</h3>
             {{-- スマホの場合はここが丸ごとアコーディオンメニューになる --}}
-            <li class="mb-2 text-center">
-                <a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
-                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
-            </li>
+            <div>
+                <li class="mb-2 text-center">
+                    <a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
+                        class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
+                </li>
 
-            @if (!empty($regions))
-                @foreach ($regions as $region)
-                    @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
-                        <li class="mb-2 text-center py-2">
-                            <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
-                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
-                                {{ $region->name }}
-                            </a>
-                        </li>
-                    @else
-                        <ul class="include-accordion scroll-control">
-                            <li>
-                                <button class="accordionBtn text-center" type="button">
+                @if (!empty($regions))
+                    @foreach ($regions as $region)
+                        @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
+                            <li class="mb-2 text-center py-2">
+                                <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
+                                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
                                     {{ $region->name }}
-                                </button>
-                                <ul class="ml-2 bg-gray-500 text-white">
-                                    @foreach ($region->prefectures()->get() as $prefecture)
-                                        <li class="mb-2 text-center">
-                                            <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
-                                                class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">
-                                                {{ $prefecture->name }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                </a>
                             </li>
-                        </ul>
-                    @endif
-                @endforeach
-            @endif
+                        @else
+                            <ul class="include-accordion scroll-control">
+                                <li>
+                                    <button class="accordionBtn text-center" type="button">
+                                        {{ $region->name }}
+                                    </button>
+                                    <ul class="ml-2 bg-gray-500 text-white">
+                                        @foreach ($region->prefectures()->get() as $prefecture)
+                                            <li class="mb-2 text-center">
+                                                <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $prefecture->id])) }}"
+                                                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $prefecture->id) ? 'text-green-500 font-bold' : '' }}">
+                                                    {{ $prefecture->name }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            </ul>
+                        @endif
+                    @endforeach
+                @endif
+            </div>
         </div>
 
         <div class="col-span-6 md:col-span-3">
