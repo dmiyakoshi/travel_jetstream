@@ -1,7 +1,6 @@
 import './bootstrap';
 
-// 画面サイズを取得
-const windowWidth = window.innerWidth
+// スマホサイズの広さ
 const spWidth = 781
 
 // スマホのみアコーディオンメニュー付与するdiv
@@ -10,31 +9,41 @@ const spAccordionMenu = document.getElementById('sp_accordion')
 const spAccordionButton = document.getElementById('sp_accordionButton')
 
 const spAccordion = () => {
-    const menu = document.querySelector('sp_accrodion')
+    const menu = document.getElementsByClassName('sp_accrodion')[0]
 
-    if (menu.classList.contains('is_open')) {
-        // クラス削除
-        menu.classList.remove('is_open')
-    } else {
-        // クラス付与
-        menu.classList.add('is_open')
-    }
+    menu.classList.toggle('is_open')
 }
 
+// アコーディオンメニューのフラグ
+let flag_spAccordion = false
+
 const changeAccordion = () => {
+    // 画面サイズを取得
+    const windowWidth = window.innerWidth
+
     if (windowWidth > spWidth) {
-        // スマホのみのアコーディオンメニュー削除
-        spAccordionMenu.classList.remove('sp_accrodion')
-        spAccordionMenu.classList.remove('is_open')
-        spAccordionButton.classList.remove('sp_accrodion_button')
+        if (flag_spAccordion === true) {
+            flag_spAccordion = false
+            // スマホのみのアコーディオンメニュー削除
+            spAccordionMenu.classList.remove('sp_accrodion')
+            spAccordionMenu.classList.remove('is_open')
+            spAccordionButton.classList.remove('sp_accrodion_button')
 
-        spAccordionButton.removeEventListener('click', spAccordion)
+            spAccordionButton.removeEventListener('click', spAccordion)
+        } else {
+            // none
+        }
     } else {
-        // スマホのみのアコーディオンメニュー追加
-        spAccordionMenu.classList.add('sp_accrodion')
-        spAccordionButton.classList.add('sp_accrodion_button')
+        if (flag_spAccordion === false) {
+            flag_spAccordion = true
+            // スマホのみのアコーディオンメニュー追加
+            spAccordionMenu.classList.add('sp_accrodion')
+            spAccordionButton.classList.add('sp_accrodion_button')
 
-        spAccordionButton.addEventListener('click', spAccordion)
+            spAccordionButton.addEventListener('click', spAccordion)
+        } else {
+            // none
+        }
     }
 }
 

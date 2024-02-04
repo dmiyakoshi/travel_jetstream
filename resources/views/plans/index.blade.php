@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto w-full my-8 px-4 py-4">
-        <div class="flex justify-end items-center mb-3 gap-1 md:flex-row">
+        <div class="flex justify-end flex-col items-center mb-3 gap-1 md:flex-row">
             <h4 class="text-gray-400 text-sm">並び替え</h4>
             <ul class="flex gap-4">
                 @foreach (PlanConst::SORT_LIST as $name => $value)
@@ -194,7 +194,7 @@
             transition-duration: .3s;
         }
 
-        .sp_accrodion {
+        .sp_accrodion.is_open {
             opacity: 1;
             height: auto;
         }
