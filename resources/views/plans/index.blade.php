@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="container mx-auto w-full my-8 px-4 py-4 bg-white grid grid-cols-6">
-        <div class="col-span-3  md:col-span-2">
+        <div class="col-span-6 mt-4 md:col-span-2">
             <h3 id="sp_accordionButton" class="mb-3 text-gray-400 text-xl text-center md:text-base">検索条件</h3>
             {{-- スマホの場合はここが丸ごとアコーディオンメニューになる --}}
             <div id="sp_accordion">
@@ -84,7 +84,7 @@
                             <div class="mt-4 flex items-center space-x-4 py-6">
                                 <div>
                                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                        {{-- <img class="h-8 w-8 rounded-full object-cover"  src="{{ $plan->hotel->profile_photo_url }}" 
+                                        {{-- <img class="h-8 w-8 rounded-full object-cover"  src="{{ $plan->hotel()->first()->profile_photo_url }}" 
                                                 alt="{{ $plan->hotel()->first()->name }}" /> --}}
                                     @endif
                                 </div>
@@ -198,5 +198,26 @@
             opacity: 1;
             height: auto;
         }
+
+        #sp_accordionButton::after {
+            content: "";
+            transform: translateY(-25%) rotate(45deg);
+            border-bottom: 3px solid #333;
+            border-right: 3px solid #333;
+            margin-left: 50%;
+            margin-top: 10px;
+            width: 10px;
+            height: 10px;
+            display: block
+        }
+
+        @media (min-width: 768px) {
+            #sp_accordionButton::after {
+                width: 0;
+                height: 0;
+                border: 0px;
+            }
+        }
+
     </style>
 </x-app-layout>

@@ -21,6 +21,9 @@
                             プラン詳細
                         </a>
                     </div>
+                    <div>
+                        <a href="{{ route(payment.create, $p) }}">支払いをする</a>
+                    </div>
                 </div>
             </div>
             <hr>
