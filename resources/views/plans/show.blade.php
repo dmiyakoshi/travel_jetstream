@@ -2,12 +2,14 @@
     <div class="container lg:w-3/4 md:w-4/5 w-11/12 mx-auto my-8 px-4 py-4 bg-white shadow-md">
 
         <x-flash-message :message="session('notice')" />
+        {{-- エラーが表示されていない --}}
         <x-validation-errors :errors="$errors" />
 
         <article class="mb-2">
             <div class="flex justify-between text-sm">
                 <div class="flex item-center">
-                    <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">{{ $plan->hotel()->first()->prefecture()->first()->name }}
+                    <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">
+                        {{ $plan->hotel()->first()->prefecture()->first()->name }}
                     </div>
                 </div>
                 <div>
@@ -31,13 +33,11 @@
             <p class="text-gray-700 text-base">{!! nl2br(e($plan->description)) !!}</p>
         </article>
         <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center my-4">
-            @if (Auth::guard('companies')->check() &&
-                    Auth::guard('companies')->user()->can('update', $plan))
+            @if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->can('update', $plan))
                 <a href="{{ route('plans.edit', $plan) }}"
                     class="bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 sm:mr-2 mb-2 sm:mb-0">変更</a>
             @endif
-            @if (Auth::guard('companies')->check() &&
-                    Auth::guard('companies')->user()->can('delete', $plan))
+            @if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->can('delete', $plan))
                 <form action="{{ route('plans.destroy', $plan) }}" method="post" class="w-full sm:w-32">
                     @csrf
                     @method('DELETE')
@@ -47,7 +47,8 @@
             @endif
             @if (Auth::guard('users')->check())
                 @if (empty($reservation))
-                    <form action="{{ route('plans.reservations.crete', $plan) }}" method="GET">
+                    <form action="{{ route('plans.reservations.store', $plan) }}" method="POST">
+                        @csrf
                         <input type="submit" value="予約する" onclick="if(!confirm('予約しますか？')){return false};"
                             class="w-full sm:w-40 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                     </form>
@@ -66,13 +67,14 @@
                         <div class="flex">
                             <p class="mb-4">{{ $re->user()->first()->name }}</p>
                             <form action="{{ route('plans.reservations.destroy', [$re, $plan]) }}" method="post"
-                            class="w-full sm:w-32">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="予約キャンセル" onclick="if(!confirm('予約を取り消しますか？')){return false};"
-                            class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
-                        </form>
-                    </div>
+                                class="w-full sm:w-32">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="予約キャンセル"
+                                    onclick="if(!confirm('予約を取り消しますか？')){return false};"
+                                    class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                            </form>
+                        </div>
                     @endforeach
                 @endif
             @endif

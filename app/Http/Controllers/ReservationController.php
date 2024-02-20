@@ -22,14 +22,6 @@ class ReservationController extends Controller
      */
     public function create(Plan $plan)
     {
-        if (Auth::guard('users')->check()) {
-            // none
-        } else if (Auth::guard('companies')->check()) {
-            return back()->withErrors('予約できません');
-        } else {
-            return redirect()->route('user.login');
-        }
-
         return view('reservations.create', compact('plan'));
     }
 
@@ -38,15 +30,26 @@ class ReservationController extends Controller
      */
     public function store(Request $request, Plan $plan)
     {
-        $reservation = new Reservation($request->all());
-
-        $reservation->company_id = $plan->hotel()->get()->company_id;
+        if (Auth::guard('users')->check()) {
+            // none
+        } else if (Auth::guard('companies')->check()) {
+            return back()->withErrors('予約できません');
+        } else {
+            return redirect()->route('user.login');
+        }
 
         try {
+            $reservation = new Reservation($request->all());
+    
+            $reservation->company_id = $plan->hotel()->first()->company_id;
+            
+            $reservation->plan_id = $plan->id;
             $reservation->user_id = Auth::guard('users')->user()->id;
+
+            // 予約日の情報がない $reservation->resev_date = 
             $reservation->save();
         } catch (\Throwable $th) {
-            return redirect()->route('reservation.create', compact('plan'))->withErrors('errors', '予約処理でエラーが発生しました');
+            return back()->withInput()->withErrors('予約処理でエラーが発生しました');
         }
 
         return redirect()->route('plan.show', compact('plan'))->with('notice', '予約が完了しました');

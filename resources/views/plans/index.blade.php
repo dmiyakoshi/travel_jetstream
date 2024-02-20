@@ -19,6 +19,7 @@
             </ul>
         </div>
     </div>
+
     <div class="container mx-auto w-full my-8 px-4 py-4 bg-white grid grid-cols-6">
         <div class="col-span-6 mt-4 md:col-span-2">
             <h3 id="sp_accordionButton" class="mb-3 text-gray-400 text-xl text-center md:text-base">検索条件</h3>
