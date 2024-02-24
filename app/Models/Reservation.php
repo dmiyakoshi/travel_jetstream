@@ -13,6 +13,7 @@ class Reservation extends Model
         'user_id',
         'plan_id',
         'hotel_id',
+        'reservation_date',
     ];
 
     public function plan() {

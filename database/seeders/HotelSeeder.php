@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Company;
 use App\Models\Hotel;
+use App\Models\Prefecture;
 
 class HotelSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class HotelSeeder extends Seeder
     public function run(): void
     {
         $companys = Company::all();
-
+        $prefectures = Prefecture::all();
 
         $names = ['HotelA','HotelB','HotelC','HotelD','HotelE','HotelF','HotelG','HotelH','HotelI','HotelJ','HotelK','HotelL',];
 
@@ -24,6 +25,11 @@ class HotelSeeder extends Seeder
                 [
                     'company_id' => $company->id,
                     'name' => $names[$company->id],
+                    'telephone' => fake()->phoneNumber(),
+                    'description' => fake()->text(),
+                    'adress'=> fake()->address(),
+                    'prefecture_id' => $prefectures[random_int(1, count($prefectures))],
+                    'capacity',
                 ]
                 );
         }

@@ -126,6 +126,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'reservation_date' => 'todayより前日は選択できません'
     ],
     'attributes'           => [
         'name' => '名前',
@@ -139,6 +140,10 @@ return [
     'values' => [
         'due_date' => [
             'yesterday' => '昨日',
+        ],
+    
+        'reservation_date' => [
+            'today' => '今日'
         ]
     ]
 ];

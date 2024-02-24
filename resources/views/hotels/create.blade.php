@@ -44,6 +44,14 @@
                     required placeholder="電話番号" value="{{ old('phonenumber') }}">
             </div>
             <div class="mb-4">
+                <label class="block text-white mb-2" for="capacity">
+                    部屋数
+                </label>
+                <input type="number" name="capacity"
+                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"
+                    required placeholder="10部屋 => 10と記入" value="{{ old('capacity') }}">
+            </div>
+            <div class="mb-4">
                 <label class="block text-white mb-2" for="description">
                     詳細
                 </label>

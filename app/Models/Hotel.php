@@ -15,6 +15,7 @@ class Hotel extends Model
         'phonenumber',
         'description',
         'prefecture_id',
+        'capacity',
     ];
 
     public function company() {
@@ -29,4 +30,7 @@ class Hotel extends Model
         return $this->belongsTo(Prefecture::class);
     }
 
+    public function reservation() {
+        return $this->hasMany(Reservation::class);
+    }
 }

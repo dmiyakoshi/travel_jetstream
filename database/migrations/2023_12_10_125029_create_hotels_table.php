@@ -20,6 +20,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('phonenumber')->unique();
             $table->string('adress');
+            $table->unsignedInteger('capacity');
             $table->foreignId('prefecture_id')
             ->cascadeOnDelete()
             ->cascadeOnUpdate();

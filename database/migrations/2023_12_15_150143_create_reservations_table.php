@@ -25,8 +25,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->date('reservation_date');
             $table->unique(['plan_id', 'user_id']);
-            $table->date('resev_date');
             $table->timestamps();
         });
     }

@@ -1,4 +1,11 @@
 <x-app-layout>
+    <div>
+        <P>新しい旅行先へ行ってみませんか？</P>
+        <button href="{{ route('root') }}">
+            プランを探す
+        </button>
+    </div>
+
     <div class="container mx-auto w-3/5 my-8 px-4 py-4">
         @foreach ($plans as $p)
             <div class="bg-white w-full px-10 py-8 hover:shadow-2xl transition duration-500">
@@ -34,4 +41,5 @@
         <p>お気に入りホテル一覧</p>
         <p>まだ作成途中　やること make;model migrate contorller お気に入り登録ボタン(非同期でやるか？)</p>
     </div>
+
 </x-app-layout>

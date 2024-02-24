@@ -2,7 +2,8 @@
     <div class="container lg:w-3/4 md:w-4/5 w-11/12 mx-auto my-8 px-4 py-4 bg-white shadow-md">
 
         <x-flash-message :message="session('notice')" />
-        {{-- エラーが表示されていない --}}
+        <x-flash-message :message="session('message')" />
+
         <x-validation-errors :errors="$errors" />
 
         <article class="mb-2">
@@ -14,8 +15,8 @@
                 </div>
                 <div>
                     <span>作成日 :{{ $plan->created_at->format('Y-m-d') }}</span>
-                    <span class="inline-block mx-1">|</span>
                     @if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->first()->company_id)
+                        <span class="inline-block mx-1">|</span>
                         <span>{{ $plan->planviews->count() }}回閲覧されています</span>
                     @endif
                 </div>
@@ -49,6 +50,11 @@
                 @if (empty($reservation))
                     <form action="{{ route('plans.reservations.store', $plan) }}" method="POST">
                         @csrf
+                        <label for="reservation_date">
+                            予約日
+                        </label>
+                        <input type="date" name="reservation_date" id="reservation_date" value="{{ old('reservation_date') }}"
+                            required placeholder="予約日">
                         <input type="submit" value="予約する" onclick="if(!confirm('予約しますか？')){return false};"
                             class="w-full sm:w-40 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                     </form>

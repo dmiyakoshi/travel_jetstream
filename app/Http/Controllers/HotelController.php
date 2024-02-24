@@ -54,6 +54,7 @@ class HotelController extends Controller
 
         return redirect()
         ->route('hotels.show', $hotel)
+        ->withInput()
         ->with('notice', '情報登録に成功しました');
     }
 
@@ -82,7 +83,7 @@ class HotelController extends Controller
     public function update(HotelRequest $request, Hotel $hotel)
     {
         if (Auth::guard('companies')->user()->id == $hotel->company_id) {
-            return redirect()->route('hotels.show', $hotel)->withErrors('errors', '編集権限がありません');
+            return redirect()->route('hotels.show', $hotel)->withInput()->withErrors('errors', '編集権限がありません');
         }
 
         $hotel->fill($request->all());
@@ -90,7 +91,7 @@ class HotelController extends Controller
         try {
             $hotel->save();
         } catch (\Throwable $th) {
-            redirect()->route('hotels.show', $hotel)->withErrors('errors', '編集保存時にエラーが発生しました。');
+            redirect()->route('hotels.show', $hotel)->withInput()->withErrors('errors', '編集保存時にエラーが発生しました。');
         }
     }
 
@@ -100,13 +101,13 @@ class HotelController extends Controller
     public function destroy(Hotel $hotel)
     {
         if (Auth::guard('companies')->user()->id == $hotel->company_id) {
-            return redirect()->route('hotels.show', $hotel)->withErrors('errors', '削除権限がありません');
+            return redirect()->route('hotels.show', $hotel)->withInput()->withErrors('errors', '削除権限がありません');
         }
 
         try {
             $hotel->delete();
         } catch (\Throwable $th) {
-            redirect()->route('hotels.show', $hotel)->withErrors('errors', '削除の際にエラーが発生しました。');
+            redirect()->route('hotels.show', $hotel)->withInput()->withErrors('errors', '削除の際にエラーが発生しました。');
         }
     }
 }

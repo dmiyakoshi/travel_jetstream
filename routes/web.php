@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ReservationController;
@@ -61,6 +62,11 @@ Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/import-csv-prefecture', [CsvImportController::class,"showPrefecture"]);
+Route::post('/import-csv-prefecture', [CsvImportController::class, 'importPrefecture']);
+Route::get('/import-csv-region', [CsvImportController::class,"showRegion"]);
+Route::post('/import-csv-region',  [CsvImportController::class,"importRegion"]);
 
 // 今回は使わない
 // Route::middleware([

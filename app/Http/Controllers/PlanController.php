@@ -32,9 +32,9 @@ class PlanController extends Controller
         $params = $request->query();
 
         $plans = Plan::openData()->order($params)
-        ->search($params)
-        ->latest('plans.created_at')
-        ->paginate(5);
+            ->search($params)
+            ->latest('plans.created_at')
+            ->paginate(5);
 
         $prefecture = $request->prefecture;
         $search = empty($prefecture) ? [] : ['prefecture' => $prefecture];
@@ -68,7 +68,7 @@ class PlanController extends Controller
             return back()->withInput()->withErrors('登録処理でエラーが発生しました');
         }
 
-        return redirect()->route('plans.show', $plan)->with('notice', '登録処理が成功しました');
+        return redirect()->route('plans.show', $plan)->withInput()->with('notice', '登録処理が成功しました');
     }
 
     /**
@@ -111,7 +111,8 @@ class PlanController extends Controller
     {
         if (Auth::guard('campaines')->user()->cannot('update', $plan)) {
             return redirect()->route('plans.show', $plan)
-                ->withErrors('自分の求人情報以外は更新できません');
+                ->withInput()
+                ->withErrors('自分の情報以外は更新できません');
         }
 
         $plan->fill($request->all());
@@ -119,12 +120,10 @@ class PlanController extends Controller
         try {
             $plan->save();
         } catch (\Exception $e) {
-            return back()->withInput()
-                ->withErrors('求人情報更新処理でエラーが発生しました');
+            return back()->withInput()->withErrors('更新処理でエラーが発生しました');
         }
 
-        return redirect()->route('plans.show', $plan)
-            ->with('notice', '求人情報を更新しました');
+        return redirect()->route('plans.show', $plan)->with('notice', '更新しました');
     }
 
     /**
@@ -134,16 +133,18 @@ class PlanController extends Controller
     {
         if (Auth::guard('campaines')->user()->cannot('delete', $plan)) {
             return redirect()->route('plans.show', $plan)
-                ->withErrors('自分の求人情報以外は削除できません');
+                ->withInput()
+                ->withErrors('自分の情報以外は削除できません');
         }
 
         try {
             $plan->delete();
         } catch (\Exception $e) {
             return back()->withInput()
-                ->withErrors('求人情報削除処理でエラーが発生しました');
+                ->withErrors('削除処理でエラーが発生しました');
         }
-        return redirect()->route('plans.index')
-            ->with('notice', '求人情報を削除しました');
+        return redirect()->route('company.dashboard')
+            ->withInput()
+            ->with('notice', '情報を削除しました');
     }
 }
