@@ -10,15 +10,15 @@
 </head>
 
 <body>
-    @if (!empty($message))
-        @foreach ($message as $m)
+    @if (!empty(session('message')))
+        @foreach (session('message') as $message)
             <div class="bg-blue-100 border-blue-500 text-blue-700 border-l-4 p-4 my-2">
                 <p>{{ $m }}</p>
             </div>
         @endforeach
     @endif
 
-    <form action="/import-csv-region" method="post" enctype="multipart/form-data">
+    <form action="/import-csv-prefecture" method="post" enctype="multipart/form-data">
         @csrf
         <div class="dropArea">
             <input type="file" name="file">

@@ -32,13 +32,13 @@ class ReservationController extends Controller
      */
     public function store(ReservationRequest $request, Plan $plan)
     {
-        $hotel = $plan->hotel_id->first();
-        $reservation_requestDay = $hotel->reservation()->where('reservation_date', $request->reservation_date)->count();
+        $hotel = $plan->hotel()->first()->id;
+        $reservation_requestDay = $hotel->reservation()->whereDate('reservation_date', '=', $request->reservation_date)->count();
 
         if (Auth::guard('users')->check()) {
             // none
         } else if (Auth::guard('companies')->check()) {
-            return back()->withInput()->withErrors('予約できません');
+            return back()->withInput()->withErrors('利用者以外は予約できません');
         } else {
             return redirect()->route('user.login');
         }
@@ -51,11 +51,11 @@ class ReservationController extends Controller
         } else {
             // none
         }
-        
+
         $reservation = new Reservation($request->all());
 
         $reservation->company_id = $plan->hotel()->first()->company_id;
-        
+
         $reservation->plan_id = $plan->id;
         $reservation->user_id = Auth::guard('users')->user()->id;
 
@@ -98,22 +98,26 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        $plan = $reservation->plan();
+        $plan = $reservation->plan()->first();
 
-        if (Auth::guard('users')->check() && Auth::guard('users')->user()->id == $plan->user_id) {
-            // ユーザー側からの削除
-        } else if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->company_id) {
-            // id が hotel_id でホテル側からの削除 
-        } else {
-            return back()->withInput()->withErrors('notice', 'キャンセル権限がありません');
-        }
+        dd($plan);
 
         try {
+            if (Auth::guard('users')->check() && Auth::guard('users')->user()->id == $reservation->user_id) {
+                // ユーザー側からの削除　ログインしているユーザーが予約したユーザーか同課の確認
+            } else if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->first()->company_id) {
+                // id が hotel_id でホテル側からの削除  
+            } else {
+                session()->flash('notice', 'キャンセル権限がありません');
+                return back()->withInput()->withErrors('notice', 'キャンセル権限がありません');
+            }
+
             $reservation->delete();
         } catch (\Throwable $th) {
             return back()->withInput()->withErrors('予約キャンセルに失敗しました');
         }
 
+        session()->flash('notice', '予約をキャンセルしました');
         return redirect()->route('plans.show', $plan)->with('notice', '予約をキャンセルしました');
     }
 }
