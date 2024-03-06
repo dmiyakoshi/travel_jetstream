@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Plan;
 use App\Models\Reservation;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReservationRequest;
-use Livewire\Attributes\Validate;
+use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
@@ -24,7 +23,65 @@ class ReservationController extends Controller
      */
     public function create(Plan $plan)
     {
-        return view('reservations.create', compact('plan'));
+        $infos = [];
+
+        $days = [];
+        $today = Carbon::today();
+
+        for ($day = $today; $day < $plan->due_date; $day->addDay()) {
+            $days[] = $day;
+            $infos[] = calenderDay($day, $plan);
+        }
+
+        // カレンダー作成
+        $calenderHtml = "";
+
+        $begenCalender = $day[0];
+        $week = 7;
+
+        $calenderHtml = $calenderHtml . '<div class="grid-cols-7">';
+
+        // 曜日の表示
+        $calenderHtml = $calenderHtml . '<div>';
+        for ($i = 0; $i < $week; $i++) {
+            $dayofweek = calenderDayofWeek($day[$i]);
+            if ($begenCalender->dayOfWeek == 0) {
+                $calenderHtml = $calenderHtml . '<div class="calender_div text-red-500">' . $dayofweek . '</div>';
+            } elseif ($begenCalender->dayOfWeek == 6) {
+                $calenderHtml = $calenderHtml . '<div class="calender_div text-blue-500">' . $dayofweek . '</div>';
+            } else {
+                $calenderHtml = $calenderHtml . '<div class="calender_div">' . $dayofweek . '</div>';
+            }
+        }
+        $calenderHtml = $calenderHtml . '</div>';
+
+        // 日付の表示
+        $calenderHtml = $calenderHtml . '<div>';
+
+        // カウンター
+        $count = 0;
+
+        foreach ($days as $day) {
+            '<div id="day$count" class="display none">$day->~~~~ //input type=dateのフォーマットに合わせる クリックでformに値を入れる
+            </div>';
+            // divの中に表示
+            $infos[0]['can_reservation'];
+            $infos[0]['opening'];
+            if ($infos[$count]['can_reservation']) {
+                // 予約可能
+
+            } else {
+                // 予約できない
+            }
+
+            $count++;
+        }
+
+        $calenderHtml = $calenderHtml . '</div>';
+
+        $calenderHtml = $calenderHtml . '</div>';
+
+        return view('reservations.create', compact('plan', 'calenderHtml'));
     }
 
     /**
@@ -32,9 +89,6 @@ class ReservationController extends Controller
      */
     public function store(ReservationRequest $request, Plan $plan)
     {
-        $hotel = $plan->hotel()->first()->id;
-        $reservation_requestDay = $hotel->reservation()->whereDate('reservation_date', '=', $request->reservation_date)->count();
-
         if (Auth::guard('users')->check()) {
             // none
         } else if (Auth::guard('companies')->check()) {
@@ -42,6 +96,9 @@ class ReservationController extends Controller
         } else {
             return redirect()->route('user.login');
         }
+
+        $hotel = $plan->hotel()->first()->id;
+        $reservation_requestDay = $hotel->reservation()->whereDate('reservation_date', '=', $request->reservation_date)->count();
 
         if ($request->reservation_date > $plan->due_date) {
             return back()->withInput()->withErrors('プランの掲載期限より後に予約はできません');

@@ -109,7 +109,6 @@
             </div>
         </div>
     </div>
-    </div>
 
     <style>
         .accordionButton {
@@ -219,6 +218,5 @@
                 border: 0px;
             }
         }
-
     </style>
 </x-app-layout>

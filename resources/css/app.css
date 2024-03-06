@@ -10,6 +10,10 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.grid-cols-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
 .col-span-1 {
     grid-column: span 1 / span 1;
 }
@@ -42,6 +46,13 @@
     grid-column-end: 2;
 }
 
+.text-blue-500 {
+	color: rgb(59 130 246);
+}
+
+.text-red-500 {
+    color: rgb(239 68 68);
+}
 
 @media (min-width: 768px) {
     .md:col-span-3 {

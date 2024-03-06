@@ -171,6 +171,8 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
+        App\Providers\MyfunctionProvider::class,
+        App\Providers\HelperProvider::class,
     ])->toArray(),
 
     /*
@@ -189,7 +191,6 @@ return [
         'CompanyConst' => \App\Consts\CompanyConst::GUARD,
         'UserConst' => \App\Consts\UserConst::GUARD,
         'PlanConst' => \App\Consts\PlanConst::class,
-        
+        'Myfunction' => \App\Facades\MyfunctionFacade::class,
     ])->toArray(),
-
 ];

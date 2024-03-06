@@ -43,4 +43,14 @@ class PlanConst
         '夕食あり' => self::MEAL_DINNER,
         '夕食、朝食あり' => self::MEAL_BOTH,
     ] ;
+
+    const DAYOFWEEK_SUNDAY = 0;
+    const DAYOFWEEK_MONDAY = 1;
+    const DAYOFWEEK_TUESDAY = 2;
+    const DAYOFWEEK_WEDENSDAY = 3;
+    const DAYOFWEEK_THURSDAY = 4;
+    const DAYOFWEEK_FRIDAY = 5;
+    const DAYOFWEEK_SATURDAY = 6;
+
+    // const DAYOFWEEK_LIST =[];
 }

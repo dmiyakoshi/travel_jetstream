@@ -28,7 +28,7 @@ class HotelSeeder extends Seeder
                     'telephone' => fake()->phoneNumber(),
                     'description' => fake()->text(),
                     'adress'=> fake()->address(),
-                    'prefecture_id' => $prefectures[random_int(1, count($prefectures))],
+                    'prefecture_id' => $prefectures[random_int($prefectures[0]->id, count($prefectures))],
                     'capacity' => random_int(3, 10),
                 ]
                 );

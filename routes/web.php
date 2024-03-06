@@ -5,6 +5,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StripePaymentsController;
+use App\Mylib\Myfunction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,10 +64,20 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/import-csv-prefecture', [CsvImportController::class,"showPrefecture"]);
+Route::get('/import-csv-prefecture', [CsvImportController::class, "showPrefecture"]);
 Route::post('/import-csv-prefecture', [CsvImportController::class, 'importPrefecture']);
-Route::get('/import-csv-region', [CsvImportController::class,"showRegion"]);
-Route::post('/import-csv-region',  [CsvImportController::class,"importRegion"]);
+Route::get('/import-csv-region', [CsvImportController::class, "showRegion"]);
+Route::post('/import-csv-region',  [CsvImportController::class, "importRegion"]);
+
+// test
+Route::get('test', function () {
+    $myfun = new Myfunction;
+    return $myfun->renderCalender();
+});
+
+Route::get('helper', function() {
+    return hello();
+});
 
 // 今回は使わない
 // Route::middleware([

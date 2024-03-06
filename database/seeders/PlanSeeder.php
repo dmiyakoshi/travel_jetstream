@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Consts\PlanConst;
 use App\Models\Hotel;
 use App\Models\Plan;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,10 +23,10 @@ class PlanSeeder extends Seeder
                 'title',
                 'price',
                 'description',
-                'due_date',
-                'hotel_id',
-                'meal',
-                'status',
+                'due_date' ,
+                'hotel_id' => $hotels[random_int($hotels[0]->id, count($hotels))],
+                'meal' => PlanConst::MEAL_LIST[random_int(PlanConst::MEAL_LIST[0], count(PlanConst::MEAL_LIST))],
+                'status' => 1, // 公開状態
             ]);
         }
     }
