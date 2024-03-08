@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Consts\PlanConst;
 use App\Models\Hotel;
 use App\Models\Plan;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class PlanSeeder extends Seeder
@@ -17,17 +17,22 @@ class PlanSeeder extends Seeder
     {
         $hotels = Hotel::all();
 
+        $counter = 0;
+        $countMax = 3;
+
         foreach ($hotels as $hotel) {
-            Plan::create([
-                'name' => fake()->text(maxNbChars: 10),
-                'title',
-                'price',
-                'description',
-                'due_date' ,
-                'hotel_id' => $hotels[random_int($hotels[0]->id, count($hotels))],
-                'meal' => PlanConst::MEAL_LIST[random_int(PlanConst::MEAL_LIST[0], count(PlanConst::MEAL_LIST))],
-                'status' => 1, // 公開状態
-            ]);
+            while ($counter < $countMax) {
+                $counter++;
+                Plan::create([
+                    'title' => fake()->text(maxNbChars: 10),
+                    'price' => fake()->randomNumber() * 1000 + fake()->randomNumber() * 100,
+                    'description' => fake()->paragraph(),
+                    'due_date' => Carbon::today()->addMonth(random_int(0, 10))->addDay(random_int(0, 20)),
+                    'hotel_id' => $hotel->id,
+                    'meal' => PlanConst::MEAL_LIST[random_int(PlanConst::MEAL_LIST[0], count(PlanConst::MEAL_LIST)-1)],
+                    'status' => 1, // 公開状態
+                ]);
+            }
         }
     }
 }

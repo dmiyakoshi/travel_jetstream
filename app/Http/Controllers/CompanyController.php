@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,7 @@ class CompanyController extends Controller
         // ->paginate(5);
 
         // 本当は 予約日が今の日付よりあとのreservations
-        $reservations = Reservation::where('company_id', Auth::guard('companies')->user()->id)->with('plan');
+        $reservations = Reservation::where('company_id', Auth::guard('companies')->user()->id)->whereDate('reservation_date', '>=', Carbon::today())->with('plan');
 
         return view('auth.company.dashboard', compact('reservations'));
     }

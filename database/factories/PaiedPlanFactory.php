@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,10 @@ class PaiedPlanFactory extends Factory
      */
     public function definition(): array
     {
+        $reservations = Reservation::all();
+
         return [
-            //
+            'reservations' => $reservations,
         ];
     }
 }

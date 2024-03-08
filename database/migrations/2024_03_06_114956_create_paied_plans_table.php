@@ -13,16 +13,10 @@ return new class extends Migration
     {
         Schema::create('paied_plans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_id')
+            $table->foreignId('reservation_id')
             ->constrained()
-            ->onUpdate()
-            ->onDelete();
-            $table->foreignId('user_id')
-            ->constrained()
-            ->onUpdate()
-            ->onDelete();
-            // ユニークにしたいが、もう一度同じプランを予約した場合は？
-            $table->unique(['user_id', 'plan_id']);
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
             $table->timestamps();
         });
     }

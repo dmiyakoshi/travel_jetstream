@@ -54,6 +54,15 @@
     color: rgb(239 68 68);
 }
 
+.migiyazirushi::after {
+    content: "";
+    width: 150px;
+    height: 15px;
+    background-color: #333;
+    clip-path: polygon(0 100%, 100% 100%, 90% 50%, 90% 90%, 0% 90%);
+    transition: transform 0.3s;
+}
+
 @media (min-width: 768px) {
     .md:col-span-3 {
         grid-column: span 3 / span 3;
