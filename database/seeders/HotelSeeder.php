@@ -17,26 +17,32 @@ class HotelSeeder extends Seeder
         $companys = Company::all();
         $prefectures = Prefecture::all();
 
-        // $names = ['HotelA','HotelB','HotelC','HotelD','HotelE','HotelF','HotelG','HotelH','HotelI','HotelJ','HotelK','HotelL',];
+        $names = [
+            'Oriental Tide Hotel', 'Private Dawn Hotel & Spa', 'Winter Gulf Resort', 'Snowy Maple Motel', 'Autumn Rose Resort', 'Bronze Bluff Hotel & Spa', 'Remote Heirloom Hotel & Spa', 'HotelQ', 'HotelR', 'HotelS', 'HotelT', 'HotelU', 'HotelF', 'HotelG', 'HotelH', 'HotelI', 'HotelJ', 'HotelK', 'HotelL', 'HotelP', 'HotelO', 'HotelE', 'HotelD', 'HotelC', 'HotelB', 'HotelA',
+        ];
 
         $counter = 0;
         $countMax = 3;
 
+        $capacity_min = 3;
+        $capacity_max = 15;
+
         foreach ($companys as $company) {
             while ($counter < $countMax) {
                 $counter++;
-                Hotel::created(
+                Hotel::create(
                     [
                         'company_id' => $company->id,
-                        'name' => $company->name,
-                        'telephone' => fake()->phoneNumber(),
+                        'name' => $names[random_int(0, count($names) - 1)],
+                        'phonenumber' => fake()->phoneNumber(),
                         'description' => fake()->text(),
                         'adress' => fake()->address(),
-                        'prefecture_id' => $prefectures[random_int(0, count($prefectures) -1)],
-                        'capacity' => random_int(3, 15),
+                        'prefecture_id' => $prefectures[random_int(0, count($prefectures) - 1)]->id,
+                        'capacity' => random_int($capacity_min, $capacity_max),
                     ]
                 );
             }
+            $counter = 0;
         }
     }
 }

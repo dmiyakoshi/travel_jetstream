@@ -42,7 +42,10 @@ class PlanConst
         '朝食あり' => self::MEAL_BREACKFAST,
         '夕食あり' => self::MEAL_DINNER,
         '夕食、朝食あり' => self::MEAL_BOTH,
-    ] ;
+    ];
+    const MEAL_DISPLAY = [
+        self::MEAL_NO, self::MEAL_BREACKFAST, self::MEAL_DINNER, self::MEAL_BOTH
+    ];
 
     const DAYOFWEEK_SUNDAY = 0;
     const DAYOFWEEK_MONDAY = 1;

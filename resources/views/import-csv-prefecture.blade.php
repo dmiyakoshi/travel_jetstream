@@ -11,11 +11,9 @@
 
 <body>
     @if (!empty(session('message')))
-        @foreach (session('message') as $message)
-            <div class="bg-blue-100 border-blue-500 text-blue-700 border-l-4 p-4 my-2">
-                <p>{{ $m }}</p>
-            </div>
-        @endforeach
+        <div class="bg-blue-100 border-blue-500 text-blue-700 border-l-4 p-4 my-2">
+            <p>{{ session('message') }}</p>
+        </div>
     @endif
 
     <form action="/import-csv-prefecture" method="post" enctype="multipart/form-data">
@@ -31,8 +29,6 @@
 
 <script>
     const dropArea = document.getElementById('dropFile')
-
-
 </script>
 
 <style>
@@ -44,6 +40,7 @@
 
     .dropArea input[type="file"] {
         width: 100px;
-        padding: calc(300px / 2) calc( (100% - 100px) / 2 );;
+        padding: calc(300px / 2) calc((100% - 100px) / 2);
+        ;
     }
 </style>

@@ -19,7 +19,7 @@ class Hotel extends Model
     ];
 
     public function company() {
-        return $this->belongTo(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function plans() {

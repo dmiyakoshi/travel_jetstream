@@ -46,8 +46,6 @@ class ReservationSeeder extends Seeder
                     }
                 }
 
-                
-
                 Reservation::create([
                     'user_id' => $user->id,
                     'plan_id' => $plan->id,
@@ -55,6 +53,7 @@ class ReservationSeeder extends Seeder
                     'reservation_date' => fake()->dateTimeBetween(Carbon::today(), $plan->due_date)
                 ]);
             }
+            $counter = 0;
         }
     }
 }

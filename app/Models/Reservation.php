@@ -17,14 +17,14 @@ class Reservation extends Model
     ];
 
     public function plan() {
-        return $this->belongTo(Plan::class);
+        return $this->belongsTo(Plan::class);
     }
 
     public function user() {
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function hotel() {
-        return $this->belongTo(Hotel::class);
+        return $this->belongsTo(Hotel::class);
     }
 }
