@@ -43,6 +43,7 @@ class PlanConst
         '夕食あり' => self::MEAL_DINNER,
         '夕食、朝食あり' => self::MEAL_BOTH,
     ];
+
     const MEAL_DISPLAY = [
         self::MEAL_NO, self::MEAL_BREACKFAST, self::MEAL_DINNER, self::MEAL_BOTH
     ];
@@ -55,5 +56,7 @@ class PlanConst
     const DAYOFWEEK_FRIDAY = 5;
     const DAYOFWEEK_SATURDAY = 6;
 
-    // const DAYOFWEEK_LIST =[];
+    const DAYOFWEEK_LIST =[
+        "日","月", "火", "水", "木", "金", "土"
+    ];
 }

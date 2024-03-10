@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <div class="col-span-6 md:col-span-3">
+        <div class="col-span-6 md:col-span-4">
             @foreach ($plans as $plan)
                 <div class="bg-white w-full px-10 py-8 hover:shadow-2xl transition duration-500 col-span-6">
                     <div class="mt-4">

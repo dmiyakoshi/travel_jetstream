@@ -27,4 +27,8 @@ class Reservation extends Model
     public function hotel() {
         return $this->belongsTo(Hotel::class);
     }
+
+    public function paied_plan() {
+        return $this->hasOne(PaiedPlan::class);
+    }
 }

@@ -61,7 +61,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function reservation() {
+    public function reservations() {
         return $this->hasMany(Reservation::class);
     }
 }

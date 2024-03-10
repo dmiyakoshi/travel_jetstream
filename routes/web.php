@@ -74,7 +74,6 @@ Route::get('test', function () {
     $myfun = new Myfunction;
     return $myfun->renderCalender();
 });
-
 Route::get('helper', function() {
     return hello();
 });
