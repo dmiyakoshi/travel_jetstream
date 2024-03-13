@@ -24,33 +24,40 @@ Route::get('/', [PlanController::class, 'index'])
 
 Route::resource('plans', PlanController::class)
     ->only(['destroy', 'create', 'store', 'edit', 'update'])
-    ->middleware('auth:companies');
+    ->middleware('auth:companies')
+    ->whereNumber('id');
 
 Route::resource('plans', PlanController::class)
-    ->only(['show']);
+    ->only(['show'])
+    ->whereNumber('id');
 
 Route::resource('hotels', HotelController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
-    ->middleware('auth:companies');
+    ->middleware('auth:companies')
+    ->whereNumber('id');
 
 Route::resource('hotels', HotelController::class)
-    ->only(['index', 'show']);
+    ->only(['index', 'show'])
+    ->whereNumber('id');
 
 Route::resource('plans.reservations', ReservationController::class)
     ->only(['create', 'store'])
-    ->middleware(['auth:users']);
+    ->middleware(['auth:users'])
+    ->whereNumber('id');
 
 Route::resource('plans.reservations', ReservationController::class)
     ->only(['destory', 'index'])
-    ->middleware(['auth:users', 'auth:companies']);
+    ->middleware(['auth:users', 'auth:companies'])
+    ->whereNumber('id');
 
 Route::resource('plans.reservations', ReservationController::class)
-    ->except(['show', 'edit', 'update']);
-
+    ->except(['show', 'edit', 'update'])
+    ->whereNumber('id');
 
 Route::get('/plans/{plan}/payment/create', [StripePaymentsController::class, 'create'])
     ->name('payment.create')
-    ->middleware('auth:users');
+    ->middleware('auth:users')
+    ->whereNumber('id');
 
 Route::post('/payment/charge', [StripePaymentsController::class, 'charge'])
     ->name('payment.charge')
@@ -64,19 +71,19 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/import-csv-prefecture', [CsvImportController::class, "showPrefecture"]);
-Route::post('/import-csv-prefecture', [CsvImportController::class, 'importPrefecture']);
-Route::get('/import-csv-region', [CsvImportController::class, "showRegion"]);
-Route::post('/import-csv-region',  [CsvImportController::class, "importRegion"]);
+// Route::get('/import-csv-prefecture', [CsvImportController::class, "showPrefecture"]);
+// Route::post('/import-csv-prefecture', [CsvImportController::class, 'importPrefecture']);
+// Route::get('/import-csv-region', [CsvImportController::class, "showRegion"]);
+// Route::post('/import-csv-region',  [CsvImportController::class, "importRegion"]);
 
 // test
-Route::get('test', function () {
-    $myfun = new Myfunction;
-    return $myfun->renderCalender();
-});
-Route::get('helper', function() {
-    return hello();
-});
+// Route::get('test', function () {
+//     $myfun = new Myfunction;
+//     return $myfun->renderCalender();
+// });
+// Route::get('helper', function() {
+//     return hello();
+// });
 
 // 今回は使わない
 // Route::middleware([

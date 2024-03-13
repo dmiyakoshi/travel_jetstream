@@ -8,6 +8,11 @@
             Stripeを使用していますので、カード情報を入力のうえお支払ください
         </p>
     </div>
+    <div>
+        <p>予約プラン</p>
+        <p>{{ $plan->title }}</p>
+        <p>{{ $plan->price }}</p>
+    </div>
     <div class="payment">
         <form action="{{ route('payment.charge', [$plan, $reservation]) }}" method="POST">
             {{ csrf_field() }}
