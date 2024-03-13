@@ -25,6 +25,8 @@ class HotelRequest extends FormRequest
             'name' => 'required|string|max:50',
             'adress' => 'required|string|max:50',
             'phonenumber' => 'required|string|max:13',
+            'prefecture_id' => 'required|exists:prefectures,id',
+            'capacity' => 'required|integer|min:1|max:4000',
             'description' => 'nullable|string|max:200',
         ];
     }

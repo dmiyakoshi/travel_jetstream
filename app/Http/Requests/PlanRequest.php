@@ -26,13 +26,16 @@ class PlanRequest extends FormRequest
         $rule = [
             'title' => 'required|string|max:50',
             'hotel_id' => 'required|exists:hotels,id',
-            'due_date' => 'required|after:yesterday',
+            'due_date' => 'required|date|after:yesterday',
+            'price' => 'required|integer|min:0|max4294967000',
             'description' => 'required|string|max:2000',
-            'status' => 'nullable|boolean',
+            // 本来は meal をtableにするべき PlanConst::MEAL_LISTの値を使用している
+            'meal'=> 'required|integer|min:0|max3:',
+            'status' => 'required|boolean',
         ];
 
         if($route === 'plan.update') {
-            $rule['due_date'] = 'required|date';
+            $rule['due_date'] = 'required|date|after:yesterday';
         }
 
         return $rule;

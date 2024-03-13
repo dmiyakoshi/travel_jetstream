@@ -23,7 +23,7 @@ return new class extends Migration
             //     ->cascadeOnUpdate()
             //     ->cascadeOnDelete();
             $table->string('title');
-            $table->integer('price');
+            $table->unsignedInteger('price');
             $table->tinyInteger('meal')->default(0);
             $table->text('description');
             $table->date('due_date');
