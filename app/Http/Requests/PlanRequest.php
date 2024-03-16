@@ -34,9 +34,10 @@ class PlanRequest extends FormRequest
             'status' => 'required|boolean',
         ];
 
-        if($route === 'plan.update') {
-            $rule['due_date'] = 'required|date|after:yesterday';
-        }
+        // 日付の更新
+        // if($route === 'plan.update') {
+        //     $rule['due_date'] = 'required|date|after:yesterday';
+        // }
 
         return $rule;
     }

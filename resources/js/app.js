@@ -111,3 +111,7 @@ accordions.forEach((accordion) => {
         });
     });
 })
+
+const today = Date.now()
+const dayOfWeekToday = today.getDay()
+

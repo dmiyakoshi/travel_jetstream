@@ -33,55 +33,74 @@ class ReservationController extends Controller
             $infos[] = calenderDay($day, $plan);
         }
 
-        // カレンダー作成
-        $calenderHtml = "";
+        // // カレンダー作成
+        // $calenderHtml = "";
 
-        $begenCalender = $day[0];
-        $week = 7;
+        // $begenCalender = $day[0];
+        // $week = 7;
 
-        $calenderHtml = $calenderHtml . '<div class="grid-cols-7">';
+        // $calenderHtml = $calenderHtml . '<div class="grid-cols-7">';
 
-        // 曜日の表示
-        $calenderHtml = $calenderHtml . '<div>';
-        for ($i = 0; $i < $week; $i++) {
-            $dayofweek = calenderDayofWeek($day[$i]);
-            if ($begenCalender->dayOfWeek == 0) {
-                $calenderHtml = $calenderHtml . '<div class="calender_div text-red-500">' . $dayofweek . '</div>';
-            } elseif ($begenCalender->dayOfWeek == 6) {
-                $calenderHtml = $calenderHtml . '<div class="calender_div text-blue-500">' . $dayofweek . '</div>';
-            } else {
-                $calenderHtml = $calenderHtml . '<div class="calender_div">' . $dayofweek . '</div>';
-            }
-        }
-        $calenderHtml = $calenderHtml . '</div>';
+        // // 曜日の表示
+        // $calenderHtml = $calenderHtml . '<div>';
 
-        // 日付の表示
-        $calenderHtml = $calenderHtml . '<div>';
+        // // 今日からカレンダー作成
+        // for ($i = 0; $i < $week; $i++) {
+        //     $dayofweek = calenderDayofWeek($day[$i]);
+        //     if ($begenCalender->dayOfWeek == 0) {
+        //         $calenderHtml = $calenderHtml . '<div class="calender_div text-red-500">' . $dayofweek . '</div>';
+        //     } elseif ($begenCalender->dayOfWeek == 6) {
+        //         $calenderHtml = $calenderHtml . '<div class="calender_div text-blue-500">' . $dayofweek . '</div>';
+        //     } else {
+        //         $calenderHtml = $calenderHtml . '<div class="calender_div">' . $dayofweek . '</div>';
+        //     }
+        // }
 
-        // カウンター
-        $count = 0;
+        // // 実際のカレンダーのようにoutuput
+        // '<div></div>
+        // <div></div>
+        // <div></div>';
 
-        foreach ($days as $day) {
-            '<div id="day$count" class="display none">$day->~~~~ //input type=dateのフォーマットに合わせる クリックでformに値を入れる
-            </div>';
-            // divの中に表示
-            $infos[0]['can_reservation'];
-            $infos[0]['opening'];
-            if ($infos[$count]['can_reservation']) {
-                // 予約可能
+        // $calenderHtml = $calenderHtml . '</div>';
 
-            } else {
-                // 予約できない
-            }
+        // // 日付の表示
+        // $calenderHtml = $calenderHtml . '<div>';
 
-            $count++;
-        }
+        // // カウンター
+        // $count = 0;
 
-        $calenderHtml = $calenderHtml . '</div>';
+        // foreach ($days as $day) {
+        //     '<div id="day$count" class="display none">$day->~~~~ //input type=dateのフォーマットに合わせる形でクリックしたときにformに値を入れる
+        //     </div>';
+        //     // divの中に表示
+        //     // $infos[0]['can_reservation'];
+        //     // $infos[0]['opening'];
 
-        $calenderHtml = $calenderHtml . '</div>';
+        //     // 残りわずかと表示させるかどうかの定数
+        //     $const_opening = 2;
+        //     if ($infos[$count]['can_reservation']) {
+        //         // 予約可能な場合の処理
+        //         if ($infos[$count]['opening'] <= $const_opening) {
+        //             '<p class="color:yellow">残りわずか</p>';
+        //         } else {
+        //             '<p class="color:green">予約可能</p>';
+        //         }
+        //         '<button class="calneder_click">予約する</button>';
+        //         '<div class="display: none">' . $day .'</div>';
+        //     } else {
+        //         // 予約できない
+        //         '<p class="color:gray">満室</p>';
+        //         '<p>' . $infos['opening'] .'</p>';
+        //     }
 
-        return view('reservations.create', compact('plan', 'calenderHtml'));
+        //     $count++;
+        // }
+
+        // $calenderHtml = $calenderHtml . '</div>';
+
+        // $calenderHtml = $calenderHtml . '</div>';
+
+        return view('reservations.create', compact('plan', 'infos', 'today'));
     }
 
     /**
