@@ -19,16 +19,16 @@ if (!function_exists('calenderDay')) {
 
         // 予約可能かどうか
         if (count($reservations) < $hotel->capacity) {
-            $info['can_reservation'] = true;
+            $info[$day->format('Y-m-d')]['can_reservation'] = true;
         } else {
-            $info['can_reservation'] = false;
+            $info[$day->format('Y-m-d')]['can_reservation'] = false;
         }
 
         // あといくつ空きがあるか
-        if ($info['can_reservation'] == true) {
-            $info['opening'] = $hotel->capacity - count($reservations);
+        if ($info[$day->format('Y-m-d')]['can_reservation'] == true) {
+            $info[$day->format('Y-m-d')]['opening'] = $hotel->capacity - count($reservations);
         } else {
-            $info['opening'] = 0;
+            $info[$day->format('Y-m-d')]['opening'] = 0;
         }
 
         // $today->isoFormat('ddd');
@@ -37,7 +37,7 @@ if (!function_exists('calenderDay')) {
         // $today->dayOfWeek;
         // 0(日曜日)から6(土曜日)
 
-        return $info;
+        return $info[$day];
     }
 }
 

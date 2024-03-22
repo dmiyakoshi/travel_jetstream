@@ -30,7 +30,7 @@ class ReservationController extends Controller
 
         for ($day = $today; $day < $plan->due_date; $day->addDay()) {
             $days[] = $day;
-            $infos[] = calenderDay($day, $plan);
+            $infos[$day->format('Y-m-d')] = calenderDay($day, $plan);
         }
 
         // // カレンダー作成
@@ -100,7 +100,7 @@ class ReservationController extends Controller
 
         // $calenderHtml = $calenderHtml . '</div>';
 
-        return view('reservations.create', compact('plan', 'infos', 'today'));
+        return view('reservations.create', compact('plan', 'infos'));
     }
 
     /**
