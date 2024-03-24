@@ -112,60 +112,41 @@ accordions.forEach((accordion) => {
     });
 })
 
-// date('year', 'month', 'day')
-
-const today = Date.now()
-const dayOfWeekToday = today.getDay()
-
-// const dueDate = $plan->due_date
-
-// addDays
-// let date = today.setDate(today.getDate() + 1)
-
-// addMOnth
-// date = today.setMonth(today.getMonth() + 1)
-
-
-const calender = document.getElementById('calender')
-
-const reservation = document.getElementById('reservation')
-
-let calenderMonth = today
-
-
-let htmlCalender = ""
-
-// 曜日作成
-'<div id="dayOfWeek"> <div class="">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="">土</div> </div>'
+// '<div id="dayOfWeek"> <div class="">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="">土</div> </div>'
 
 // 日付作成
 // 今日以前、掲載日以降、それ以外
-const calenderFunction = (calenderMonth, reservation) => {
-    let dateCalender = new Date(calenderMonth.getyear())
+const calenderFunction = (calenderMonth, due_date, infos) => {
+    // date('year', 'month', 'day')
+    const today = Date.now()
+    const dayOfWeekToday = today.getDay()
+    
+    // addDays
+    // let date = today.setDate(today.getDate() + 1)
+    
+    // addMOnth
+    // date = today.setMonth(today.getMonth() + 1)
+    
+    
+    const calender = document.getElementById('calender')
+    
+    const reservation = document.getElementById('reservation')    
+    
+    let htmlCalender = ""
 
-    if (dateCalender > today) {
+    // 曜日作成
+    htmlCalender = '<div id="dayOfWeek"> <div class="">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="">土</div> </div>'
+    let dateCalender = new Date(calenderMonth.getyear(),calenderMonth.getMonth(),1)
 
-    } else if (dateCalender > reservation) {
-
-    } else {
-
+    for (let index = 0; index < array.length; index++) {
+        if (dateCalender < today) {
+            // カレンダーの今日以前の日付
+            
+        } else if (dateCalender > due_date) {
+            // カレンダーの掲載日以降の日付
+    
+        } else {
+            // カレンダーの予約可能日
+        }
     }
 }
-
-// 月の移動ボタン
-const nextMonth = document.getElementById('nextMonth')
-const backMonth = document.getElementById('backMonth')
-// 
-const next = () => {
-    calenderMonth = calenderMonth.setMonth(date.getMonth() + 1)
-    calender(calender, reservation)
-}
-
-// 
-const back = () => {
-    calenderMonth = calenderMonth.setMonth(date.getMonth() - 1)
-    calender(calender, reservation)
-}
-
-nextMonth.addEventListener('click', next)
-backMonth.addEventListener('click', back)
