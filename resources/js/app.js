@@ -138,15 +138,24 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     htmlCalender = '<div id="dayOfWeek"> <div class="">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="">土</div> </div>'
     let dateCalender = new Date(calenderMonth.getyear(),calenderMonth.getMonth(),1)
 
+    htmlCalender = htmlCalender + `<div>`
     for (let index = 0; index < array.length; index++) {
-        if (dateCalender < today) {
+        if (dateCalender.getDay() < today) {
             // カレンダーの今日以前の日付
-            
-        } else if (dateCalender > due_date) {
+            if (dateCalender) { // 1日だけ処理が違う
+                
+            } else {
+
+            }
+            `<div>${dateCalender.getDay}</div>`
+        } else if (dateCalender > due_date) { //dateCalnderは due_date に合わせる必要がある duedate = 2024-03-10?
             // カレンダーの掲載日以降の日付
-    
+            
         } else {
             // カレンダーの予約可能日
+            `<div class=>${infos[dateCalender]['opening']}</div>`
         }
     }
+
+    htmlCalender = htmlCalender + '</div>'
 }
