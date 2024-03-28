@@ -842,7 +842,7 @@
                 <div
                     class="w-4/5 flex flex-auto flex-col md:flex-row items-center justify-center p-10 xl:p-32 overflow-hidden">
                     <div class="absolute bg-gradient-to-b from-indigo-900 to-black opacity-75 inset-0 z-0"></div>
-                    <div class="w-4/5 z-10">
+                    <div class="z-10">
                         <h2 class="text-xl xl:text-3xl italic mb-6">Travel</h2>
                         <div class="text-5xl sm:text-6xl xl:text-8xl font-bold leading-tight mb-6">楽しい旅行は<br>準備だって楽しい
                         </div>
@@ -854,21 +854,11 @@
                         class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8 md:p-10 lg:p-14 sm:rounded-lg md:rounded-none relative z-11">
                         <div class="max-w-md w-full space-y-8">
                             <div class="text-center text-white">
-                                <h3 class="mt-6 text-2xl font-bold mb-6">
-                                    企業アカウントログイン
-                                </h3>
-                                <div>
-                                    <a href="{{ route('company.login') }}"
-                                        class="w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">Login</a>
-                                </div>
-                                <p class="flex flex-col items-center justify-center mt-10 text-center text-md">
-                                    <span>企業アカウントはお持ちですか?</span>
-                                    <a href="{{ route('company.register') }}"
-                                        class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">企業アカウント登録</a>
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-center space-x-2">
-                                <span class="h-px w-full bg-gray-200"></span>
+                                <a href="{{ route('root') }}">
+                                    <h3 class="text-xl">
+                                        旅行プランを探す
+                                    </h3>
+                                </a>
                             </div>
                             <div class="text-center text-white">
                                 <h3 class="mt-6 text-2xl font-bold mb-6">
@@ -882,6 +872,23 @@
                                     <span>ユーザー登録はお済みですか?</span>
                                     <a href="{{ route('user.register') }}"
                                         class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">ユーザー登録</a>
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="h-px w-full bg-gray-200"></span>
+                            </div>
+                            <div class="text-center text-white">
+                                <h3 class="mt-6 text-2xl font-bold mb-6">
+                                    企業アカウントログイン
+                                </h3>
+                                <div>
+                                    <a href="{{ route('company.login') }}"
+                                        class="w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">Login</a>
+                                </div>
+                                <p class="flex flex-col items-center justify-center mt-10 text-center text-md">
+                                    <span>企業アカウントはお持ちですか?</span>
+                                    <a href="{{ route('company.register') }}"
+                                        class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">企業アカウント登録</a>
                                 </p>
                             </div>
                         </div>

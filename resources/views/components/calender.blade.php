@@ -1,6 +1,14 @@
 <div>
-    <div id="backMonth" class=""> next </div>
-    <div id="nextMonth" class=""> back </div>
+    <div id="backMonth" class="">
+        <p>
+            next >>
+        </p>
+    </div>
+    <div id="nextMonth" class=""> 
+        <p>
+            back <<
+        </p>
+    </div>
 
     <div>
         <div>
@@ -48,15 +56,20 @@
     calenderFunction(calenderMonth, {{ $plan->due_date }}, infos)
 
     // 月の移動ボタン
-    const nextMonth = document.getElementById('nextMonth')
-    const backMonth = document.getElementById('backMonth')
+    const nextMonth = document.querySelector('#nextMonth')
+    const backMonth = document.querySelector('#backMonth')
 
     // DomContentLoaded で 画面読み込みごの動きをチェックさせる
     const next = () => {
         // 翌月に変更
-        // if calenderMonth が Plan->duedate　と同じ月なら disabled
-        calenderMonth = calenderMonth.setMonth(date.getMonth() + 1)
-        calenderFunction(calenderMonth, {{ $plan->due_date }})
+        if () {
+            // if calenderMonth が Plan->duedate　と同じ月なら disabled
+            nextMonth.classList.add('text-gray-500')
+        } else {
+            nextMonth.classList.remove('text-gray-500')
+            calenderMonth = calenderMonth.setMonth(date.getMonth() + 1)
+            calenderFunction(calenderMonth, {{ $plan->due_date }})
+        }
     }
 
     // DomContentLoaded で 画面読み込みごの動きをチェックさせる
