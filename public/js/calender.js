@@ -13,6 +13,8 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     // addMOnth
     // date = today.setMonth(today.getMonth() + 1)
 
+    const lastDayMonth = new Date(calenderMonth.getFillYear(), calenderMonth.getMonth()+1, 0).getDate()
+
     const calender = document.getElementById('calender')
 
     const reservation = document.getElementById('reservation')
@@ -24,37 +26,60 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     let dateCalender = new Date(calenderMonth.getFillYear(), calenderMonth.getMonth(), 1)
 
     htmlCalender = htmlCalender + `<div>`
-    for (let index = 0; index < array.length; index++) {
+    for (let index = 0; index < lastDayMonth; index++) {
         // for文の前に曜日をチェック 日曜日なら処理が必要
         if(dateCalender.getDate() !== 1 && dateCalender.getDay() == 0) {
-            // 
+            htmlCalender = htmlCalender + '<div class="">'
         }
 
         if (dateCalender.getDate() < today) {
             // カレンダーの今日以前の日付
             if (dateCalender.getDate() === 1) { // 1日だけ処理が違う
-
+                for (let index = 0; index < dateCalender.getDate().getDay(); index++) {
+                    const element = array[index];
+                }
             } else {
                 // １日以外の日
                 htmlCalender = htmlCalender + `<div class="text-gray-500"></div>`
             }
-            `<div>${dateCalender.getDate()}</div>`
-        } else if (dateCalender > due_date) { //dateCalnderは due_date に合わせる必要がある duedate = 2024-03-10?
+            // `<div>${dateCalender.getDate()}</div>`
+        } else if (dateCalender.getDate() > due_date) { //dateCalnderは due_date に合わせる必要がある duedate = 2024-03-10?
             // カレンダーの掲載日以降の日付
             htmlCalender = htmlCalender + `<div class="text-gray-500"></div>`
         } else {
             // カレンダーの予約可能日　openingの値で分岐
+            if (infos[dateCalender]['opening'] === 0) {
+                htmlCalender = htmlCalender + `<div class="text-gray-500">☓ 満室</div>`
+            } else {
+                if (dateCalender.getDate() === 0) {
+                    // 日曜日
+                    htmlCalender = htmlCalender + `<div class="bg-red-200 clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div>`
+                } else if (dateCalender.getDate() === 6) {
+                    // 土曜日
+                    htmlCalender = htmlCalender + `<div class="bg-blue-200 clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div>`
+                } else {
+                    htmlCalender = htmlCalender + `<div class="clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div>`
+                }
+            }
 
-            htmlCalender = htmlCalender + `<div class=>${infos[dateCalender]['opening']}</div>` // dateCalenderを infos のkey の形に合わせる
-
-            htmlCalender = htmlCalender + `<div class="text-gray-500">☓ 満室</div>`
         }
 
         // for文の最後に曜日をチェック 土曜日なら処理が必要
         if (dateCalender.getDay() == 6 ) {
-            
+            htmlCalender = htmlCalender + '</div>'
         }
     }
 
     htmlCalender = htmlCalender + '</div>'
+
+    calender.innerHTML = htmlCalender
+
+    // クリックでdateを取得
+    const clickDates = document.getElementsByClassName('clickDate')
+
+    for (const clickDate of clickDates) {
+        clickDate.addEventListener('click', function() {
+            reservation.value = clickDate.dateset.date
+        })
+    }
 }
