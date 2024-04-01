@@ -29,39 +29,41 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     for (let index = 0; index < lastDayMonth; index++) {
         // for文の前に曜日をチェック 日曜日なら処理が必要
         if(dateCalender.getDate() !== 1 && dateCalender.getDay() == 0) {
-            htmlCalender = htmlCalender + '<div class="">'
+            htmlCalender = htmlCalender + '<div class="grid-cols-7">'
         }
 
+        // 日付の判定
         if (dateCalender.getDate() < today) {
             // カレンダーの今日以前の日付
             if (dateCalender.getDate() === 1) { // 1日だけ処理が違う
-                for (let index = 0; index < dateCalender.getDate().getDay(); index++) {
-                    const element = array[index];
+                for (let index = dateCalender.getDate().getDay(); index <= 6; index++) {
+                    htmlCalender = htmlCalender + `<div class="text-gray-500 blankDay"><div>${dateCalender.getDate()}</div><div></div></div>`
                 }
+
             } else {
                 // １日以外の日
-                htmlCalender = htmlCalender + `<div class="text-gray-500"></div>`
-            }
-            // `<div>${dateCalender.getDate()}</div>`
-        } else if (dateCalender.getDate() > due_date) { //dateCalnderは due_date に合わせる必要がある duedate = 2024-03-10?
-            // カレンダーの掲載日以降の日付
-            htmlCalender = htmlCalender + `<div class="text-gray-500"></div>`
-        } else {
-            // カレンダーの予約可能日　openingの値で分岐
-            if (infos[dateCalender]['opening'] === 0) {
-                htmlCalender = htmlCalender + `<div class="text-gray-500">☓ 満室</div>`
-            } else {
-                if (dateCalender.getDate() === 0) {
-                    // 日曜日
-                    htmlCalender = htmlCalender + `<div class="bg-red-200 clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div>`
-                } else if (dateCalender.getDate() === 6) {
-                    // 土曜日
-                    htmlCalender = htmlCalender + `<div class="bg-blue-200 clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div>`
-                } else {
-                    htmlCalender = htmlCalender + `<div class="clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div>`
-                }
             }
 
+            // 共通
+            htmlCalender = htmlCalender + `<div class="text-gray-500 blankDay"><div>${dateCalender.getDate()}</div><div></div></div>`
+        } else if (dateCalender.getDate() > due_date) { //dateCalnderは due_date に合わせる必要がある duedate = 2024-03-10?
+            // カレンダーの掲載日以降の日付
+            htmlCalender = htmlCalender + `<div class="text-gray-500 blankDay"><div>${dateCalender.getDate()}</div><div></div></div>`
+        } else {
+            // カレンダーの予約可能日　openingの値で分岐
+            if (infos[dateCalender.toLocaleDateString('sv-SE')]['opening'] === 0) {
+                htmlCalender = htmlCalender + `<div class="text-gray-500"><div>${dateCalender.getDate()}</div><p>${dateCalender.getDate()}</p>><div><p>満室</p></div></div>`
+            } else {
+                if (dateCalender.getDate().getDay() === 0) {
+                    // 日曜日
+                    htmlCalender = htmlCalender + `<div class="bg-red-200 clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
+                } else if (dateCalender.getDate().getDay() === 6) {
+                    // 土曜日
+                    htmlCalender = htmlCalender + `<div class="bg-blue-200 clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
+                } else {
+                    htmlCalender = htmlCalender + `<div class="clickDate" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
+                }
+            }
         }
 
         // for文の最後に曜日をチェック 土曜日なら処理が必要

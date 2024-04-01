@@ -47,7 +47,7 @@ const changeAccordion = () => {
     }
 }
 
-window.addEventListener('load', changeAccordion)
+document.addEventListener('DOMContentLoaded', changeAccordion)
 window.addEventListener('resize', changeAccordion)
 
 
