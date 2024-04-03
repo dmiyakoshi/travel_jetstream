@@ -87,7 +87,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
 
     htmlCalender = htmlCalender + '</div>'
 
-    calender.textContent = htmlCalender
+    calender.innerHTML = htmlCalender
 
     // クリックでdateを取得
     const clickDates = document.getElementsByClassName('clickDate')
