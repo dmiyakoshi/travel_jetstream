@@ -26,8 +26,6 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
 
     let htmlCalender = ""
 
-    // 曜日作成
-    htmlCalender = '<div id="dayOfWeek"> <div class="text-white bg-red-500">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="text-white bg-blue-500">土</div> </div>'
     let dateCalender = new Date(calenderMonth.getFillYear(), calenderMonth.getMonth(), firstDayMOnth)
 
     htmlCalender = htmlCalender + `<div>`

@@ -11,14 +11,14 @@
     </div>
 
     <div>
-        <div>
-            <div class="">日</div>
+        <div class="text-center">
+            <div class="text-white bg-red-500">日</div>
             <div>月</div>
             <div>火</div>
             <div>水</div>
             <div>木</div>
             <div>金</div>
-            <div class="">土</div>
+            <div class="text-white bg-blue-500">土</div>
         </div>
 
         <div class="cols-7" id="calender">
@@ -48,6 +48,7 @@
 </div>
 <script>
     let calenderMonth = Date.now()
+    const today = new Date()
 
     const infos = @json($infos)
 
@@ -55,29 +56,47 @@
 
     calenderFunction(calenderMonth, {{ $plan->due_date }}, infos)
 
+    // dateを変換 YYYY-MM-DD
+    const dateString = (date) => {
+        return date.toLocaleDateString('sv-SE')
+    }
+
     // 月の移動ボタン
     const nextMonth = document.querySelector('#nextMonth')
     const backMonth = document.querySelector('#backMonth')
 
+    let nextFlag = false
+    let backFlag = false
+
     // DomContentLoaded で 画面読み込みごの動きをチェックさせる
     const next = () => {
+        console.log('click next')
         // 翌月に変更
         if () {
             // if calenderMonth が Plan->duedate　と同じ月なら disabled
-            nextMonth.classList.add('text-gray-500')
+
+            nextMonth.classList.add('text-gray-500, cursor-not-allowed')
         } else {
-            nextMonth.classList.remove('text-gray-500')
+            nextMonth.classList.remove('text-gray-500, cursor-not-allowed')
             calenderMonth = calenderMonth.setMonth(date.getMonth() + 1)
             calenderFunction(calenderMonth, {{ $plan->due_date }})
         }
+
+        if()
     }
 
     // DomContentLoaded で 画面読み込みごの動きをチェックさせる
     const back = () => {
+        console.log('click back')
         // 先月に変更
         // if calenderMonth が todayの月と同じなら disabled
-        calenderMonth = calenderMonth.setMonth(date.getMonth() - 1)
-        calenderFunction(calenderMonth, {{ $plan->due_date }})
+        if (calenderMonth.getMonth() ===  today.getMonth()) {
+            backMonth.classList.add('text-gray-500, cursor-not-allowed')
+        } else {
+            backMonth.classList.remove('text-gray-500, cursor-not-allowed')
+            calenderMonth = calenderMonth.setMonth(date.getMonth() - 1)
+            calenderFunction(calenderMonth, {{ $plan->due_date }})
+        }
     }
 
     nextMonth.addEventListener('click', next)
