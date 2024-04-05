@@ -68,62 +68,71 @@
     let nextFlag = false
     let backFlag = false
 
-    // nextの確認 flagの代わり
+    // next動かしていいかの確認 flagの代わり
     const CheckNext = () => {
-        return dueDate.split()
+        return calenderMonth.getMonth() <= dueDate.split('-')[1] && calenderMonth.getFullyear() <= dueDate.split('-')[0]
     }
 
-    // backの確認 flagの代わり
+    // back動かしていいかの確認 flagの代わり
     const CheckBack = () => {
         return calenderMonth.getMonth() === today.getMonth()
     }
 
-    // DomContentLoaded で 画面読み込みごの動きをチェックさせる
     const next = () => {
         console.log('click next')
-        // 翌月に変更
-        if (nextFlag === true) {
+        // 動かしていいかの確認
+        if (CheckNext === true) {
+            // 翌月に変更
             nextMonth.classList.remove('text-gray-500, cursor-not-allowed')
             calenderMonth = calenderMonth.setMonth(date.getMonth() + 1)
             calenderFunction(calenderMonth, dueDate)
         } else {
-            // 
+            nextMonth.classList.remove('text-gray-500, cursor-not-allowed')
         }
 
-        if (backFlag === true) {
-            // none
-        } else if (backFlag === false) {
-            // 確認作業
-            if (calenderMonth.getMonth() === today.getMonth()) {
-
-            }
+        // もう片方の確認
+        if(CheckBack === true) {
+            // 
         } else {
-            // none
+            backMonth.classList.remove('text-gray-500, cursor-not-allowed')
         }
     }
 
-    // DomContentLoaded で 画面読み込みごの動きをチェックさせる
     const back = () => {
         console.log('click back')
-        // 先月に変更
-        // if calenderMonth が todayの月と同じなら disabled
-        if (calenderMonth.getMonth() === today.getMonth()) {
-            backMonth.classList.add('text-gray-500, cursor-not-allowed')
-        } else {
+        // 動かしていいかの確認
+        if (CheckBack === true) {
+            // 先月に変更
             backMonth.classList.remove('text-gray-500, cursor-not-allowed')
             calenderMonth = calenderMonth.setMonth(date.getMonth() - 1)
             calenderFunction(calenderMonth, dueDate)
+        } else {
+            backMonth.classList.remove('text-gray-500, cursor-not-allowed')
         }
 
-        if (nextFlag === true) {
+        // もう片方の確認
+        if(CheckNext === true) {
             // 
-        } else if (nextFlag === false) {
-            // 確認作業
         } else {
-            // 
+            next.classList.remove('text-gray-500, cursor-not-allowed')
         }
     }
 
     nextMonth.addEventListener('click', next)
     backMonth.addEventListener('click', back)
+
+    document.addEventListener('DomContenLoaded', function() {
+        if(CheckBack === true) {
+            // none
+        } else {
+            backMonth.classList.add('text-gray-500, cursor-not-allowed')
+        }
+
+
+        if (CheckNext) {
+            // none
+        } else {
+            next.classList.add('text-gray-500, cursor-not-allowed')
+        }
+    })
 </script>

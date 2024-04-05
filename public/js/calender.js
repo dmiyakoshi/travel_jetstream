@@ -11,7 +11,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     // let date = today.setDate(today.getDate() + 1)
 
     // addMOnth
-    // date = today.setMonth(today.getMonth() + 1)
+    // let date = today.setMonth(today.getMonth() + 1)
 
     const firstDayMOnth = 1
     // calenderMonthの最終日
@@ -32,7 +32,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     for (dateCalender; dateCalender < lastDayMonth; dateCalender.setDate(dateCalender.getDate() + 1)) {
         // for文の前に曜日をチェック 日曜日なら処理が必要
         if(dateCalender.getDate() !== firstDayMOnth && dateCalender.getDay() == dayOfWeekSunday) {
-            htmlCalender = htmlCalender + '<div class="grid-cols-7">'
+            htmlCalender = htmlCalender + '<div class="grid grid-cols-7">'
         }
 
         // 日付の判定
