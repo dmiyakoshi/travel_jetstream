@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="container mx-auto w-3/5 my-8 px-4 py-4">
         <div>
-            <P>新しい旅行先へ行ってみませんか？</P>
-            <button href="{{ route('root') }}">
+            <P class="text-center">新しい旅行先へ行ってみませんか？</P>
+            <a class="text-white bg-blue-500 p-1 rounded" href="{{ route('root') }}">
                 プランを探す
-            </button>
+            </a>
         </div>
         <div>
             <p>予約済み旅行プラン</p>
@@ -34,7 +34,6 @@
                         </a>
                     </div>
                     <div>
-                        {{-- {{ dd($reservation->paied_plan) }} --}}
                         @if ($reservation->paied_plan)
                             <p>支払い済み</p>
                         @else

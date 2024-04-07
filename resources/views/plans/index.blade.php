@@ -34,8 +34,8 @@
                     @foreach ($regions as $region)
                         @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
                             <li class="mb-2 text-center py-2">
-                                <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->id])) }}"
-                                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->id) ? 'text-green-500 font-bold' : '' }}">
+                                <a href="/?{{ http_build_query(array_merge($sort, ['prefecture' => $region->prefectures->first()->id])) }}"
+                                    class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture=' . $region->prefectures->first()->id) ? 'text-green-500 font-bold' : '' }}">
                                     {{ $region->name }}
                                 </a>
                             </li>

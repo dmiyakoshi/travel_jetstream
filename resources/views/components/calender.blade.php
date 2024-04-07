@@ -1,12 +1,15 @@
 <div>
-    <div id="backMonth" class="">
-        <p>
-            next >>
-        </p>
-    </div>
-    <div id="nextMonth" class="">
-        <p>
-            back << </p>
+    <div>
+        <div id="backMonth" class="">
+            <p>
+                next >>
+            </p>
+        </div>
+        <div id="nextMonth" class="">
+            <p>
+                back << 
+            </p>
+        </div>
     </div>
 
     <div>
@@ -20,28 +23,7 @@
             <div class="text-white bg-blue-500">土</div>
         </div>
 
-        <div class="cols-7" id="calender">
-            @for ($i = 0; $days[$i] < $plan->due_date; $i++)
-                <?php
-                $day = $days[$i];
-                if ($day == $days[0]) {
-                    $youbi = $day->dayOfWeek;
-                    $diff = PlanConst::DAYOFWEEK_SATURDAY - $youbi;
-                }
-                ?>
-                <div>
-                    @for ($j = 0; $j < $diff; $j++)
-                        <div class="clander_blank"></div>
-                    @endfor
-                </div>
-
-                <div>
-                    {{ $infos[$i] }}
-                </div>
-            @else
-                <div></div>
-            @endif
-            @endfor
+        <div id="calender">
         </div>
     </div>
 </div>
