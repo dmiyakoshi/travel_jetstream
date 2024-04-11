@@ -54,7 +54,7 @@ Route::resource('plans.reservations', ReservationController::class)
     ->except(['show', 'edit', 'update'])
     ->whereNumber('id');
 
-Route::get('/plans/{plan}/payment/create', [StripePaymentsController::class, 'create'])
+Route::get('/plans/{reservation}/payment/create', [StripePaymentsController::class, 'create'])
     ->name('payment.create')
     ->middleware('auth:users')
     ->whereNumber('id');

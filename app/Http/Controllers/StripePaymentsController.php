@@ -15,7 +15,7 @@ use Stripe\Charge;
 
 class StripePaymentsController extends Controller
 {
-    public function create(Plan $plan)
+    public function create(Reservation $reservation)
     {
         if (Auth::guard('users')->check()) {
             // 
@@ -23,11 +23,19 @@ class StripePaymentsController extends Controller
             return back();
         }
 
-        return view('payment.create', compact('plan'));
+        $plan = $reservation->plan;
+
+        return view('payment.create', compact('plan', 'reservation'));
     }
 
     public function charge(Request $request, Plan $plan, Reservation $reservation)
     {
+        if (Auth::guard('users')->check()) {
+            // 
+        } else {
+            return back();
+        }
+
         // paied_plansにDB登録する処理を追加する
         DB::beginTransaction();
         try {

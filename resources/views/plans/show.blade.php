@@ -31,6 +31,7 @@
                 @endif
                 <h3 class="text-lg h-10 leading-10">{{ $plan->hotel->name }}</h3>
             </div>
+            <p class="text-left">料金: {{ $plan->price }}円</p>
             <p class="text-gray-700 text-base">{!! nl2br(e($plan->description)) !!}</p>
         </article>
         <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center my-4">
@@ -53,8 +54,8 @@
                         <label for="reservation_date">
                             予約日
                         </label>
-                        <input type="date" name="reservation_date" id="reservation_date" value="{{ old('reservation_date') }}"
-                            required placeholder="予約日">
+                        <input type="date" name="reservation_date" id="reservation_date"
+                            value="{{ old('reservation_date') }}" required placeholder="予約日">
                         <input type="submit" value="予約する" onclick="if(!confirm('予約しますか？')){return false};"
                             class="w-full sm:w-40 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                     </form>
