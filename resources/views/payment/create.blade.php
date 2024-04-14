@@ -1,5 +1,6 @@
 <x-app-layout>
     <x-validation-errors :errors="$errors" />
+    <x-flash-message :message="session('notice')" />
     <div>
         <p>決済画面</p>
 
@@ -14,9 +15,8 @@
         <p>{{ $plan->title }}</p>
         <p>{{ $plan->price }}円</p>
     </div>
-    {{-- {{ dd(Auth::guard('users')->user()->email) }} --}}
     <div class="payment">
-        <form action="{{ route('payment.charge', [$plan, $reservation]) }}" method="POST">
+        <form action="{{ route('payment.charge', $reservation) }}" method="POST">
             {{ csrf_field() }}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ env('STRIPE_KEY') }}"
                 data-amount={{ $plan->price }} data-name="Stripe Demo" data-label="決済をする"

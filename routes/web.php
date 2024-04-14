@@ -59,9 +59,13 @@ Route::get('/plans/{reservation}/payment/create', [StripePaymentsController::cla
     ->middleware('auth:users')
     ->whereNumber('id');
 
-Route::post('/payment/charge', [StripePaymentsController::class, 'charge'])
+Route::post('/payment/charge/{reservation}', [StripePaymentsController::class, 'charge'])
     ->name('payment.charge')
     ->middleware('auth:users');
+
+Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
+    ->name('payment.complete');
+// Route::post('/charge', 'ChargeController@charge');
 
 Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
     ->name('payment.complete')

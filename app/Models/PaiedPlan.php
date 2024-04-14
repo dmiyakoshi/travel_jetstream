@@ -9,6 +9,10 @@ class PaiedPlan extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'reservation_id',
+    ];
+
     public function reservation() {
         return $this->belongsTo(Reservation::class);
     }
