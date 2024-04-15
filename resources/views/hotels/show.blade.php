@@ -39,7 +39,7 @@
                     <div class="flex justify-between text-sm">
                         <div class="flex item-center">
                             <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">
-                                {{ $plan->occupation->name }}
+                                {{ $hotel->name }}
                             </div>
                         </div>
                         <div>
@@ -53,10 +53,9 @@
                         {{ $plan->title }}</h2>
                     <div class="flex mt-1 mb-3">
                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                            <div><img src="{{ $plan->company->profile_photo_url }}" alt=""
+                            <div><img src="{{ $plan->hotel->company->profile_photo_url }}" alt=""
                                     class="h-10 w-10 rounded-full object-cover mr-3"></div>
                         @endif
-                        <h3 class="text-lg h-10 leading-10">{{ $plan->company->name }}</h3>
                     </div>
                     <p class="text-gray-700 text-base">{!! nl2br(e($plan->description)) !!}</p>
                 </article>

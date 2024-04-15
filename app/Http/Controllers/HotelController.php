@@ -16,7 +16,7 @@ class HotelController extends Controller
     public function index()
     {
         if (Auth::guard('companies')->check()) {
-            $hotel = Hotel::where('company_id', Auth::guard('companies')->user()->id);
+            $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->get();
         } else if (Auth::guard('users')->check()) {
             // どうするか未定　お気に入りホテルを作りそれを表示する？
         } else {
@@ -65,7 +65,7 @@ class HotelController extends Controller
     {
         $prefecture = Prefecture::where('prefecture_id', $hotel->prefecture_id);
 
-        $plans = $hotel->plans()->latest();
+        $plans = $hotel->plans;
         return view('hotels.show', compact('hotel', 'plans', 'prefecture'));
     }
 

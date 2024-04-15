@@ -4,7 +4,7 @@
 
         <x-validation-errors :errors="$errors" />
 
-        <form action="{{ route('plans.update') }}" method="POST"
+        <form action="{{ route('plans.update', $plan) }}" method="POST"
             class="rounded pt-3 pb-8 mb-4">
             @csrf
             @method('PUT')
@@ -18,7 +18,7 @@
             </div>
             <div class="mb-4">
                 <label class="block text-white mb-2" for="price">
-                    価格
+                    価格(円)
                 </label>
                 <input type="text" name="price"
                 class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-pink-600 w-full py-2 px-3"

@@ -99,9 +99,9 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        $hotel = Hotel::where('hotel_id', $plan->hotel_id);
+        $hotels = Hotel::where('id', $plan->hotel_id)->get();
 
-        return view('plans.edit', compact('plan', 'hotel'));
+        return view('plans.edit', compact('plan', 'hotels'));
     }
 
     /**

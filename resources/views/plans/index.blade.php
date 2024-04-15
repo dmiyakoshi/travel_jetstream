@@ -78,6 +78,9 @@
                         </div>
                         <h2 class="text-lg text-gray-700 font-semibold">{{ $plan->title }}
                         </h2>
+                        <div class="px-2 h-10 leading-7 rounded-full">
+                            {{ $plan->price }}円
+                        </div>
                         <p class="mt-4 text-md text-gray-600">
                             {{ Str::limit($plan->description, 50) }}
                         </p>
