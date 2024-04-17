@@ -64,52 +64,56 @@
         </div>
 
         <div class="col-span-6 md:col-span-4">
-            @foreach ($plans as $plan)
-                <div class="bg-white w-full px-10 py-8 hover:shadow-2xl transition duration-500 col-span-6">
-                    <div class="mt-4">
-                        <div class="flex justify-between text-sm items-center mb-4">
-                            <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">
-                                {{ $plan->hotel()->first()->prefecture()->first()->name }}
+            @if (count($plans) == 0)
+                <p>他の条件でさがしてみしょう</p>
+            @else
+                @foreach ($plans as $plan)
+                    <div class="bg-white w-full px-10 py-8 hover:shadow-2xl transition duration-500 col-span-6">
+                        <div class="mt-4">
+                            <div class="flex justify-between text-sm items-center mb-4">
+                                <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">
+                                    {{ $plan->hotel()->first()->prefecture()->first()->name }}
+                                </div>
+                                <div class="text-gray-700 text-sm text-right">
+                                    <span>掲載期限 :{{ $plan->due_date }}</span>
+                                    <span class="inline-block mx-1">|</span>
+                                </div>
                             </div>
-                            <div class="text-gray-700 text-sm text-right">
-                                <span>掲載期限 :{{ $plan->due_date }}</span>
-                                <span class="inline-block mx-1">|</span>
+                            <h2 class="text-lg text-gray-700 font-semibold">{{ $plan->title }}
+                            </h2>
+                            <div class="px-2 h-10 leading-7 rounded-full">
+                                {{ $plan->price }}円
                             </div>
-                        </div>
-                        <h2 class="text-lg text-gray-700 font-semibold">{{ $plan->title }}
-                        </h2>
-                        <div class="px-2 h-10 leading-7 rounded-full">
-                            {{ $plan->price }}円
-                        </div>
-                        <p class="mt-4 text-md text-gray-600">
-                            {{ Str::limit($plan->description, 50) }}
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <div class="mt-4 flex items-center space-x-4 py-6">
-                                <div>
-                                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                        {{-- <img class="h-8 w-8 rounded-full object-cover"  src="{{ $plan->hotel()->first()->profile_photo_url }}" 
+                            <p class="mt-4 text-md text-gray-600">
+                                {{ Str::limit($plan->description, 50) }}
+                            </p>
+                            <div class="flex justify-between items-center">
+                                <div class="mt-4 flex items-center space-x-4 py-6">
+                                    <div>
+                                        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                            {{-- <img class="h-8 w-8 rounded-full object-cover"  src="{{ $plan->hotel()->first()->profile_photo_url }}" 
                                                 alt="{{ $plan->hotel()->first()->name }}" /> --}}
-                                    @endif
+                                        @endif
+                                    </div>
+                                    <div class="text-sm font-semibold">{{ $plan->hotel()->first()->name }}<span
+                                            class="font-normal ml-2">{{ $plan->created_at->diffForHumans() }}</span>
+                                    </div>
                                 </div>
-                                <div class="text-sm font-semibold">{{ $plan->hotel()->first()->name }}<span
-                                        class="font-normal ml-2">{{ $plan->created_at->diffForHumans() }}</span>
+                                <div>
+                                    <a href="{{ route('plans.show', $plan) }}"
+                                        class="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 mt-4 px-5 py-3 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">
+                                        more
+                                    </a>
                                 </div>
-                            </div>
-                            <div>
-                                <a href="{{ route('plans.show', $plan) }}"
-                                    class="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 mt-4 px-5 py-3 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">
-                                    more
-                                </a>
                             </div>
                         </div>
                     </div>
+                    <hr>
+                @endforeach
+                <div class="block mt-3">
+                    {{ $plans->links() }}
                 </div>
-                <hr>
-            @endforeach
-            <div class="block mt-3">
-                {{ $plans->links() }}
-            </div>
+            @endif
         </div>
     </div>
 

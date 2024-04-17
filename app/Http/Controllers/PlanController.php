@@ -61,6 +61,7 @@ class PlanController extends Controller
     public function store(PlanRequest $request)
     {
         $plan = new Plan($request->all());
+        $plan->status = 0;
 
         try {
             $plan->save();
@@ -68,7 +69,7 @@ class PlanController extends Controller
             return back()->withInput()->withErrors('登録処理でエラーが発生しました');
         }
 
-        return redirect()->route('plans.show', $plan)->withInput()->with('notice', '登録処理が成功しました');
+        return redirect()->route('plans.show', $plan)->withInput()->with('notice', '登録処理が成功しました。公開に変更するまでは非公開です');
     }
 
     /**
@@ -109,7 +110,7 @@ class PlanController extends Controller
      */
     public function update(PlanRequest $request, Plan $plan)
     {
-        if (Auth::guard('campaines')->user()->cannot('update', $plan)) {
+        if (Auth::guard('companies')->user()->cannot('update', $plan)) {
             return redirect()->route('plans.show', $plan)
                 ->withInput()
                 ->withErrors('自分の情報以外は更新できません');
