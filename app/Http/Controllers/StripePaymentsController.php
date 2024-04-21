@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaiedPlan;
-use App\Models\Plan;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +22,7 @@ class StripePaymentsController extends Controller
             } else {
                 return back();
             }
-    
+
             $plan = $reservation->plan;
         } catch (\Exception $e) {
             return back();
@@ -34,41 +33,37 @@ class StripePaymentsController extends Controller
 
     public function charge(Request $request, Reservation $reservation)
     {
-        $plan = $reservation->plan;
         session()->flash('notice', '処理開始');
-        // dd($reservation->user_id, Auth::guard('users')->user()->id, $plan, $reservation);
         if (Auth::guard('users')->check() && $reservation->user_id == Auth::guard('users')->user()->id) {
             // 
         } else {
             return back();
         }
+        
+        try {
+            $plan = $reservation->plan;
+            session()->flash('notice', 'try start');
 
-        session()->flash('notice', 'try start');
-
-        // paied_plansにDB登録する処理を追加する
-        DB::beginTransaction();
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-        
-        $customer = Customer::create(array(
-            'email' => $request->stripeEmail,
-            'source' => $request->stripeToken
-        ));
-        
-        session()->flash('notice', '確認メッセージ');
-        
-        $charge = Charge::create(array(
-            'customer' => $customer->id,
-                'amount' => $plan->price,
-                'currency' => 'jpy'
-            ));
-            
-            session()->flash('notice', '確認メッセージ２');
-            
+            DB::beginTransaction();
             PaiedPlan::updateOrCreate([
                 'reservation_id' => $reservation->id,
             ]);
-            
-            try {
+
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $customer = Customer::create(array(
+                'email' => $request->stripeEmail,
+                'source' => $request->stripeToken
+            ));
+
+            session()->flash('notice', '確認メッセージ');
+
+            $charge = Charge::create(array(
+                'customer' => $customer->id,
+                'amount' => $plan->price,
+                'currency' => 'jpy'
+            ));
+
+            session()->flash('notice', '確認メッセージ２');
         } catch (\Exception $e) {
             Db::rollBack();
             return back()->withInput()->withErrors('支払い処理でエラーが発生したので処理を中止しました');

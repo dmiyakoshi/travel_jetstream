@@ -11,7 +11,7 @@
         
             @if (empty($hotels))
                 <p>まだ登録されていません</p>
-                <a href="">登録してみましょう</a>
+                <a href="{{ route('root') }}">登録してみましょう</a>
             @else
                 <div>
                     @foreach ($hotels as $hotel)

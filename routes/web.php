@@ -75,10 +75,10 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
-// Route::get('/import-csv-prefecture', [CsvImportController::class, "showPrefecture"]);
-// Route::post('/import-csv-prefecture', [CsvImportController::class, 'importPrefecture']);
-// Route::get('/import-csv-region', [CsvImportController::class, "showRegion"]);
-// Route::post('/import-csv-region',  [CsvImportController::class, "importRegion"]);
+Route::get('/import-csv-prefecture', [CsvImportController::class, "showPrefecture"]);
+Route::post('/import-csv-prefecture', [CsvImportController::class, 'importPrefecture']);
+Route::get('/import-csv-region', [CsvImportController::class, "showRegion"]);
+Route::post('/import-csv-region',  [CsvImportController::class, "importRegion"]);
 
 // test
 // Route::get('test', function () {

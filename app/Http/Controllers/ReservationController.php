@@ -116,27 +116,27 @@ class ReservationController extends Controller
             return redirect()->route('user.login');
         }
 
-        $hotel = $plan->hotel()->first()->id;
-        $reservation_requestDay = $hotel->reservation()->whereDate('reservation_date', '=', $request->reservation_date)->count();
-
-        if ($request->reservation_date > $plan->due_date) {
-            return back()->withInput()->withErrors('プランの掲載期限より後に予約はできません');
-        } else if ($hotel->capacity <= $reservation_requestDay) {
-            // 予約の際に選べないようにするべき？
-            return back()->withInput()->withErrors('予約日は満室のため宿泊できません');
-        } else {
-            // none
-        }
-
-        $reservation = new Reservation($request->all());
-
-        $reservation->company_id = $plan->hotel()->first()->company_id;
-
-        $reservation->plan_id = $plan->id;
-        $reservation->user_id = Auth::guard('users')->user()->id;
-
-        $reservation->save();
         try {
+            $hotel = $plan->hotel()->first()->id;
+            $reservation_requestDay = $hotel->reservation()->whereDate('reservation_date', '=', $request->reservation_date)->count();
+
+            if ($request->reservation_date > $plan->due_date) {
+                return back()->withInput()->withErrors('プランの掲載期限より後に予約はできません');
+            } else if ($hotel->capacity <= $reservation_requestDay) {
+                // 予約の際に選べないようにするべき？
+                return back()->withInput()->withErrors('予約日は満室のため宿泊できません');
+            } else {
+                // none
+            }
+
+            $reservation = new Reservation($request->all());
+
+            $reservation->hotel_id = $plan->hotel->id;
+
+            $reservation->plan_id = $plan->id;
+            $reservation->user_id = Auth::guard('users')->user()->id;
+
+            $reservation->save();
         } catch (\Throwable $th) {
             return back()->withInput()->withErrors('予約処理でエラーが発生しました');
         }

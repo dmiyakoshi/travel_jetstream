@@ -49,7 +49,7 @@ class ReservationSeeder extends Seeder
                 Reservation::create([
                     'user_id' => $user->id,
                     'plan_id' => $plan->id,
-                    'company_id' => $plan->hotel()->first()->company()->first()->id,
+                    'hotel_id' => $plan->hotel->id,
                     'reservation_date' => fake()->dateTimeBetween(Carbon::today(), $plan->due_date)
                 ]);
             }

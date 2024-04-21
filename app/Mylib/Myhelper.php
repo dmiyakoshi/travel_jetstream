@@ -15,7 +15,7 @@ if (!function_exists('calenderDay')) {
     function calenderDay(Carbon $day, Plan $plan)
     {
         $hotel = $plan->hotel()->first();
-        $reservations = $hotel->reservations()->whereDate($plan->due_date, $day->today())->get();
+        $reservations = $hotel->reservations()->whereDate('reservation_date', $day->format('Y-m-d'))->get();
 
         // 予約可能かどうか
         if (count($reservations) < $hotel->capacity) {
@@ -37,7 +37,7 @@ if (!function_exists('calenderDay')) {
         // $today->dayOfWeek;
         // 0(日曜日)から6(土曜日)
 
-        return $info[$day];
+        return $info[$day->format('Y-m-d')];
     }
 }
 

@@ -11,7 +11,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
 
     const firstDayMOnth = 1
     // calenderMonthの最終日
-    const lastDayMonth = new Date(calenderMonth.getFillYear(), calenderMonth.getMonth()+1, 0).getDate()
+    const lastDayMonth = new Date(calenderMonth.getFullYear(), calenderMonth.getMonth()+1, 0).getDate()
 
     const calender = document.getElementById('calender')
 
@@ -22,7 +22,11 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
 
     let htmlCalender = ""
 
-    let dateCalender = new Date(calenderMonth.getFillYear(), calenderMonth.getMonth(), firstDayMOnth)
+    let dateCalender = new Date(calenderMonth.getFullYear(), calenderMonth.getMonth(), firstDayMOnth)
+
+    console.log('-----------------------')
+    console.log(dateCalender)
+    console.log(dateCalender.getDate())
 
     htmlCalender = htmlCalender + `<div>`
     for (dateCalender; dateCalender.getDate() < lastDayMonth; dateCalender.setDate(dateCalender.getDate() + 1)) {
@@ -35,7 +39,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
         if (dateCalender < today) {
             // カレンダーの今日以前の日付
             if (dateCalender.getDate() === firstDayMOnth) { // 1日だけ処理が違う
-                for (let index = dateCalender.getDate().getDay(); index <= dayOfWeekSaturday; index++) {
+                for (let index = dateCalender.getDay(); index <= dayOfWeekSaturday; index++) {
                     htmlCalender = htmlCalender + `<div class="text-gray-500 blankDay h-14"><div>${dateCalender.getDate()}</div><div></div></div>`
                 }
             } else {
@@ -51,7 +55,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
             // 応急処置
             if (dateCalender.getDate() === today.getDate() && today.getDate() === firstDayMOnth) {
                 if (dateCalender.getDate() === firstDayMOnth) { // 1日だけ処理が違う
-                    for (let index = dateCalender.getDate().getDay(); index <= dayOfWeekSaturday; index++) {
+                    for (let index = dateCalender.getDay(); index <= dayOfWeekSaturday; index++) {
                         htmlCalender = htmlCalender + `<div class="text-gray-500 blankDay h-14"><div>${dateCalender.getDate()}</div><div></div></div>`
                     }
                 } else {
@@ -63,10 +67,10 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
             if (infos[dateCalender.toLocaleDateString('sv-SE')]['opening'] === 0) {
                 htmlCalender = htmlCalender + `<div class="text-gray-500 h-14"><div>${dateCalender.getDate()}</div><p>${dateCalender.getDate()}</p>><div><p>満室</p></div></div>`
             } else {
-                if (dateCalender.getDate().getDay() === dayOfWeekSunday) {
+                if (dateCalender.getDay() === dayOfWeekSunday) {
                     // 日曜日
                     htmlCalender = htmlCalender + `<div class="bg-red-200 clickDate cursor-pointer h-14" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
-                } else if (dateCalender.getDate().getDay() === dayOfWeekSaturday) {
+                } else if (dateCalender.getDay() === dayOfWeekSaturday) {
                     // 土曜日
                     htmlCalender = htmlCalender + `<div class="bg-blue-200 clickDate cursor-pointer h-14" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
                 } else {

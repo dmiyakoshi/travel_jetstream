@@ -59,6 +59,10 @@
                         <input type="submit" value="予約する" onclick="if(!confirm('予約しますか？')){return false};"
                             class="w-full sm:w-40 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
                     </form>
+
+                    <div>
+                        <a href="{{ route('plans.reservations.create', $plan) }}">試作カレンダーページ</a>
+                    </div>
                 @else
                     <form action="{{ route('plans.reservations.destroy', [$reservation, $plan]) }}" method="post"
                         class="w-full sm:w-32">

@@ -12,15 +12,17 @@
         </div>
     </div>
 
+    <p>due_date: {{ $plan->due_date }}</p>
+
     <div>
-        <div class="text-center">
-            <div class="text-white bg-red-500">日</div>
-            <div>月</div>
-            <div>火</div>
-            <div>水</div>
-            <div>木</div>
-            <div>金</div>
-            <div class="text-white bg-blue-500">土</div>
+        <div class="text-center grid grid-cols-7">
+            <div class="text-white bg-red-500 col-span-1 border-black">日</div>
+            <div class="col-span-1 border-r border-black">月</div>
+            <div class="col-span-1 border-r border-black">火</div>
+            <div class="col-span-1 border-r border-black">水</div>
+            <div class="col-span-1 border-r border-black">木</div>
+            <div class="col-span-1 border-r border-black">金</div>
+            <div class="text-white bg-blue-500 col-span-1 border-black">土</div>
         </div>
 
         <div id="calender">
@@ -28,10 +30,10 @@
     </div>
 </div>
 <script>
-    let calenderMonth = Date.now()
     const today = new Date()
+    let calenderMonth = today
 
-    const dueDate = {{ $plan->due_date }}
+    const dueDate = string({{ $plan->due_date }})
     const infos = @json($infos)
 
     console.log(infos)

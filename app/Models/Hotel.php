@@ -30,7 +30,7 @@ class Hotel extends Model
         return $this->belongsTo(Prefecture::class);
     }
 
-    public function reservation() {
+    public function reservations() {
         return $this->hasMany(Reservation::class);
     }
 }
