@@ -28,10 +28,12 @@ class ReservationController extends Controller
         $days = [];
         $today = Carbon::today();
 
-        for ($day = $today; $day < $plan->due_date; $day->addDay()) {
+        for ($day = $today; $day <= $plan->due_date; $day->addDay()) {
             $days[] = $day;
             $infos[$day->format('Y-m-d')] = calenderDay($day, $plan);
         }
+
+        dd($days, $infos);
 
         // // カレンダー作成
         // $calenderHtml = "";

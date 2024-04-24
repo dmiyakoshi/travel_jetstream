@@ -2,12 +2,6 @@
 const calenderFunction = (calenderMonth, due_date, infos) => {
     // date('year', 'month', 'day')
     const today = new Date()
-    console.log('calender function')
-    // addDays
-    // let date = today.setDate(today.getDate() + 1)
-
-    // addMOnth
-    // let date = today.setMonth(today.getMonth() + 1)
 
     const firstDayMOnth = 1
     // calenderMonthの最終日
@@ -20,29 +14,21 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     const dayOfWeekSunday = 0
     const dayOfWeekSaturday = 6
 
-    console.log(new Date(calenderMonth.getFullYear(), calenderMonth.getMonth() + 1, 0))
-
     let htmlCalender = ""
 
-    // let dateCalender = new Date(calenderMonth.getFullYear(), calenderMonth.getMonth(), firstDayMOnth)
+    htmlCalender = htmlCalender + `<div><div class="w-full text-center text-xl border-b">${calenderMonth.getMonth() + 1}月</div><div class="text-center grid grid-cols-7 border-b"><div class="text-white bg-red-500 col-span-1 border-black">日</div><div class="col-span-1 border-r border-black">月</div><div class="col-span-1 border-r border-black">火</div><div class="col-span-1 border-r border-black">水</div><div class="col-span-1 border-r border-black">木</div><div class="col-span-1 border-r border-black">金</div><div class="text-white bg-blue-500 col-span-1 border-black">土</div></div>`
 
-    // console.log('-----------------------')
-    // console.log(dateCalender)
-    // console.log(dateCalender.getDate())
-
-    htmlCalender = htmlCalender + `<div>`
     for (let dateCalender = new Date(calenderMonth.getFullYear(), calenderMonth.getMonth(), firstDayMOnth); dateCalender <= lastDayMonth; dateCalender.setDate(dateCalender.getDate() + 1)) {
-        console.log(dateCalender.getDate())
         // for文の前に曜日をチェック 日曜日なら処理が必要
         if (dateCalender.getDate() !== firstDayMOnth && dateCalender.getDay() == dayOfWeekSunday) {
-            htmlCalender = htmlCalender + '<div class="grid grid-cols-7 grid-flow-row">'
+            htmlCalender = htmlCalender + '<div class="grid grid-cols-7 grid-flow-row border-b">'
         }
 
         // 日付の判定
         if (dateCalender < today) {
             // カレンダーの今日以前の日付
             if (dateCalender.getDate() === firstDayMOnth) { // 1日だけ処理が違う
-                htmlCalender = htmlCalender + '<div class="grid grid-cols-7 grid-flow-row">'
+                htmlCalender = htmlCalender + '<div class="grid grid-cols-7 grid-flow-row border-b">'
                 for (let index = 0; index < dateCalender.getDay(); index++) {
                     htmlCalender = htmlCalender + `<div class="text-gray-500 cols-1 blankDay h-14"><div></div><div></div></div>`
                 }
@@ -51,20 +37,27 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
             }
 
             // 共通
-            htmlCalender = htmlCalender + `<div class="text-gray-500 cols-1 blankDay h-14"><div class="text-center">${dateCalender.getDate()}</div><div></div></div>`
+            if (dateCalender.getDay() === dayOfWeekSunday) {
+                // 日曜日
+                htmlCalender = htmlCalender + `<div class="bg-red-200 cols-1 blankDay clickDate cursor-pointer text-center h-14"><div>${dateCalender.getDate()}</div><div></div></div>`
+            } else if (dateCalender.getDay() === dayOfWeekSaturday) {
+                // 土曜日
+                htmlCalender = htmlCalender + `<div class="bg-blue-200 cols-1 blankDay clickDate cursor-pointer text-center h-14"><div>${dateCalender.getDate()}</div><div></div></div>`
+            } else {
+                htmlCalender = htmlCalender + `<div class="text-gray-500 cols-1 blankDay h-14"><div class="text-center">${dateCalender.getDate()}</div><div></div></div>`
+            }
         } else if (dateCalender.toLocaleDateString('sv-SE') > due_date) { //dateCalnderは due_date に合わせる必要がある
             // カレンダーの掲載日以降の日付
             htmlCalender = htmlCalender + `<div class="text-gray-500 cols-1 blankDay h-14"><div class="text-center>${dateCalender.getDate()}</div><div></div></div>`
         } else {
             // 応急処置
-            if (dateCalender.getDate() === today.getDate() && today.getDate() === firstDayMOnth) {
-                if (dateCalender.getDate() === firstDayMOnth) { // 1日だけ処理が違う
-                    for (let index = dateCalender.getDay(); index <= dayOfWeekSaturday; index++) {
-                        htmlCalender = htmlCalender + `<div class="text-gray-500 cols-1 blankDay h-14"><div class="text-center">${dateCalender.getDate()}</div><div></div></div>`
-                    }
-                } else {
-                    // １日以外の日
+            if (dateCalender.getDate() === firstDayMOnth) { // 1日だけ処理が違う
+                htmlCalender = htmlCalender + '<div class="grid grid-cols-7 grid-flow-row border-b">'
+                for (let index = 0; index < dateCalender.getDay(); index++) {
+                    htmlCalender = htmlCalender + `<div class="text-gray-500 cols-1 blankDay h-14"><div class="text-center"></div><div></div></div>`
                 }
+            } else {
+                // １日以外の日
             }
 
             // カレンダーの予約可能日　openingの値で分岐
@@ -73,12 +66,12 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
             } else {
                 if (dateCalender.getDay() === dayOfWeekSunday) {
                     // 日曜日
-                    htmlCalender = htmlCalender + `<div class="bg-red-200 clickDate cursor-pointer text-center h-14" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
+                    htmlCalender = htmlCalender + `<div class="bg-red-200 clickDate cols-1 cursor-pointer text-center h-14" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
                 } else if (dateCalender.getDay() === dayOfWeekSaturday) {
                     // 土曜日
-                    htmlCalender = htmlCalender + `<div class="bg-blue-200 clickDate cursor-pointer text-center h-14" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
+                    htmlCalender = htmlCalender + `<div class="bg-blue-200 clickDate cols-1 cursor-pointer text-center h-14" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
                 } else {
-                    htmlCalender = htmlCalender + `<div class= "cursor-pointer clickDate h-14 text-center" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
+                    htmlCalender = htmlCalender + `<div class= "cursor-pointer cols-1 clickDate h-14 text-center" data-date='${dateCalender.toLocaleDateString('sv-SE')}'><div>${dateCalender.getDate()}</div><div>${infos[dateCalender.toLocaleDateString('sv-SE')]['opening']}</div></div>`
                 }
             }
         }
@@ -98,8 +91,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
 
     for (let clickDate of clickDates) {
         clickDate.addEventListener('click', function () {
-            console.log(clickDate.dateset.date)
-            reservation.value = clickDate.dateset.date
+            reservation.value = clickDate.dataset.date
         })
     }
 }
