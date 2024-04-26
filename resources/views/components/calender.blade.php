@@ -2,17 +2,14 @@
     <div class="flex justify-between">
         <div id="backMonth" class="">
             <p>
-                back <<
-            </p>
+                << back </p>
         </div>
         <div id="nextMonth" class="">
             <p>
-                next >> 
+                next >>
             </p>
         </div>
     </div>
-
-    <p>due_date: {{ $plan->due_date }}</p>
 
     <div>
         <p>予約日 まだフォームに入れていない　バリデーションどうする？</p>
@@ -27,11 +24,11 @@
     const today = new Date()
     let calenderMonth = new Date(today.getFullYear(), today.getMonth(), 1)
 
-    const due_date_year = {{ explode('-' ,$plan->due_date)[0] }}
-    const due_date_month = {{ explode('-' ,$plan->due_date)[1] }}
-    const due_date_day = {{ explode('-' ,$plan->due_date)[2] }}
+    const due_date_year = {{ explode('-', $plan->due_date)[0] }}
+    const due_date_month = {{ explode('-', $plan->due_date)[1] }}
+    const due_date_day = {{ explode('-', $plan->due_date)[2] }}
 
-    const dueDate = new Date(due_date_year, due_date_month-1, due_date_day)
+    const dueDate = new Date(due_date_year, due_date_month - 1, due_date_day)
 
     const infos = @json($infos)
 
@@ -61,47 +58,64 @@
     }
 
     const next = () => {
-        console.log('next')
         // 動かしていいかの確認
         if (CheckNext() === true) {
             // 翌月に変更
-            nextMonth.classList.remove('text-gray-500')
-            nextMonth.classList.remove('cursor-not-allowed')
             calenderMonth = new Date(calenderMonth.setMonth(calenderMonth.getMonth() + 1))
             calenderFunction(calenderMonth, dueDate, infos)
-        } else {
-            nextMonth.classList.add('text-gray-500')
-            nextMonth.classList.add('cursor-not-allowed')
-        }
 
-        // もう片方の確認
-        if(CheckBack() === true) {
-            // 
+            if (CheckNext() === true) {
+                nextMonth.classList.remove('text-gray-300')
+                nextMonth.classList.remove('cursor-not-allowed')
+                nextMonth.classList.add('cursor-pointer')
+            } else {
+                nextMonth.classList.add('text-gray-300')
+                nextMonth.classList.add('cursor-not-allowed')
+                nextMonth.classList.remove('cursor-pointer')
+            }
         } else {
-            backMonth.classList.remove('text-gray-500')
+            nextMonth.classList.add('text-gray-300')
+            nextMonth.classList.add('cursor-not-allowed')
+            nextMonth.classList.remove('cursor-pointer')
+        }
+        // もう片方の確認
+        if (CheckBack() === true) {
+            backMonth.classList.remove('text-gray-300')
             backMonth.classList.remove('cursor-not-allowed')
+            backMonth.classList.add('cursor-pointer')
+        } else {
+            // 
         }
     }
 
     const back = () => {
-        console.log('back')
         // 動かしていいかの確認
         if (CheckBack() === true) {
             // 先月に変更
-            backMonth.classList.remove('text-gray-500')
-            backMonth.classList.remove('cursor-not-allowed')
             calenderMonth = new Date(calenderMonth.setMonth(calenderMonth.getMonth() - 1))
             calenderFunction(calenderMonth, dueDate, infos)
-        } else {
-            backMonth.classList.add('text-gray-500')
-            backMonth.classList.add('cursor-not-allowed')
-        }
 
-        // もう片方の確認
-        if(CheckNext() === true) {
-            // 
+            // カレンダー変更後の確認
+            if (CheckBack() === true) {
+                backMonth.classList.remove('text-gray-300')
+                backMonth.classList.remove('cursor-not-allowed')
+                backMonth.classList.add('cursor-pointer')
+            } else {
+                backMonth.classList.add('text-gray-300')
+                backMonth.classList.add('cursor-not-allowed')
+                backMonth.classList.remove('cursor-pointer')
+            }
         } else {
-            next.classList.remove('text-gray-500', 'cursor-not-allowed')
+            backMonth.classList.add('text-gray-300')
+            backMonth.classList.add('cursor-not-allowed')
+            backMonth.classList.remove('cursor-pointer')
+        }
+        // もう片方の確認
+        if (CheckNext() === true) {
+            nextMonth.classList.remove('text-gray-300', 'cursor-not-allowed')
+            nextMonth.classList.add('cursor-pointer')
+        } else {
+            // 
         }
     }
 
@@ -109,19 +123,17 @@
     backMonth.addEventListener('click', back)
 
     document.addEventListener("DOMContentLoaded", function() {
-        console.log('loaded')
-        if(CheckBack() === true) {
+        if (CheckBack() === true) {
             // none
         } else {
-            backMonth.classList.add('text-gray-500')
+            backMonth.classList.add('text-gray-300')
             backMonth.classList.add('cursor-not-allowed')
         }
 
-
-        if (CheckNext()) {
-            // none
+        if (CheckNext() === true) {
+            nextMonth.classList.add('cursor-pointer')
         } else {
-            nextMonth.classList.add('text-gray-500')
+            nextMonth.classList.add('text-gray-300')
             nextMonth.classList.add('cursor-not-allowed')
         }
     })

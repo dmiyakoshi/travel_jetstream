@@ -27,80 +27,12 @@ class ReservationController extends Controller
 
         $days = [];
         $today = Carbon::today();
+        $due_date = new Carbon($plan->due_date);
 
-        for ($day = $today; $day <= $plan->due_date; $day->addDay()) {
+        for ($day = $today; $day <= $due_date; $day->addDay()) {
             $days[] = $day;
             $infos[$day->format('Y-m-d')] = calenderDay($day, $plan);
         }
-
-        dd($days, $infos);
-
-        // // カレンダー作成
-        // $calenderHtml = "";
-
-        // $begenCalender = $day[0];
-        // $week = 7;
-
-        // $calenderHtml = $calenderHtml . '<div class="grid-cols-7">';
-
-        // // 曜日の表示
-        // $calenderHtml = $calenderHtml . '<div>';
-
-        // // 今日からカレンダー作成
-        // for ($i = 0; $i < $week; $i++) {
-        //     $dayofweek = calenderDayofWeek($day[$i]);
-        //     if ($begenCalender->dayOfWeek == 0) {
-        //         $calenderHtml = $calenderHtml . '<div class="calender_div text-red-500">' . $dayofweek . '</div>';
-        //     } elseif ($begenCalender->dayOfWeek == 6) {
-        //         $calenderHtml = $calenderHtml . '<div class="calender_div text-blue-500">' . $dayofweek . '</div>';
-        //     } else {
-        //         $calenderHtml = $calenderHtml . '<div class="calender_div">' . $dayofweek . '</div>';
-        //     }
-        // }
-
-        // // 実際のカレンダーのようにoutuput
-        // '<div></div>
-        // <div></div>
-        // <div></div>';
-
-        // $calenderHtml = $calenderHtml . '</div>';
-
-        // // 日付の表示
-        // $calenderHtml = $calenderHtml . '<div>';
-
-        // // カウンター
-        // $count = 0;
-
-        // foreach ($days as $day) {
-        //     '<div id="day$count" class="display none">$day->~~~~ //input type=dateのフォーマットに合わせる形でクリックしたときにformに値を入れる
-        //     </div>';
-        //     // divの中に表示
-        //     // $infos[0]['can_reservation'];
-        //     // $infos[0]['opening'];
-
-        //     // 残りわずかと表示させるかどうかの定数
-        //     $const_opening = 2;
-        //     if ($infos[$count]['can_reservation']) {
-        //         // 予約可能な場合の処理
-        //         if ($infos[$count]['opening'] <= $const_opening) {
-        //             '<p class="color:yellow">残りわずか</p>';
-        //         } else {
-        //             '<p class="color:green">予約可能</p>';
-        //         }
-        //         '<button class="calneder_click">予約する</button>';
-        //         '<div class="display: none">' . $day .'</div>';
-        //     } else {
-        //         // 予約できない
-        //         '<p class="color:gray">満室</p>';
-        //         '<p>' . $infos['opening'] .'</p>';
-        //     }
-
-        //     $count++;
-        // }
-
-        // $calenderHtml = $calenderHtml . '</div>';
-
-        // $calenderHtml = $calenderHtml . '</div>';
 
         return view('reservations.create', compact('plan', 'infos'));
     }

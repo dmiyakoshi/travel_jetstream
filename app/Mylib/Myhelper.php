@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\Reservation;
 use Carbon\Carbon;
@@ -26,9 +27,18 @@ if (!function_exists('calenderDay')) {
 
         // あといくつ空きがあるか
         if ($info[$day->format('Y-m-d')]['can_reservation'] == true) {
-            $info[$day->format('Y-m-d')]['opening'] = $hotel->capacity - count($reservations);
+            $countOpening = $hotel->capacity - count($reservations);
+
+            // 切り替えの定数
+            $constOpening = 3;
+            $constCapacity = 5;
+            if ( $countOpening < $constOpening || $countOpening < ($hotel->capacity / $constCapacity)  ) {
+                $info[$day->format('Y-m-d')]['opening'] = '△';
+            } else {
+                $info[$day->format('Y-m-d')]['opening'] = '〇';
+            }
         } else {
-            $info[$day->format('Y-m-d')]['opening'] = 0;
+            $info[$day->format('Y-m-d')]['opening'] = '☓';
         }
 
         // $today->isoFormat('ddd');
