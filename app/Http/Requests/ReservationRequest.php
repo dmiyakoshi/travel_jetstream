@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class ReservationRequest extends FormRequest
 {
@@ -21,9 +22,10 @@ class ReservationRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            // 予約日が今日以降、掲載日までの検証
-            'reservation_date' => 'date|after:today'
-        ];
+        // 使わない　コントローラー内でバリデーション
+        return [];
+        //     // 予約日が今日以降、掲載日までの検証
+        //     'reservation_date' => "required|date|after_or_equal:now|befor_or_equal:{$due_date}:"
+        // ];
     }
 }

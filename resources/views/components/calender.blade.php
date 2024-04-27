@@ -14,6 +14,7 @@
     <div>
         <p>予約日 まだフォームに入れていない　バリデーションどうする？</p>
         <input type="hidden" id="reservation" name="reservation_date">
+        <input type="hidden" name="due_date" value="{{ $plan->due_date }}">
     </div>
     <div>
         <div id="calender">

@@ -5,8 +5,8 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StripePaymentsController;
-use App\Mylib\Myfunction;
 use Illuminate\Support\Facades\Route;
+use App\Mylib\Myfunction;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,13 +46,14 @@ Route::resource('plans.reservations', ReservationController::class)
     ->whereNumber('id');
 
 Route::resource('plans.reservations', ReservationController::class)
-    ->only(['destory', 'index'])
+    ->only(['destory'])
     ->middleware(['auth:users', 'auth:companies'])
     ->whereNumber('id');
 
-Route::resource('plans.reservations', ReservationController::class)
-    ->except(['show', 'edit', 'update'])
-    ->whereNumber('id');
+// editをどうするか未定 変えるとしたら予約日？ 支払いがすんでいたらどうする？
+// Route::resource('plans.reservations', ReservationController::class)
+//     ->except(['show', 'edit', 'update'])
+//     ->whereNumber('id');
 
 Route::get('/plans/{reservation}/payment/create', [StripePaymentsController::class, 'create'])
     ->name('payment.create')
@@ -61,11 +62,11 @@ Route::get('/plans/{reservation}/payment/create', [StripePaymentsController::cla
 
 Route::post('/payment/charge/{reservation}', [StripePaymentsController::class, 'charge'])
     ->name('payment.charge')
-    ->middleware('auth:users');
+    ->middleware('auth:users')
+    ->whereNumber('id');
 
 Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
     ->name('payment.complete');
-// Route::post('/charge', 'ChargeController@charge');
 
 Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
     ->name('payment.complete')

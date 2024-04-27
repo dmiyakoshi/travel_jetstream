@@ -7,6 +7,7 @@ use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReservationRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ReservationController extends Controller
 {
@@ -61,6 +62,14 @@ class ReservationController extends Controller
                 return back()->withInput()->withErrors('予約日は満室のため宿泊できません');
             } else {
                 // none
+            }
+
+            $validate = Validator::make($request->all(), [
+                'reservation_date' => ['required', 'date','after_or_equal:now()', "befor_or_equal:{$plan->due_date}"],
+            ]);
+
+            if ($validate->fails()) {
+                return back()->withInput()->withErrors($validate);
             }
 
             $reservation = new Reservation($request->all());
