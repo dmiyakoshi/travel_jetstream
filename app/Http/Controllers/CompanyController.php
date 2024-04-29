@@ -21,7 +21,7 @@ class CompanyController extends Controller
      */
     public function dashboard(Request $request)
     {
-        $params = $request->query();
+        // $params = $request->query();
 
         // $plans = Plan::latest()
         //     ->with('reservations')
@@ -29,8 +29,12 @@ class CompanyController extends Controller
         // ->searchStatus($params)
         // ->paginate(5);
 
+        $reservations = [];
         // 本当は 予約日が今の日付よりあとのreservations
-        $reservations = Reservation::where('company_id', Auth::guard('companies')->user()->id)->whereDate('reservation_date', '>=', Carbon::today())->with('plan');
+        $hotels = Company::where('company_id', Auth::guard('companies')->user()->id);
+        foreach ($hotels as $hotel) {
+            $reservations[$hotel->id] = $hotels->reservations();
+        }
 
         return view('auth.company.dashboard', compact('reservations'));
     }

@@ -64,7 +64,7 @@
                         <a href="{{ route('plans.reservations.create', $plan) }}">試作カレンダーページ</a>
                     </div>
                 @else
-                    <form action="{{ route('plans.reservations.destroy', [$reservation, $plan]) }}" method="post"
+                    <form action="{{ route('reservations.destory', $reservation) }}" method="post"
                         class="w-full sm:w-32">
                         @csrf
                         @method('DELETE')

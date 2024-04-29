@@ -43,6 +43,7 @@ class ReservationController extends Controller
      */
     public function store(ReservationRequest $request, Plan $plan)
     {
+        session('notice', '開始');
         if (Auth::guard('users')->check()) {
             // none
         } else if (Auth::guard('companies')->check()) {
@@ -51,40 +52,41 @@ class ReservationController extends Controller
             return redirect()->route('user.login');
         }
 
-        try {
-            $hotel = $plan->hotel()->first()->id;
-            $reservation_requestDay = $hotel->reservation()->whereDate('reservation_date', '=', $request->reservation_date)->count();
-
-            if ($request->reservation_date > $plan->due_date) {
-                return back()->withInput()->withErrors('プランの掲載期限より後に予約はできません');
-            } else if ($hotel->capacity <= $reservation_requestDay) {
+        $hotel = $plan->hotel()->first();
+        $reservation_requestDay = $hotel->reservations()->whereDate('reservation_date', '=', $request->reservation_date)->get();
+        // dd($reservation_requestDay->count(), $hotel->reservations);
+        
+        if ($request->reservation_date > $plan->due_date) {
+            return back()->withInput()->withErrors('プランの掲載期限より後に予約はできません');
+        } else if ($hotel->capacity <= $reservation_requestDay->count()) {
                 // 予約の際に選べないようにするべき？
                 return back()->withInput()->withErrors('予約日は満室のため宿泊できません');
             } else {
                 // none
             }
-
+            
             $validate = Validator::make($request->all(), [
-                'reservation_date' => ['required', 'date','after_or_equal:now()', "befor_or_equal:{$plan->due_date}"],
+                'reservation_date' => ['required', 'date','after_or_equal:' . now()->format('Y-m-d'), "before_or_equal:{$plan->due_date}"],
             ]);
-
+            
             if ($validate->fails()) {
                 return back()->withInput()->withErrors($validate);
             }
-
+            
             $reservation = new Reservation($request->all());
-
+            
             $reservation->hotel_id = $plan->hotel->id;
-
+            
             $reservation->plan_id = $plan->id;
             $reservation->user_id = Auth::guard('users')->user()->id;
-
+            
             $reservation->save();
+            try {
         } catch (\Throwable $th) {
             return back()->withInput()->withErrors('予約処理でエラーが発生しました');
         }
 
-        return redirect()->route('plan.show', compact('plan'))->with('notice', '予約が完了しました');
+        return redirect()->route('plans.show', compact('plan'))->with('notice', '予約が完了しました');
     }
 
     /**
@@ -93,7 +95,7 @@ class ReservationController extends Controller
     public function show(Reservation $reservation)
     {
         // exceptが効かず、なぜか route に存在
-        return back();
+        // return back();
     }
 
     /**
@@ -118,8 +120,6 @@ class ReservationController extends Controller
     public function destroy(Reservation $reservation)
     {
         $plan = $reservation->plan()->first();
-
-        dd($plan);
 
         try {
             if (Auth::guard('users')->check() && Auth::guard('users')->user()->id == $reservation->user_id) {

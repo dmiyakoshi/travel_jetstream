@@ -1,5 +1,7 @@
 <x-app-layout>
     <script src="{{ asset('/js/calender.js') }}"></script>
+    <x-validation-errors :errors="$errors" />
+    <x-flash-message :message="session('notice')" />
     <p>reservations.create</p>
     <div class="my-5">
         <p>{{ $plan->title }}</p>

@@ -12,9 +12,12 @@
     </div>
 
     <div>
-        <p>予約日 まだフォームに入れていない　バリデーションどうする？</p>
-        <input type="hidden" id="reservation" name="reservation_date">
-        <input type="hidden" name="due_date" value="{{ $plan->due_date }}">
+        <p>予約日 モーダルウィンドウ</p>
+        <form action="{{ route('plans.reservations.store', $plan) }}" method="post">
+            @csrf
+            <input type="hidden" id="reservation" name="reservation_date">
+            <input type="submit" value="予約する">
+        </form>
     </div>
     <div>
         <div id="calender">
@@ -46,15 +49,11 @@
 
     // next動かしていいかの確認 flagの代わり
     const CheckNext = () => {
-        console.log(`calenderMonth.getMonth(): ${calenderMonth.getMonth()}`)
-        console.log(`dueDate.getMonth(): ${dueDate.getMonth()}`)
         return calenderMonth.getMonth() < dueDate.getMonth() && calenderMonth.getFullYear() <= dueDate.getFullYear()
     }
 
     // back動かしていいかの確認 flagの代わり
     const CheckBack = () => {
-        console.log(`calenderMonth.getMonth(): ${calenderMonth.getMonth()}`)
-        console.log(`today.getMonth(): ${today.getMonth()}`)
         return calenderMonth.getMonth() > today.getMonth() && calenderMonth.getFullYear() >= today.getFullYear()
     }
 
