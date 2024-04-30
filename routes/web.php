@@ -6,7 +6,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StripePaymentsController;
 use Illuminate\Support\Facades\Route;
-use App\Mylib\Myfunction;
+// use App\Mylib\Myfunction;
 
 /*
 |--------------------------------------------------------------------------

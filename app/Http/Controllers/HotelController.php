@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotel;
 use App\Http\Requests\HotelRequest;
+use App\Models\Plan;
 use Illuminate\Support\DB;
 use App\Models\Prefecture;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class HotelController extends Controller
     public function index()
     {
         if (Auth::guard('companies')->check()) {
-            $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->get();
+            return route('company.dashboard');
         } else if (Auth::guard('users')->check()) {
             // どうするか未定　お気に入りホテルを作りそれを表示する？
         } else {
@@ -65,7 +66,8 @@ class HotelController extends Controller
     {
         $prefecture = Prefecture::where('prefecture_id', $hotel->prefecture_id);
 
-        $plans = $hotel->plans;
+        $plans = Plan::where('hotel_id', $hotel->id)->with('reservations')->get();
+
         return view('hotels.show', compact('hotel', 'plans', 'prefecture'));
     }
 
@@ -74,6 +76,8 @@ class HotelController extends Controller
      */
     public function edit(Hotel $hotel)
     {
+        $prefecture = Prefecture::where('prefecture_id', $hotel->prefecture_id);
+
         return view('hotels.edit', compact('hotel'));
     }
 

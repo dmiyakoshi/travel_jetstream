@@ -31,11 +31,12 @@ class CompanyController extends Controller
 
         $reservations = [];
         // 本当は 予約日が今の日付よりあとのreservations
-        $hotels = Company::where('company_id', Auth::guard('companies')->user()->id);
+        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->with('reservations')->get();
         foreach ($hotels as $hotel) {
-            $reservations[$hotel->id] = $hotels->reservations();
+            $reservations[$hotel->id] = $hotel->reservations()->count();
         }
 
-        return view('auth.company.dashboard', compact('reservations'));
+        session()->flash('notice', 'ログインしました');
+        return view('auth.company.dashboard', compact('hotels' ,'reservations'));
     }
 }

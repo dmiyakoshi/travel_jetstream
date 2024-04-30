@@ -27,6 +27,10 @@
             </div>
         </div>
 
+        <div>
+            <form action="{{ route('hotels.destory', $hotel) }}" method="post"></form>
+        </div>
+
         <div class="my-5">
             @if (Auth::guard('companies')->check() && $hotel->company_id == Auth::guard('companies')->user()->id)
                 <a href="{{ route('plans.create') }}" class="mx-auto">

@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto my-8 px-4 py-4 lg:w-3/5">
+        <x-flash-message :message="session('notice')" />
         <div class="flex bg-white py-2 mx-auto justify-evenly">
             <P class="text-center">新しい旅行先へ行ってみませんか？</P>
             <a class="text-white bg-blue-500 rounded" href="{{ route('root') }}">

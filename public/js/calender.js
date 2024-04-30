@@ -25,7 +25,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
         }
 
         // 日付の判定
-        if (dateCalender.getDate() < today.getDate() && dateCalender.getMonth() <= today.getMonth()) {
+        if (dateCalender.getDate() < today.getDate() && dateCalender.getMonth() <= today.getMonth() && dateCalender.getFullYear() <= today.getFullYear()) {
             console.log(dateCalender)
             // カレンダーの今日以前の日付
             if (dateCalender.getDate() === firstDayMOnth) { // 1日だけ処理が違う
@@ -47,7 +47,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
             } else {
                 htmlCalender = htmlCalender + `<div class="text-gray-300 cols-1 blankDay border-r h-14"><div class="text-center">${dateCalender.getDate()}</div><div></div></div>`
             }
-        } else if (dateCalender.getDate() > due_date.getDate() && dateCalender.getMonth() >= due_date.getMonth()) {
+        } else if (dateCalender.getDate() > due_date.getDate() && dateCalender.getMonth() >= due_date.getMonth() && dateCalender.getFullYear() >= due_date.getFullYear() ) {
             // カレンダーの掲載期限以降の日付
             // 共通
             if (dateCalender.getDay() === dayOfWeekSunday) {

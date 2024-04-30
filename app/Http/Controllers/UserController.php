@@ -24,6 +24,7 @@ class UserController extends Controller
 
         // dd($reservations);
 
+        session()->flash('notice', 'ログインしました');
         return view('auth.user.dashboard', compact('reservations'));
     }
 }
