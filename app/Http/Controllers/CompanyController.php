@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\Hotel;
 use App\Models\Plan;
-use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +35,19 @@ class CompanyController extends Controller
             $reservations[$hotel->id] = $hotel->reservations()->count();
         }
 
-        session()->flash('notice', 'ログインしました');
-        return view('auth.company.dashboard', compact('hotels' ,'reservations'));
+        // session()->flash('notice', 'ログインしました');
+        return view('auth.company.dashboard', compact('hotels' ,'reservations'))->with('notice', 'ログインしました');
+    }
+
+    public function manage() {
+        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->get();
+
+        $reservations = [];
+
+        foreach ($hotels as $hotel) {
+            $reservations[] = $hotel->reservation;
+        }
+
+        return view('auth.company.manage', compact('hotels', 'reservations'));
     }
 }

@@ -132,7 +132,7 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan)
     {
-        if (Auth::guard('campaines')->user()->cannot('delete', $plan)) {
+        if (Auth::guard('companies')->user()->cannot('delete', $plan)) {
             return redirect()->route('plans.show', $plan)
                 ->withInput()
                 ->withErrors('自分の情報以外は削除できません');
@@ -144,8 +144,8 @@ class PlanController extends Controller
             return back()->withInput()
                 ->withErrors('削除処理でエラーが発生しました');
         }
-        return redirect()->route('company.dashboard')
-            ->withInput()
-            ->with('notice', '情報を削除しました');
+
+        session()->flash('notice', 'プランを削除しました');
+        return redirect()->route('company.dashboard');
     }
 }

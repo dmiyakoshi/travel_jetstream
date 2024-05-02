@@ -133,6 +133,10 @@ Route::get('company/dashboard', [CompanyController::class, 'dashboard'])
     ->middleware(['auth:companies'])
     ->name('company.dashboard');
 
+Route::get('company/manage', [CompanyController::class, 'manage'])
+    ->middleware(['auth:companies'])
+    ->name('company.manage');
+
 Route::get('user/dashboard', [UserController::class, 'dashboard'])
     ->middleware(['auth:users'])
     ->name('user.dashboard');

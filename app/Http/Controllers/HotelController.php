@@ -105,6 +105,8 @@ class HotelController extends Controller
     public function destroy(Hotel $hotel)
     {
         if (Auth::guard('companies')->user()->id == $hotel->company_id) {
+            // none 
+        } else {
             return redirect()->route('hotels.show', $hotel)->withInput()->withErrors('errors', '削除権限がありません');
         }
 
@@ -113,5 +115,9 @@ class HotelController extends Controller
         } catch (\Throwable $th) {
             redirect()->route('hotels.show', $hotel)->withInput()->withErrors('errors', '削除の際にエラーが発生しました。');
         }
+
+        session()->flash('message', 'message');
+
+        return redirect()->route('company.dashboard')->with('notice', 'ホテル情報を削除しました');
     }
 }
