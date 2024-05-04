@@ -7,7 +7,9 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\Hotel;
 use App\Models\Plan;
+use App\Models\Reservation;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,20 +34,21 @@ class CompanyController extends Controller
         // 本当は 予約日が今の日付よりあとのreservations
         $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->with('reservations')->get();
         foreach ($hotels as $hotel) {
-            $reservations[$hotel->id] = $hotel->reservations()->count();
+            $reservations[$hotel->id] = $hotel->reservations();
         }
 
-        // session()->flash('notice', 'ログインしました');
-        return view('auth.company.dashboard', compact('hotels' ,'reservations'))->with('notice', 'ログインしました');
+        session()->flash('notice', 'ログインしました');
+        return view('auth.company.dashboard', compact('hotels' ,'reservations'));
     }
 
+    // 予約を管理するページ
     public function manage() {
-        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->get();
+        $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->with('reservations')->get();
 
         $reservations = [];
 
         foreach ($hotels as $hotel) {
-            $reservations[] = $hotel->reservation;
+            $reservations[$hotel->id] = $hotel->reservations->sortBy('reservation_date')->values();
         }
 
         return view('auth.company.manage', compact('hotels', 'reservations'));

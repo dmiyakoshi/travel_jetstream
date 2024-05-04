@@ -10,6 +10,9 @@
             </a>
         </div>
         <div>
+            <div>
+                <a href="{{ route('company.manage') }}">予約管理ページ（仮）　ホテル側の方はどうする</a>
+            </div>
             <h4 class="text-gray-400 text-sm">予約状況</h4>
             @foreach ($hotels as $hotel)
                 <div class="bg-white w-full px-10 py-8 hover:shadow-2xl transition duration-500">
@@ -25,7 +28,7 @@
                                         <span class="inline-block mx-1">|</span>
                                         <span>エントリー :{{ $reservation->reservations->count() }}</span>
                                     </div> --}}
-                                <p class="font-semibold">予約件数: {{ $reservations[$hotel->id] }}件</p>
+                                <p class="font-semibold">予約件数: {{ $reservations[$hotel->id]->count() }}件</p>
                             </div>
                         </a>
                         {{-- <p class="mt-4 text-md text-gray-600">
