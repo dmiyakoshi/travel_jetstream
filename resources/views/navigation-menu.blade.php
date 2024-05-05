@@ -160,7 +160,6 @@
                     企業ログイン
                 </x-responsive-nav-link>
             </div>
-
         @endif
 
         <!-- Responsive Settings Options -->
@@ -189,6 +188,9 @@
 
 
             @if (Auth::guard('companies')->check())
+                <x-dropdown-link href="{{ route('company.manage') }}">
+                    {{ '予約管理' }}
+                </x-dropdown-link>
                 <x-dropdown-link href="{{ route('hotels.create') }}">
                     {{ 'ホテル登録' }}
                 </x-dropdown-link>
