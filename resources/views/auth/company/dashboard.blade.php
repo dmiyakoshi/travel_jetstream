@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto w-3/5 my-8 px-4 py-4">
+        <h2>会社アカウントダッシュボード</h2>
         <x-flash-message :message="session('notice')" />
         <div>
             <a href="{{ route('hotels.index') }}">

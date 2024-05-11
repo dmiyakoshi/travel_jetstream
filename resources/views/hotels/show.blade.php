@@ -1,13 +1,10 @@
 <x-app-layout>
-    <div class="container lg:w-3/4 md:w-4/5 w-11/12 mx-auto my-8 px-4 py-4 bg-white shadow-md">
-
+    <div class="container mx-auto lg:w-3/4 md:w-4/5 w-11/12 my-8 px-4 py-4 bg-white shadow-md">
         <x-flash-message :message="session('notice')" />
-        <x-flash-message :message="session('message')" />
         <x-validation-errors :errors="$errors" />
 
         <div>
             <p>ホテル情報</p>
-
             <div>
                 <div class="flex justify-around">
                     <p>名前</p>
@@ -21,7 +18,7 @@
                     <p>電話番号</p>
                     <p>{{ $hotel->phonenumber }}</p>
                 </div>
-                {{-- デザインを分ける --}}
+
                 <div>
                     <p>詳細</p>
                     <p>{{ $hotel->description }}</p>
@@ -43,7 +40,7 @@
                     <a href="{{ route('hotels.edit', $hotel) }}">ホテル情報編集</a>
                 </div>
 
-                <div class="my-5">
+                <div>
                     <a href="{{ route('plans.create') }}" class="mx-auto">
                         新しくプランを作成する
                     </a>

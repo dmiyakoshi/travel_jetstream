@@ -54,10 +54,12 @@ class ReservationController extends Controller
 
         $hotel = $plan->hotel()->first();
         $reservation_requestDay = $hotel->reservations()->whereDate('reservation_date', '=', $request->reservation_date)->get();
-        // dd($reservation_requestDay->count(), $hotel->reservations);
-        
+        $today = Carbon::today();
+
         if ($request->reservation_date > $plan->due_date) {
-            return back()->withInput()->withErrors('プランの掲載期限より後に予約はできません');
+            return back()->withInput()->withErrors('プランの掲載期限より後には予約できません');
+        } else if($request->reservation_date < $today) {
+            return back()->withInput()->withErrors('今日以前の日付には予約できません');
         } else if ($hotel->capacity <= $reservation_requestDay->count()) {
                 // 予約の際に選べないようにするべき？
                 return back()->withInput()->withErrors('予約日は満室のため宿泊できません');
@@ -86,7 +88,7 @@ class ReservationController extends Controller
             return back()->withInput()->withErrors('予約処理でエラーが発生しました');
         }
 
-        return redirect()->route('plans.show', compact('plan'))->with('notice', '予約が完了しました');
+        return redirect()->route('plans.show', compact('plan'))->withInput()->with('notice', '予約が完了しました');
     }
 
     /**
@@ -127,7 +129,6 @@ class ReservationController extends Controller
             } else if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->first()->company_id) {
                 // id が hotel_id でホテル側からの削除  
             } else {
-                session()->flash('notice', 'キャンセル権限がありません');
                 return back()->withInput()->withErrors('notice', 'キャンセル権限がありません');
             }
 
@@ -136,7 +137,6 @@ class ReservationController extends Controller
             return back()->withInput()->withErrors('予約キャンセルに失敗しました');
         }
 
-        session()->flash('notice', '予約をキャンセルしました');
         return redirect()->route('plans.show', $plan)->with('notice', '予約をキャンセルしました');
     }
 }

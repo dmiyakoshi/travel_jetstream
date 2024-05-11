@@ -20,11 +20,8 @@ class UserController extends Controller
         //     $query->where('user_id', Auth::guard('users')->user()->id);
         // })->get();
 
-        $reservations = Reservation::where('user_id', Auth::guard('users')->user()->id)->with('paied_plan', 'plan')->get();
+        $reservations = Reservation::where('user_id', Auth::guard('users')->user()->id)->with('paied_plan', 'plan')->sortBy('reservation_date')->get();
 
-        // dd($reservations);
-
-        session()->flash('notice', 'ログインしました');
         return view('auth.user.dashboard', compact('reservations'));
     }
 }
