@@ -111,9 +111,21 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
     // クリックでdateを取得
     const clickDates = document.getElementsByClassName('clickDate')
 
+    const displayDateFunction = (date) => {
+        const StringDate = date.split('-')
+        display = `${StringDate[0]}年${StringDate[1]}月${StringDate[2]}日`
+
+        return display
+    }
+
     for (let clickDate of clickDates) {
         clickDate.addEventListener('click', function () {
             reservation.value = clickDate.dataset.date
+
+            const displayDate = document.getElementById('displayDate')
+            displayDate.value = displayDateFunction(clickDate.dataset.date)
+
+            modalOpenFunctoion()
         })
     }
 }

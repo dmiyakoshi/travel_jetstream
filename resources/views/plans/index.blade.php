@@ -31,7 +31,7 @@
                         class="hover:text-blue-500 {{ strpos(url()->full(), 'prefecture') ?: 'text-green-500 font-bold' }}">全て</a>
                 </li>
 
-                @if (!empty($regions))
+                @if (!$regions->isEmpty())
                     @foreach ($regions as $region)
                         @if ($region->id == PlanConst::REGION_HOKKAIDOU || $region->id == PlanConst::REGION_OKINAWA)
                             <li class="mb-2 text-center py-2">
@@ -60,12 +60,14 @@
                             </ul>
                         @endif
                     @endforeach
+                @else
+                    <p>地域登録なし</p>
                 @endif
             </div>
         </div>
 
         <div class="col-span-6 md:col-span-4">
-            @if (count($plans) == 0)
+            @if ($plans->isEmpty())
                 <p>他の条件でさがしてみしょう</p>
             @else
                 @foreach ($plans as $plan)
@@ -134,17 +136,6 @@
             transition: .5s;
         }
 
-        .accordionButton::before {
-            transform: rotate(-45deg);
-            right: 35px;
-        }
-
-        .accordionButton::after {
-            transform: rotate(45deg);
-            right: 30px;
-        }
-
-
         .menu {
             height: 0;
             display: none;
@@ -175,16 +166,6 @@
             text-align: left;
             padding: 15px 0;
             font-size: 1em;
-        }
-
-        li.active button::before {
-            transform: rotate(-135deg);
-            transition: .5s;
-        }
-
-        li.active button::after {
-            transform: rotate(135deg);
-            transition: .5s;
         }
 
         li.active button {

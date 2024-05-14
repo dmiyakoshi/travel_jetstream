@@ -1,13 +1,13 @@
 <x-app-layout>
-    <div class="container mx-auto">
-        <p>予約管理ページ</p>
+    <div class="container mx-auto text-center max-w-2xl">
+        <p class="text-xl mb-10">予約管理ページ</p>
 
         @foreach ($hotels as $hotel)
-            <div class="mb-4 text-center">
+            <div class="mb-10">
                 <p>{{ $hotel->name }}</p>
                 <p>予約件数: {{ $hotel->reservations->count() }}件</p>
 
-                @if ($hotel->reservations->count() == 0)
+                @if ($hotel->reservations->isEmpty())
                     <p class="text-gray-400">現在予約はありません</p>
                 @else
                     <div>
