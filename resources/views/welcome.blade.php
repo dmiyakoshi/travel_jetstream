@@ -862,16 +862,16 @@
                             </div>
                             <div class="text-center text-white">
                                 <h3 class="mt-6 text-2xl font-bold mb-6">
-                                    ユーザーアカウントログイン
+                                    ユーザー登録
                                 </h3>
                                 <div>
-                                    <a href="{{ route('user.login') }}"
-                                        class="w-full flex justify-center bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-4 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">Login</a>
+                                    <a href="{{ route('user.register') }}"
+                                        class="w-full flex justify-center bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-4 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">登録</a>
                                 </div>
                                 <p class="flex flex-col items-center justify-center mt-10 text-center text-md">
                                     <span>ユーザー登録はお済みですか?</span>
-                                    <a href="{{ route('user.register') }}"
-                                        class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">ユーザー登録</a>
+                                    <a href="{{ route('user.login') }}"
+                                        class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">ユーザーアカウントログイン</a>
                                 </p>
                             </div>
                             <div class="flex items-center justify-center space-x-2">
@@ -879,16 +879,16 @@
                             </div>
                             <div class="text-center text-white">
                                 <h3 class="mt-6 text-2xl font-bold mb-6">
-                                    企業アカウントログイン
+                                    企業アカウント登録
                                 </h3>
                                 <div>
-                                    <a href="{{ route('company.login') }}"
-                                        class="w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">Login</a>
+                                    <a href="{{ route('company.register') }}"
+                                        class="w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">登録</a>
                                 </div>
                                 <p class="flex flex-col items-center justify-center mt-10 text-center text-md">
                                     <span>企業アカウントはお持ちですか?</span>
-                                    <a href="{{ route('company.register') }}"
-                                        class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">企業アカウント登録</a>
+                                    <a href="{{ route('company.login') }}"
+                                        class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">企業アカウントログイン</a>
                                 </p>
                             </div>
                         </div>

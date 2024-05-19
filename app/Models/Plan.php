@@ -45,21 +45,17 @@ class Plan extends Model
 
     public function scopeOrder(Builder $query, $params)
     {
-
         if ((empty($params['sort'])) ||
-            (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)
-        ) {
+            (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)) {
             $query->latest('plans.created_at');
         } elseif (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_VIEW_RANK) {
             $query->withCount('planViews')
                 ->orderBy('plan_views_count', 'desc');
         } else if ((!empty($params['sort'])) ||
-            (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_NEW_ARRIVALS)
-        ) {
-            $query->latest('plans.created_at');
-        } elseif (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_VIEW_RANK) {
-            $query->withCount('planViews')
-                ->orderBy('plan_views_count', 'desc');
+            (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_PRICE_ASC)) {
+            $query->orderBy('plans.price', 'asc');
+        } else if (!empty($params['sort']) && $params['sort'] == PlanConst::SORT_PRICE_DEC) {
+            $query->orderBy('plans.price', 'desc');
         }
 
         return $query;
@@ -89,19 +85,23 @@ class Plan extends Model
         return $query;
     }
 
-    public function hotel() {
+    public function hotel()
+    {
         return $this->belongsTo(Hotel::class);
     }
 
-    public function company() {
+    public function company()
+    {
         return $this->belongsTo(Company::class);
     }
 
-    public function reservations() {
+    public function reservations()
+    {
         return $this->hasMany(Reservation::class);
     }
 
-    public function planviews() {
+    public function planviews()
+    {
         return $this->hasMany(PlanView::class);
     }
 }

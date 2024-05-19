@@ -125,7 +125,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
             const displayDate = document.getElementById('displayDate')
             displayDate.value = displayDateFunction(clickDate.dataset.date)
 
-            modalOpenFunctoion()
+            modalOpen()
         })
     }
 }

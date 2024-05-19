@@ -2,10 +2,10 @@
     <div class="container mx-auto my-8 px-4 py-4 lg:w-3/5">
         <h2>ユーザーアカウントダッシュボード</h2>
         <x-flash-message :message="session('notice')" />
-        <div class="flex bg-white py-2 mx-auto justify-evenly">
-            <P class="text-center">新しい旅行先へ行ってみませんか？</P>
-            <a class="text-white bg-blue-500 rounded" href="{{ route('root') }}">
-                プランを探す
+        <div class="bg-white py-2 mx-auto md:flex justify-evenly">
+            <P class="text-center p-2">新しい旅行先へ行ってみませんか？</P>
+            <a class="text-white bg-blue-500 rounded p-2" href="{{ route('root') }}">
+                新しいプランを探す
             </a>
         </div>
 
@@ -34,11 +34,14 @@
                             hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 mt-4 px-5 py-3 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">
                                 プラン詳細
                             </a>
-                            <div class="text-white">
+                            <form action="{{ route('plans.reservations.destory', $reservation) }}">
+                                <input type="submit" value="キャンセル">
+                            </form>
+                            <div class="text-white mt-4">
                                 @if ($reservation->paied_plan)
-                                    <p class="bg-green-400">支払い済み</p>
+                                    <p class="bg-green-400 px-5 py-3 rounded-full">支払い済み</p>
                                 @else
-                                    <a class="bg-black"
+                                    <a class="bg-black px-5 py-3 rounded-full"
                                         href="{{ route('payment.create', $reservation) }}">支払いをする</a>
                                 @endif
                             </div>

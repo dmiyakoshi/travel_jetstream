@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Hotel;
+use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,16 @@ class CompanyController extends Controller
         // 本当は 予約日が今の日付よりあとのreservations
         $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->with('reservations')->get();
         foreach ($hotels as $hotel) {
-            $reservations[$hotel->id] = $hotel->reservations->pluck('reservation_date')->where('reservation_date', '>=', $today);
+            $dates = $hotel->reservations->pluck('reservation_date');
+            $count = 0;
+            foreach ($dates as $date) {
+                $result[] = $date > $today;
+                if ($date > $today) {
+                    $count += 1;
+                }
+            }
+
+            $reservations[$hotel->id] = $count;
         }
 
         session()->flash('notice', 'ログインしました');
@@ -47,7 +57,12 @@ class CompanyController extends Controller
         $reservations = [];
 
         foreach ($hotels as $hotel) {
-            $reservations[$hotel->id] = $hotel->reservations->where('reservation_date', '>=', $today)->sortBy('reservation_date')->values();
+            // $reservations[$hotel->id] = $hotel->reservations->where('reservation_date', '>=', $today)->sortBy('reservation_date')->values();
+            $reservations[$hotel->id] = Reservation::where('hotel_id', $hotel->id)->whereDate('reservation_date', '>=', $today)->orderBy('reservation_date')->get();
+            // $reservations[$hotel->id] = Reservation::whereHas('Hotel', function ($query) use ($hotel) {
+            //     $today = Carbon::today();
+            //     $query->where('hotel_id', $hotel->id)->whereDate('reservatiom_date', '>=', $today)->orderBy('reservation_date')->get();
+            // });
         }
 
         return view('auth.company.manage', compact('hotels', 'reservations'));

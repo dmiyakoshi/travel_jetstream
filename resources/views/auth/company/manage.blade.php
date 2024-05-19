@@ -5,7 +5,7 @@
         @foreach ($hotels as $hotel)
             <div class="mb-10">
                 <p>{{ $hotel->name }}</p>
-                <p>予約件数: {{ $hotel->reservations->count() }}件</p>
+                <p>予約件数: {{ $reservations[$hotel->id]->count() }}件</p>
 
                 @if ($hotel->reservations->isEmpty())
                     <p class="text-gray-400">現在予約はありません</p>

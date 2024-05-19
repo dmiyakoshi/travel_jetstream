@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use App\Models\Reservation;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -20,7 +21,9 @@ class UserController extends Controller
         //     $query->where('user_id', Auth::guard('users')->user()->id);
         // })->get();
 
-        $reservations = Reservation::where('user_id', Auth::guard('users')->user()->id)->with('paied_plan', 'plan')->sortBy('reservation_date')->get();
+        $today = Carbon::today();
+
+        $reservations = Reservation::where('user_id', Auth::guard('users')->user()->id)->whereDate('reservation_date', '>=', $today)->with('paied_plan', 'plan')->get();
 
         return view('auth.user.dashboard', compact('reservations'));
     }

@@ -114,7 +114,7 @@
                     <hr>
                 @endforeach
                 <div class="block mt-3">
-                    {{ $plans->links() }}
+                    {{ $plans->appends(request()->query())->links() }}
                 </div>
             @endif
         </div>

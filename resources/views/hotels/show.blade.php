@@ -50,7 +50,7 @@
 
         <div>
             <p>このホテルのプラン</p>
-            @if ($plans->count() == 0)
+            @if ($plans->isEmpty())
                 <p>まだ宿泊プランがありません</p>
             @else
                 @foreach ($plans as $plan)

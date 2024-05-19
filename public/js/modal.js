@@ -1,7 +1,24 @@
 // modal 
 const modalDiv = document.getElementById('modal')
 
-const modalOpenFunctoion = () => {
+// アニメーションの場合
+const modalOpenFrames = {
+    opacity:[0, 1],
+    display:['none','block'],
+}
+
+const modalCloseFrames = {
+    opacity:[1, 0],
+    display:['block', 'none'],
+}
+
+const options = {
+    duration: 600,
+    easing: 'ease'
+}
+
+// クリックで動作する関数 確認はまだ
+const modalOpen = () => {
     modalDiv.style.opacity = 1
     modalDiv.style.display = 'block'
 }

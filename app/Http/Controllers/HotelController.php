@@ -116,7 +116,7 @@ class HotelController extends Controller
             redirect()->route('hotels.show', $hotel)->withInput()->withErrors('errors', '削除の際にエラーが発生しました。');
         }
 
-        session()->flash('message', 'message');
+        // session()->flash('message', 'message');
 
         return redirect()->route('company.dashboard')->with('notice', 'ホテル情報を削除しました');
     }
