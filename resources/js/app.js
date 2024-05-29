@@ -12,6 +12,7 @@ const spAccordion = () => {
     const menu = document.getElementsByClassName('sp_accrodion')[0]
 
     menu.classList.toggle('is_open')
+    spAccordionButton.classList.toggle('is_open_after')
 }
 
 // アコーディオンメニューのフラグ

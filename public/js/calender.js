@@ -113,10 +113,10 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
 
     const displayDateFunction = (date) => {
         const StringDate = date.split('-')
-        display = `${StringDate[0]}年${StringDate[1]}月${StringDate[2]}日`
-
-        return display
+        displayDay = `${StringDate[0]}年${StringDate[1]}月${StringDate[2]}日`
+        return displayDay
     }
+
 
     for (let clickDate of clickDates) {
         clickDate.addEventListener('click', function () {

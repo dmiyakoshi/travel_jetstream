@@ -63,24 +63,24 @@
 
                         <x-slot name="content">
                             <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
+                            <div class="block px-2 py-2 text-xs text-gray-400">
                                 {{ __('Manage Account') }}
                             </div>
 
                             @if ($prefix == null)
-                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                <div class="block px-2 py-2 text-xs text-gray-400">
                                     <x-dropdown-link href="{{ route('welcome') }}">
                                         {{ 'アカウント登録はこちら' }}
                                     </x-dropdown-link>
                                 </div>
 
-                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                <div class="block px-2 py-2 text-xs text-gray-400">
                                     <x-dropdown-link href="{{ route('user.login') }}">
                                         {{ 'ユーザーアカウントログイン' }}
                                     </x-dropdown-link>
                                 </div>
 
-                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                <div class="block px-2 py-2 text-xs text-gray-400">
                                     <x-dropdown-link href="{{ route('company.login') }}">
                                         {{ '企業アカウントログイン' }}
                                     </x-dropdown-link>
@@ -152,12 +152,12 @@
             </div>
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('user.login') }}">
-                    ユーザーログイン
+                    ユーザーアカウントログイン
                 </x-responsive-nav-link>
             </div>
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('company.login') }}">
-                    企業ログイン
+                    企業アカウントログイン
                 </x-responsive-nav-link>
             </div>
         @endif

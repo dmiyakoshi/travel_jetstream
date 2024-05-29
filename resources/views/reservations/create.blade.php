@@ -9,7 +9,7 @@
         </div>
         <x-calender :infos="$infos" :plan="$plan" />
 
-        <div id="modal" class="hidden opacity-0 transition z-10 bg-black">
+        <div id="modal" class="hidden opacity-0 transition z-10 bg-black absolute top-0 right-0 w-full h-full">
             <div class="bg-white mx-auto w-4/6 md:w-7/12">
                 <p>予約プラン: {{ $plan->title }}</p>
                 <p>値段: {{ $plan->price }}円</p>

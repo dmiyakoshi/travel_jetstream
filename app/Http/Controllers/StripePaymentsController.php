@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaiedPlan;
+use App\Models\Plan;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,12 +21,12 @@ class StripePaymentsController extends Controller
             if (Auth::guard('users')->check() && $reservation->user_id == Auth::guard('users')->user()->id) {
                 // 
             } else {
-                return back();
+                return back()->withInput()->with('予約していません', 'notice');
             }
 
             $plan = $reservation->plan;
         } catch (\Exception $e) {
-            return back();
+            return back()->withInput()->withErrors('errors', '予期せぬエラーが発生しました');
         }
 
         return view('payment.create', compact('plan', 'reservation'));

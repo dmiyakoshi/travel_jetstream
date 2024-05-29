@@ -596,6 +596,10 @@
             font-weight: 600
         }
 
+        .bg-violet-500 {
+            background-color: rgb(139 92 246);
+        }
+
         .leading-relaxed {
             line-height: 1.625
         }
@@ -855,7 +859,7 @@
                         <div class="max-w-md w-full space-y-8">
                             <div class="text-center text-white">
                                 <a href="{{ route('root') }}">
-                                    <h3 class="text-xl">
+                                    <h3 class="text-xl bg-violet-500 py-5 rounded-lg">
                                         旅行プランを探す
                                     </h3>
                                 </a>

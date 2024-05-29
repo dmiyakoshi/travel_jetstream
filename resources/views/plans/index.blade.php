@@ -200,6 +200,11 @@
             display: block
         }
 
+        .is_open_after::after {
+                transform: translateY(-25%) rotate(225deg) !important;
+            }
+
+
         @media (min-width: 768px) {
             #sp_accordionButton::after {
                 width: 0;
