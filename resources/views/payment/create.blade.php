@@ -4,10 +4,10 @@
             <x-validation-errors :errors="$errors" />
             <x-flash-message :message="session('notice')" />
             <div>
-                <p>
+                <p class="text-lg">
                     各種情報を確認の上、間違えなければ決済するのボタンを押し,カード情報を入力のうえお支払ください。
                 </p>
-                <p>*当サイトでは決済にStripeを使用しています。</p>
+                <p class="text-sm mb-2">*当サイトでは決済にStripeを使用しています。</p>
             </div>
             <div>
                 <p class="mt-5 text-2xl mb-5">予約プラン</p>
@@ -22,8 +22,8 @@
                 <form action="{{ route('payment.charge', $reservation) }}" method="POST">
                     {{ csrf_field() }}
                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ env('STRIPE_KEY') }}"
-                        data-amount={{ $plan->price }} data-name="Stripe Demo" data-label="決済をする"
-                        data-description="Online course about integrating Stripe" data-email={{ Auth::guard('users')->user()->email }}
+                        data-amount={{ $plan->price }} data-name="クレジットカード決済" data-label="決済をする"
+                        data-description="Stripe決済　デモ" data-email={{ Auth::guard('users')->user()->email }}
                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto" data-currency="JPY">
                     </script>
                 </form>

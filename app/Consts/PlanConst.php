@@ -45,7 +45,7 @@ class PlanConst
     ];
 
     const MEAL_DISPLAY = [
-        self::MEAL_NO, self::MEAL_BREACKFAST, self::MEAL_DINNER, self::MEAL_BOTH
+        'なし', '朝食あり', '夕食あり', '夕食、朝食あり'
     ];
 
     const DAYOFWEEK_SUNDAY = 0;

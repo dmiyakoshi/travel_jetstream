@@ -30,7 +30,6 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
 
         // 日付の判定
         if (dateCalender.getDate() < today.getDate() && dateCalender.getMonth() <= today.getMonth() && dateCalender.getFullYear() <= today.getFullYear()) {
-            console.log(dateCalender)
             // カレンダーの今日以前の日付
             if (dateCalender.getDate() === firstDayMonth) { // 1日だけ処理が違う
                 htmlCalender = htmlCalender + '<div class="grid grid-cols-7 grid-flow-row border-b">'
@@ -123,7 +122,7 @@ const calenderFunction = (calenderMonth, due_date, infos) => {
             reservation.value = clickDate.dataset.date
 
             const displayDate = document.getElementById('displayDate')
-            displayDate.value = displayDateFunction(clickDate.dataset.date)
+            displayDate.textContent = displayDateFunction(clickDate.dataset.date)
 
             modalOpen()
         })

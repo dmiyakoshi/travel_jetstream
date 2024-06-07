@@ -1,5 +1,5 @@
 // modal 
-const modalDiv = document.getElementById('modal')
+const modalDiv = document.querySelector('#modal')
 
 // アニメーションの場合
 const modalOpenFrames = {
@@ -26,8 +26,8 @@ const modalOpen = () => {
 const modalCloseButton = document.getElementById('modalClose')
 
 const modalCloseFunction = () => {
-    modalDiv.style.displey = 'none'
     modalDiv.style.opacity = 0
+    modalDiv.style.display = 'none'
 }
 
 modalCloseButton.addEventListener('click', modalCloseFunction)

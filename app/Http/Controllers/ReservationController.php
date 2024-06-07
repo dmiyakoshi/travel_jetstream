@@ -56,34 +56,35 @@ class ReservationController extends Controller
         $reservation_requestDay = $hotel->reservations()->whereDate('reservation_date', '=', $request->reservation_date)->get();
         $today = Carbon::today();
 
+        // dd($request, $today, $request->reservation_date < $today);
         if ($request->reservation_date > $plan->due_date) {
             return back()->withInput()->withErrors('プランの掲載期限より後には予約できません');
-        } else if($request->reservation_date < $today) {
+        } else if ($request->reservation_date < $today) {
             return back()->withInput()->withErrors('今日以前の日付には予約できません');
         } else if ($hotel->capacity <= $reservation_requestDay->count()) {
-                // 予約の際に選べないようにするべき？
-                return back()->withInput()->withErrors('予約日は満室のため宿泊できません');
-            } else {
-                // none
-            }
-            
-            $validate = Validator::make($request->all(), [
-                'reservation_date' => ['required', 'date','after_or_equal:' . now()->format('Y-m-d'), "before_or_equal:{$plan->due_date}"],
-            ]);
-            
-            if ($validate->fails()) {
-                return back()->withInput()->withErrors($validate);
-            }
-            
-            $reservation = new Reservation($request->all());
-            
-            $reservation->hotel_id = $plan->hotel->id;
-            
-            $reservation->plan_id = $plan->id;
-            $reservation->user_id = Auth::guard('users')->user()->id;
-            
-            $reservation->save();
-            try {
+            // 予約の際に選べないようにするべき？
+            return back()->withInput()->withErrors('予約日は満室のため宿泊できません');
+        } else {
+            // none
+        }
+
+        $validate = Validator::make($request->all(), [
+            'reservation_date' => ['required', 'date', 'after_or_equal:' . now()->format('Y-m-d'), "before_or_equal:{$plan->due_date}"],
+        ]);
+
+        if ($validate->fails()) {
+            return back()->withInput()->withErrors($validate);
+        }
+
+        $reservation = new Reservation($request->all());
+
+        $reservation->hotel_id = $plan->hotel->id;
+
+        $reservation->plan_id = $plan->id;
+        $reservation->user_id = Auth::guard('users')->user()->id;
+
+        $reservation->save();
+        try {
         } catch (\Throwable $th) {
             return back()->withInput()->withErrors('予約処理でエラーが発生しました');
         }
@@ -121,22 +122,25 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
+        // dd($reservation);
         $plan = $reservation->plan()->first();
 
-        try {
-            if (Auth::guard('users')->check() && Auth::guard('users')->user()->id == $reservation->user_id) {
-                // ユーザー側からの削除　ログインしているユーザーが予約したユーザーか同課の確認
-            } else if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel()->first()->company_id) {
-                // id が hotel_id でホテル側からの削除  
-            } else {
-                return back()->withInput()->withErrors('notice', 'キャンセル権限がありません');
-            }
+        if (Auth::guard('users')->check() && Auth::guard('users')->user()->id == $reservation->user_id) {
+            // ユーザー側からの削除　ログインしているユーザーが予約したユーザーか同課の確認
+            $prefix = "users";
+        } else if (Auth::guard('companies')->check() && Auth::guard('companies')->user()->id == $plan->hotel->company_id) {
+            // id が hotel_id でホテル側からの削除  
+            $prefix = "companies";
+        } else {
+            return back()->withInput()->withErrors('notice', 'キャンセル権限がありません');
+        }
 
+        try {
             $reservation->delete();
         } catch (\Throwable $th) {
             return back()->withInput()->withErrors('予約キャンセルに失敗しました');
         }
 
-        return redirect()->route('plans.show', $plan)->with('notice', '予約をキャンセルしました');
+        return redirect()->route($prefix . 'dashboard')->with('notice', '予約をキャンセルしました');
     }
 }

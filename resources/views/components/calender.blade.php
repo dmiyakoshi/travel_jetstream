@@ -12,14 +12,7 @@
         </div>
 
         <div>
-            <p>予約日 モーダルウィンドウ</p>
-            <form action="{{ route('plans.reservations.store', $plan) }}" method="post">
-                @csrf
-                <input type="hidden" id="reservation" name="reservation_date">
-                <input type="submit" value="予約する">
-            </form>
-        </div>
-        <div>
+            <p>予約日 選択</p>
             <div id="calender">
             </div>
         </div>

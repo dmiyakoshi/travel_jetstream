@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Consts\PlanConst;
 use App\Models\Hotel;
 use App\Models\Plan;
 use Carbon\Carbon;

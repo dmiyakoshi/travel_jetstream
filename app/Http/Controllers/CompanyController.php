@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompanyRequest;
-use App\Http\Requests\UpdateCompanyRequest;
+// use App\Http\Requests\StoreCompanyRequest;
+// use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Hotel;
 use App\Models\Reservation;
 use Carbon\Carbon;
@@ -30,7 +30,7 @@ class CompanyController extends Controller
         $reservations = [];
         $today = Carbon::today();
 
-        // 本当は 予約日が今の日付よりあとのreservations
+        // 予約日が今の日付よりあとのreservations
         $hotels = Hotel::where('company_id', Auth::guard('companies')->user()->id)->with('reservations')->get();
         foreach ($hotels as $hotel) {
             $dates = $hotel->reservations->pluck('reservation_date');
@@ -45,7 +45,6 @@ class CompanyController extends Controller
             $reservations[$hotel->id] = $count;
         }
 
-        session()->flash('notice', 'ログインしました');
         return view('auth.company.dashboard', compact('hotels', 'reservations'));
     }
 
@@ -57,12 +56,7 @@ class CompanyController extends Controller
         $reservations = [];
 
         foreach ($hotels as $hotel) {
-            // $reservations[$hotel->id] = $hotel->reservations->where('reservation_date', '>=', $today)->sortBy('reservation_date')->values();
             $reservations[$hotel->id] = Reservation::where('hotel_id', $hotel->id)->whereDate('reservation_date', '>=', $today)->orderBy('reservation_date')->get();
-            // $reservations[$hotel->id] = Reservation::whereHas('Hotel', function ($query) use ($hotel) {
-            //     $today = Carbon::today();
-            //     $query->where('hotel_id', $hotel->id)->whereDate('reservatiom_date', '>=', $today)->orderBy('reservation_date')->get();
-            // });
         }
 
         return view('auth.company.manage', compact('hotels', 'reservations'));

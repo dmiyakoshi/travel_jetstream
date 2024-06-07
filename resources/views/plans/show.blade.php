@@ -24,14 +24,11 @@
             <p class="text-gray-700 text-base text-right">掲載期限 :{{ $plan->due_date }}</p>
             <h2 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-1 text-3xl md:text-4xl">
                 {{ $plan->title }}</h2>
-            <div class="flex mt-1 mb-3">
-                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <div><img src="{{ $plan->hotel->profile_photo_url }}" alt=""
-                            class="h-10 w-10 rounded-full object-cover mr-3"></div>
-                @endif
+            <div class="mt-1 mb-3">
                 <h3 class="text-lg h-10 leading-10">{{ $plan->hotel->name }}</h3>
             </div>
             <p class="text-left">料金: {{ $plan->price }}円</p>
+            <p class="text-left">食事: {{ PlanConst::MEAL_DISPLAY[$plan->meal] }}</p>
             <p class="text-gray-700 text-base">{!! nl2br(e($plan->description)) !!}</p>
         </article>
         <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center my-4">
@@ -77,7 +74,7 @@
                     @foreach ($reservation as $re)
                         <div class="flex">
                             <p class="mb-4">{{ $re->user()->first()->name }}</p>
-                            <form action="{{ route('plans.reservations.destroy', [$re, $plan]) }}" method="post"
+                            <form action="{{ route('reservations.destory', [$re]) }}" method="post"
                                 class="w-full sm:w-32">
                                 @csrf
                                 @method('DELETE')

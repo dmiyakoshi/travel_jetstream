@@ -45,15 +45,12 @@ Route::resource('plans.reservations', ReservationController::class)
     ->middleware(['auth:users'])
     ->whereNumber('id');
 
-Route::post('reservations/{reservation}', [ReservationController::class, 'destory'])
-    ->middleware(['auth:users', 'auth:companies'])
+// editをどうするか未定 変えるとしたら予約日？ 支払いがすんでいたらどうする？
+// middlewareがあると動かない welcomeへリダイレクト？
+Route::delete('reservations/{reservation}', [ReservationController::class, 'destroy'])
+    // ->middleware(['auth:users', 'auth:companies'])
     ->whereNumber('id')
     ->name('reservations.destory');
-
-// editをどうするか未定 変えるとしたら予約日？ 支払いがすんでいたらどうする？
-// Route::resource('plans.reservations', ReservationController::class)
-//     ->except(['show', 'edit', 'update'])
-//     ->whereNumber('id');
 
 Route::get('/payment/create/{reservation}', [StripePaymentsController::class, 'create'])
     ->name('payment.create')
@@ -64,9 +61,6 @@ Route::post('/payment/charge/{reservation}', [StripePaymentsController::class, '
     ->name('payment.charge')
     ->middleware('auth:users')
     ->whereNumber('id');
-
-// Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
-//     ->name('payment.complete');
 
 Route::get('/payment/complete', [StripePaymentsController::class, 'complete'])
     ->name('payment.complete')

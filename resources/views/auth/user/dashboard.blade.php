@@ -33,7 +33,9 @@
                             hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 px-5 py-3 rounded tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full md:w-auto">
                                 プラン詳細
                             </a>
-                            <form class="w-full md:w-auto" action="{{ route('reservations.destory', $reservation) }}">
+                            <form class="w-full md:w-auto" action="{{ route('reservations.destory', $reservation) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
                                 <input class="bg-red-400 text-white px-5 py-3 rounded curosor-pointer font-semibold w-full" type="submit" value="キャンセル">
                             </form>
                                 @if ($reservation->paied_plan)

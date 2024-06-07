@@ -17,6 +17,7 @@
                                     <th>名前</th>
                                     <th>予約日</th>
                                     <th>支払い</th>
+                                    <th>キャンセル</th>
                                 </tr>
                                 @foreach ($reservations[$hotel->id] as $reservation)
                                     <tr>
@@ -28,6 +29,16 @@
                                             @else
                                                 未払い
                                             @endif
+                                        </td>
+                                        <td>
+                                            <form class="w-full md:w-auto"
+                                                action="{{ route('reservations.destory', $reservation) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input
+                                                    class="bg-red-400 text-white px-5 py-3 rounded curosor-pointer font-semibold w-full"
+                                                    onclick="if(!confirm('予約を取り消しますか？')){return false};" type="submit" value="キャンセル">
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
