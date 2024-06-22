@@ -24,7 +24,6 @@
     <div class="container mx-auto w-full my-8 px-4 py-4 bg-white grid grid-cols-6">
         <div class="col-span-6 mt-4 md:col-span-2">
             <h3 id="sp_accordionButton" class="mb-3 text-gray-400 text-xl text-center md:text-base">検索条件</h3>
-            {{-- スマホの場合はここが丸ごとアコーディオンメニューになる --}}
             <div id="sp_accordion">
                 <li class="mb-2 text-center">
                     <a href="/{{ empty($sort) ? '' : '?' . http_build_query($sort) }}"
@@ -119,7 +118,7 @@
             @endif
         </div>
     </div>
-
+<script src="{{ asset('js/plan_index.js') }}"></script>
     <style>
         .accordionButton {
             text-align: left

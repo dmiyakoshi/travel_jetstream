@@ -37,7 +37,7 @@
                                                 @method('DELETE')
                                                 <input
                                                     class="bg-red-400 text-white px-5 py-3 rounded curosor-pointer font-semibold w-full"
-                                                    onclick="if(!confirm('予約を取り消しますか？')){return false};" type="submit" value="キャンセル">
+                                                    onclick="if(!confirm('予約を取り消しますか？ ')){return false};" type="submit" value="キャンセル">
                                             </form>
                                         </td>
                                     </tr>

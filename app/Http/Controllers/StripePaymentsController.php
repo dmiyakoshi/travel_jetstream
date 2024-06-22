@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaiedPlan;
-use App\Models\Plan;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +18,7 @@ class StripePaymentsController extends Controller
         // dd($reservation->plan->id, Auth::guard('users')->user()->id);
         try {
             if (Auth::guard('users')->check() && $reservation->user_id == Auth::guard('users')->user()->id) {
-                // 
+                // pass
             } else {
                 return back()->withInput()->with('予約していません', 'notice');
             }
@@ -34,16 +33,14 @@ class StripePaymentsController extends Controller
 
     public function charge(Request $request, Reservation $reservation)
     {
-        session()->flash('notice', '処理開始');
         if (Auth::guard('users')->check() && $reservation->user_id == Auth::guard('users')->user()->id) {
-            // 
+            // pass
         } else {
             return back();
         }
         
         try {
             $plan = $reservation->plan;
-            session()->flash('notice', 'try start');
 
             DB::beginTransaction();
             PaiedPlan::updateOrCreate([
@@ -56,15 +53,11 @@ class StripePaymentsController extends Controller
                 'source' => $request->stripeToken
             ));
 
-            session()->flash('notice', '確認メッセージ');
-
             $charge = Charge::create(array(
                 'customer' => $customer->id,
                 'amount' => $plan->price,
                 'currency' => 'jpy'
             ));
-
-            session()->flash('notice', '確認メッセージ２');
         } catch (\Exception $e) {
             Db::rollBack();
             return back()->withInput()->withErrors('支払い処理でエラーが発生したので処理を中止しました');

@@ -122,7 +122,6 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        // dd($reservation);
         $plan = $reservation->plan()->first();
 
         if (Auth::guard('users')->check() && Auth::guard('users')->user()->id == $reservation->user_id) {
